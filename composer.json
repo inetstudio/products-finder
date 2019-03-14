@@ -20,7 +20,7 @@
         "InetStudio\\ProductsFinder\\Classifiers\\Entries\\": "entities/classifiers/entries/src",
         "InetStudio\\ProductsFinder\\Links\\": "entities/links/src",
         "InetStudio\\ProductsFinder\\Products\\": "entities/products/src",
-        "InetStudio\\ProductsFinder\\Reviews\\Messages\\": "entities/products/src"
+        "InetStudio\\ProductsFinder\\Reviews\\Messages\\": "entities/reviews/messages/src"
       }
     },
     "extra": {
