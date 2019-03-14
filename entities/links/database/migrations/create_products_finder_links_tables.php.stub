@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+/**
+ * Class CreateProductsFinderLinksTables.
+ */
+class CreateProductsFinderLinksTables extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('products_finder_links', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('product_id')->unsigned()->index();
+            $table->string('type');
+            $table->string('href', 1000);
+            $table->timestamps();
+
+            $table->foreign('product_id')->references('id')->on('products_finder_products')->onDelete('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('products_finder_links');
+    }
+}

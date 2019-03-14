@@ -1,0 +1,54 @@
+<?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+/**
+ * Class CreateProductsFinderProductsTables.
+ */
+class CreateProductsFinderProductsTables extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('products_finder_products', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('feed_hash')->default('');
+            $table->string('ean')->default('');
+            $table->string('brand')->default('');
+            $table->string('series')->default('');
+            $table->string('group_name')->default('');
+            $table->string('shade')->default('');
+            $table->string('title', 1000);
+            $table->text('description')->nullable();
+            $table->text('benefits')->nullable();
+            $table->text('how_to_use')->nullable();
+            $table->text('features')->nullable();
+            $table->string('volume')->default('');
+            $table->boolean('update')->default(1);
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('products_finder_products_recommendations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('product_id');
+            $table->integer('recommendation_id');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('products_finder_products_recommendations');
+        Schema::drop('products_finder_products');
+    }
+}
