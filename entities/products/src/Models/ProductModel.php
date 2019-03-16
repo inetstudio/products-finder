@@ -300,10 +300,21 @@ class ProductModel extends Model implements ProductModelContract, HasMedia, Favo
         }
 
         $arr = Arr::only($this->toArray(), ['id', 'brand', 'series', 'title', 'description', 'benefits', 'how_to_use']);
+        $arr = collect($arr)->mapWithKeys(function ($item, $key) {
+            $item = preg_replace('/[^A-Za-zА-Яа-я0-9\-\(\) ]+/u', '', $item);
+
+            return [$key => $item];
+        })->toArray();
 
         $arr['classifiers'] = $this->classifiers->map(function ($item) {
-            return Arr::only($item->toArray(), ['id', 'value']);
+            return collect(Arr::only($item->toArray(), ['id', 'value']))->mapWithKeys(function ($item, $key) {
+                $item = preg_replace('/[^A-Za-zА-Яа-я0-9\-\(\) ]+/u', '', $item);
+
+                return [$key => $item];
+            })->toArray();
         })->toArray();
+
+        $arr['search_field'] = $arr['title'].' '.implode(' ', collect($arr['classifiers'])->pluck('value')->toArray());
 
         return $arr;
     }
