@@ -3,17 +3,13 @@
 namespace InetStudio\ProductsFinder\Reviews\Messages\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Support\DeferrableProvider;
 
 /**
  * Class MessagesBindingsServiceProvider.
  */
-class MessagesBindingsServiceProvider extends ServiceProvider
+class MessagesBindingsServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    /**
-    * @var  bool
-    */
-    protected $defer = true;
-
     /**
     * @var  array
     */
