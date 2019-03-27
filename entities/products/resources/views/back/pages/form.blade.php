@@ -12,18 +12,6 @@
         @include('admin.module.products-finder.products::back.partials.breadcrumbs.form')
     @endpush
 
-    @if ($item->hasMedia('preview'))
-        <div class="row m-b-lg m-t-lg m-sm">
-            <div class="col-md-6">
-                <div class="product-image">
-                    <a data-fancybox href="{{ url($item->getFirstMediaUrl('preview')) }}">
-                        <img src="{{ url($item->getFirstMediaUrl('preview', 'preview_admin')) }}" class=" m-b-md img-fluid" alt="post_image">
-                    </a>
-                </div>
-            </div>
-        </div>
-    @endif
-
     <div class="wrapper wrapper-content">
         <div class="ibox">
             <div class="ibox-title">
@@ -61,6 +49,18 @@
                                     </div>
                                     <div id="collapseMain" class="collapse show" aria-expanded="true">
                                         <div class="panel-body">
+
+                                            <div class="form-group row ">
+                                                <label for="ean" class="col-sm-2 col-form-label font-bold font-bold">Изображение</label>
+                                                <div class="col-sm-10">
+                                                    <div class="product-image">
+                                                        <a data-fancybox href="{{ url($item->getFirstMediaUrl('preview')) }}">
+                                                            <img src="{{ url($item->getFirstMediaUrl('preview', 'preview_admin')) }}" class=" m-b-md img-fluid" alt="post_image">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="hr-line-dashed"></div>
 
                                             {!! Form::string('ean', $item->ean, [
                                                'label' => [
