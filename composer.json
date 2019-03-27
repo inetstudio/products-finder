@@ -26,7 +26,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "InetStudio\\ProductsFinder\\Providers\\ProductsFindersServiceProvider",
+                "InetStudio\\ProductsFinder\\Providers\\ProductsFinderServiceProvider",
                 "InetStudio\\ProductsFinder\\Classifiers\\Entries\\Providers\\EntriesBindingsServiceProvider",
                 "InetStudio\\ProductsFinder\\Classifiers\\Entries\\Providers\\EntriesServiceProvider",
                 "InetStudio\\ProductsFinder\\Links\\Providers\\LinksBindingsServiceProvider",

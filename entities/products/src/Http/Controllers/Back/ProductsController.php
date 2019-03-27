@@ -34,7 +34,7 @@ class ProductsController extends Controller implements ProductsControllerContrac
     }
 
     /**
-     * Добавление объекта.
+     * Создание объекта.
      *
      * @param ProductsServiceContract $productsService
      *
