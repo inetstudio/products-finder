@@ -119,7 +119,7 @@ class ProcessFeeds extends Command
                     'volume' => trim($this->getNodeValue('volume', $item)),
                 ];
 
-                $productObject = $this->productsService->saveModel($productData, ($productObject) ? $productObject->id : 0);
+                $productObject = $this->productsService->saveModel($productData, ($productObject) ? $productObject['id'] : 0);
 
                 $this->attachMedia($productObject, $item);
                 $this->attachLinks($productObject, $item);
@@ -159,7 +159,8 @@ class ProcessFeeds extends Command
         $content = $response->getBody()->getContents();
         $responseXml = simplexml_load_string($content);
 
-        return $responseXml ?? null;
+
+        return ($responseXml) ? $responseXml : null;
     }
 
     /**
@@ -260,16 +261,16 @@ class ProcessFeeds extends Command
 
         $hrefArr['shop'] = array_filter($hrefArr['shop']);
 
-        $this->linksService->model::where('product_id', $productObject->id)->whereNotIn('href', $hrefArr)->delete();
+        $this->linksService->model::where('product_id', $productObject['id'])->whereNotIn('href', $hrefArr)->delete();
 
         foreach ($hrefArr as $hrefsType => $hrefs) {
             foreach ($hrefs as $href) {
-                $linkObject = $this->linksService->model::where('product_id', $productObject->id)->where('href', $href)
+                $linkObject = $this->linksService->model::where('product_id', $productObject['id'])->where('href', $href)
                     ->first();
 
                 $linkData = [
                     'type' => $hrefsType,
-                    'product_id' => $productObject->id,
+                    'product_id' => $productObject['id'],
                     'href' => $href,
                 ];
 
