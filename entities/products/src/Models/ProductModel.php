@@ -320,7 +320,7 @@ class ProductModel extends Model implements ProductModelContract, HasMedia, Favo
             return [$key => $item];
         })->toArray();
 
-        $arr['classifiers'] = $this->classifiers->map(function ($item) {
+        $arr['classifiers'] = $this['classifiers']->map(function ($item) {
             return collect(Arr::only($item->toArray(), ['id', 'value']))->mapWithKeys(function ($item, $key) {
                 $item = preg_replace('/[^A-Za-zА-Яа-я0-9\-\(\) ]+/u', '', $item);
 

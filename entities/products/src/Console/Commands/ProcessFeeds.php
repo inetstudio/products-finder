@@ -159,7 +159,7 @@ class ProcessFeeds extends Command
         $content = $response->getBody()->getContents();
         $responseXml = simplexml_load_string($content);
 
-        return $responseXml;
+        return $responseXml ?? null;
     }
 
     /**
