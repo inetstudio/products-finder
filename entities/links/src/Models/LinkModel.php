@@ -21,12 +21,12 @@ class LinkModel extends Model implements LinkModelContract
     protected $table = 'products_finder_links';
 
     /**
-     * Атрибуты, для которых разрешено массовое назначение.
+     * Атрибуты, для которых запрещено массовое назначение.
      *
      * @var array
      */
-    protected $fillable = [
-        'type', 'product_id', 'href',
+    protected $guarded = [
+        'id', 'created_at', 'updated_at',
     ];
 
     /**
@@ -44,7 +44,7 @@ class LinkModel extends Model implements LinkModelContract
      *
      * @param $value
      */
-    public function setTypeAttribute($value)
+    public function setTypeAttribute($value): void
     {
         $this->attributes['type'] = trim(strip_tags($value));
     }
@@ -54,7 +54,7 @@ class LinkModel extends Model implements LinkModelContract
      *
      * @param $value
      */
-    public function setProductIdAttribute($value)
+    public function setProductIdAttribute($value): void
     {
         $this->attributes['product_id'] = (int) trim(strip_tags($value));
     }
@@ -64,7 +64,7 @@ class LinkModel extends Model implements LinkModelContract
      *
      * @param $value
      */
-    public function setHrefAttribute($value)
+    public function setHrefAttribute($value): void
     {
         $this->attributes['href'] = trim(strip_tags($value));
     }
@@ -74,16 +74,18 @@ class LinkModel extends Model implements LinkModelContract
      *
      * @return string
      */
-    public function getShopClassAttribute()
+    public function getShopClassAttribute(): string
     {
-        $url = parse_url($this->href);
+        $url = parse_url($this['href']);
 
-        if (isset($url['host'])) {
-            if (preg_match('/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i', $url['host'], $regs)) {
-                return strtok($regs['domain'], '.');
-            }
+        if (! isset($url['host'])) {
+            return 'default';
         }
 
-        return 'default';
+        if (! preg_match('/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i', $url['host'], $regs)) {
+            return 'default';
+        }
+
+        return strtok($regs['domain'], '.');
     }
 }

@@ -2,7 +2,7 @@
 
 namespace InetStudio\ProductsFinder\Products\Http\Responses\Back\Resource;
 
-use Illuminate\View\View;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\Support\Responsable;
 use InetStudio\ProductsFinder\Products\Contracts\Http\Responses\Back\Resource\FormResponseContract;
 
@@ -31,9 +31,9 @@ class FormResponse implements FormResponseContract, Responsable
      *
      * @param \Illuminate\Http\Request $request
      *
-     * @return View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function toResponse($request): View
+    public function toResponse($request)
     {
         return view('admin.module.products-finder.products::back.pages.form', $this->data);
     }

@@ -27,6 +27,6 @@
     </div>
 @endsection
 
-@pushonce('scripts:datatables_checks_products_index')
+@pushonce('scripts:datatables_products_finder_products_index')
     {!! $table->scripts() !!}
 @endpushonce

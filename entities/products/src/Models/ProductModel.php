@@ -13,6 +13,7 @@ use InetStudio\Classifiers\Models\Traits\HasClassifiers;
 use InetStudio\ProductsFinder\Links\Models\Traits\Links;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use InetStudio\Reviews\Messages\Models\Traits\HasReviews;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use InetStudio\Favorites\Contracts\Models\Traits\FavoritableContract;
 use InetStudio\AdminPanel\Base\Models\Traits\Scopes\BuildQueryScopeTrait;
 use InetStudio\ProductsFinder\Products\Contracts\Models\ProductModelContract;
@@ -31,6 +32,9 @@ class ProductModel extends Model implements ProductModelContract, HasMedia, Favo
     use HasClassifiers;
     use BuildQueryScopeTrait;
 
+    /**
+     * @var array
+     */
     protected $images = [
         'config' => 'products_finder_products',
         'model' => 'product',
@@ -44,14 +48,12 @@ class ProductModel extends Model implements ProductModelContract, HasMedia, Favo
     protected $table = 'products_finder_products';
 
     /**
-     * Атрибуты, для которых разрешено массовое назначение.
+     * Атрибуты, для которых запрещено массовое назначение.
      *
      * @var array
      */
-    protected $fillable = [
-        'feed_hash', 'ean', 'brand', 'series', 'group_name',
-        'shade', 'title', 'description', 'benefits',
-        'how_to_use', 'features', 'volume', 'update',
+    protected $guarded = [
+        'id', 'created_at', 'updated_at', 'deleted_at',
     ];
 
     /**
@@ -67,8 +69,6 @@ class ProductModel extends Model implements ProductModelContract, HasMedia, Favo
 
     /**
      * Загрузка модели.
-     *
-     * @return void
      */
     protected static function boot()
     {
@@ -121,7 +121,7 @@ class ProductModel extends Model implements ProductModelContract, HasMedia, Favo
      *
      * @param $value
      */
-    public function setFeedHashAttribute($value)
+    public function setFeedHashAttribute($value): void
     {
         $this->attributes['feed_hash'] = trim(strip_tags($value));
     }
@@ -131,7 +131,7 @@ class ProductModel extends Model implements ProductModelContract, HasMedia, Favo
      *
      * @param $value
      */
-    public function setEanAttribute($value)
+    public function setEanAttribute($value): void
     {
         $this->attributes['ean'] = trim(strip_tags($value));
     }
@@ -141,7 +141,7 @@ class ProductModel extends Model implements ProductModelContract, HasMedia, Favo
      *
      * @param $value
      */
-    public function setBrandAttribute($value)
+    public function setBrandAttribute($value): void
     {
         $this->attributes['brand'] = trim(strip_tags($value));
     }
@@ -151,7 +151,7 @@ class ProductModel extends Model implements ProductModelContract, HasMedia, Favo
      *
      * @param $value
      */
-    public function setSeriesAttribute($value)
+    public function setSeriesAttribute($value): void
     {
         $this->attributes['series'] = trim(strip_tags($value));
     }
@@ -161,7 +161,7 @@ class ProductModel extends Model implements ProductModelContract, HasMedia, Favo
      *
      * @param $value
      */
-    public function setGroupNameAttribute($value)
+    public function setGroupNameAttribute($value): void
     {
         $this->attributes['group_name'] = trim(strip_tags($value));
     }
@@ -171,7 +171,7 @@ class ProductModel extends Model implements ProductModelContract, HasMedia, Favo
      *
      * @param $value
      */
-    public function setShadeAttribute($value)
+    public function setShadeAttribute($value): void
     {
         $this->attributes['shade'] = trim(strip_tags($value));
     }
@@ -181,7 +181,7 @@ class ProductModel extends Model implements ProductModelContract, HasMedia, Favo
      *
      * @param $value
      */
-    public function setTitleAttribute($value)
+    public function setTitleAttribute($value): void
     {
         $this->attributes['title'] = trim(strip_tags($value));
     }
@@ -191,9 +191,11 @@ class ProductModel extends Model implements ProductModelContract, HasMedia, Favo
      *
      * @param $value
      */
-    public function setDescriptionAttribute($value)
+    public function setDescriptionAttribute($value): void
     {
-        $this->attributes['description'] = trim(str_replace("&nbsp;", ' ', strip_tags((isset($value['text'])) ? $value['text'] : (! is_array($value) ? $value : ''))));
+        $value = (isset($value['text'])) ? $value['text'] : (! is_array($value) ? $value : '');
+
+        $this->attributes['description'] = trim(str_replace("&nbsp;", ' ', strip_tags($value)));
     }
 
     /**
@@ -201,9 +203,11 @@ class ProductModel extends Model implements ProductModelContract, HasMedia, Favo
      *
      * @param $value
      */
-    public function setBenefitsAttribute($value)
+    public function setBenefitsAttribute($value): void
     {
-        $this->attributes['benefits'] = trim(str_replace("&nbsp;", ' ', strip_tags((isset($value['text'])) ? $value['text'] : (! is_array($value) ? $value : ''))));
+        $value = (isset($value['text'])) ? $value['text'] : (! is_array($value) ? $value : '');
+
+        $this->attributes['benefits'] = trim(str_replace("&nbsp;", ' ', strip_tags($value)));
     }
 
     /**
@@ -211,9 +215,11 @@ class ProductModel extends Model implements ProductModelContract, HasMedia, Favo
      *
      * @param $value
      */
-    public function setHowToUseAttribute($value)
+    public function setHowToUseAttribute($value): void
     {
-        $this->attributes['how_to_use'] = trim(str_replace("&nbsp;", ' ', strip_tags((isset($value['text'])) ? $value['text'] : (! is_array($value) ? $value : ''))));
+        $value = (isset($value['text'])) ? $value['text'] : (! is_array($value) ? $value : '');
+
+        $this->attributes['how_to_use'] = trim(str_replace("&nbsp;", ' ', strip_tags($value)));
     }
 
     /**
@@ -221,9 +227,11 @@ class ProductModel extends Model implements ProductModelContract, HasMedia, Favo
      *
      * @param $value
      */
-    public function setFeaturesAttribute($value)
+    public function setFeaturesAttribute($value): void
     {
-        $this->attributes['features'] = trim(str_replace("&nbsp;", ' ', strip_tags((isset($value['text'])) ? $value['text'] : (! is_array($value) ? $value : ''))));
+        $value = (isset($value['text'])) ? $value['text'] : (! is_array($value) ? $value : '');
+
+        $this->attributes['features'] = trim(str_replace("&nbsp;", ' ', strip_tags($value)));
     }
 
     /**
@@ -231,7 +239,7 @@ class ProductModel extends Model implements ProductModelContract, HasMedia, Favo
      *
      * @param $value
      */
-    public function setVolumeAttribute($value)
+    public function setVolumeAttribute($value): void
     {
         $this->attributes['volume'] = trim(strip_tags($value));
     }
@@ -241,7 +249,7 @@ class ProductModel extends Model implements ProductModelContract, HasMedia, Favo
      *
      * @param $value
      */
-    public function setUpdateAttribute($value)
+    public function setUpdateAttribute($value): void
     {
         $this->attributes['update'] = (bool) trim(strip_tags($value));
     }
@@ -250,11 +258,15 @@ class ProductModel extends Model implements ProductModelContract, HasMedia, Favo
      * Рекомендации.
      *
      * @return BelongsToMany
+     *
+     * @throws BindingResolutionException
      */
     public function recommendations(): BelongsToMany
     {
+        $productModel = app()->make('InetStudio\ProductsFinder\Products\Contracts\Models\ProductModelContract');
+
         return $this->belongsToMany(
-            app()->make('InetStudio\ProductsFinder\Products\Contracts\Models\ProductModelContract'),
+            get_class($productModel),
             'products_finder_products_recommendations',
             'product_id',
             'recommendation_id'
@@ -285,6 +297,8 @@ class ProductModel extends Model implements ProductModelContract, HasMedia, Favo
      * Настройка полей для поиска.
      *
      * @return array
+     *
+     * @throws BindingResolutionException
      */
     public function toSearchableArray(): array
     {

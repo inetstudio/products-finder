@@ -2,7 +2,7 @@
 
 namespace InetStudio\ProductsFinder\Products\Http\Responses\Back\Resource;
 
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\Support\Responsable;
 use InetStudio\ProductsFinder\Products\Contracts\Http\Responses\Back\Resource\DestroyResponseContract;
 
@@ -29,11 +29,11 @@ class DestroyResponse implements DestroyResponseContract, Responsable
     /**
      * Возвращаем ответ при удалении объекта.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
-    public function toResponse($request): JsonResponse
+    public function toResponse($request)
     {
         return response()->json([
             'success' => $this->result,

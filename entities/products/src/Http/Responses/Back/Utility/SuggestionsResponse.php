@@ -3,10 +3,11 @@
 namespace InetStudio\ProductsFinder\Products\Http\Responses\Back\Utility;
 
 use League\Fractal\Manager;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Responsable;
-use League\Fractal\Serializer\DataArraySerializer;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use InetStudio\ProductsFinder\Products\Contracts\Http\Responses\Back\Utility\SuggestionsResponseContract;
 
 /**
@@ -15,9 +16,9 @@ use InetStudio\ProductsFinder\Products\Contracts\Http\Responses\Back\Utility\Sug
 class SuggestionsResponse implements SuggestionsResponseContract, Responsable
 {
     /**
-     * @var array
+     * @var Collection
      */
-    protected $suggestions;
+    protected $items;
 
     /**
      * @var string
@@ -27,38 +28,47 @@ class SuggestionsResponse implements SuggestionsResponseContract, Responsable
     /**
      * SuggestionsResponse constructor.
      *
-     * @param Collection $suggestions
+     * @param Collection $items
      * @param string $type
      */
-    public function __construct(Collection $suggestions, string $type)
+    public function __construct(Collection $items,
+                                string $type = '')
     {
-        $this->suggestions = $suggestions;
+        $this->items = $items;
         $this->type = $type;
     }
 
     /**
      * Возвращаем slug по заголовку объекта.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      *
-     * @return JsonResponse
+     * @return JsonResponse|\Illuminate\Http\Response
+     *
+     * @throws BindingResolutionException
      */
-    public function toResponse($request): JsonResponse
+    public function toResponse($request)
     {
-        $resource = (app()->makeWith(
-            'InetStudio\ProductsFinder\Products\Contracts\Transformers\Back\SuggestionTransformerContract', [
+        $resource = (app()->make('InetStudio\ProductsFinder\Products\Contracts\Transformers\Back\Utility\SuggestionTransformerContract', [
             'type' => $this->type,
-        ]))->transformCollection($this->suggestions);
+        ]))->transformCollection($this->items);
+
+        $serializer = app()->make('InetStudio\AdminPanel\Base\Contracts\Serializers\SimpleDataArraySerializerContract');
 
         $manager = new Manager();
-        $manager->setSerializer(new DataArraySerializer());
+        $manager->setSerializer($serializer);
 
         $transformation = $manager->createData($resource)->toArray();
 
+        $data = [
+            'suggestions' => [],
+            'items' => [],
+        ];
+
         if ($this->type == 'autocomplete') {
-            $data['suggestions'] = $transformation['data'];
+            $data['suggestions'] = $transformation;
         } else {
-            $data['items'] = $transformation['data'];
+            $data['items'] = $transformation;
         }
 
         return response()->json($data);

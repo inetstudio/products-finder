@@ -3,6 +3,7 @@
 namespace InetStudio\ProductsFinder\Products\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Container\BindingResolutionException;
 
 /**
  * Class PrepareClassifiersCommand.
@@ -26,7 +27,7 @@ class PrepareClassifiersCommand extends Command
     /**
      * Запуск команды.
      *
-     * @return void
+     * @throws BindingResolutionException
      */
     public function handle(): void
     {

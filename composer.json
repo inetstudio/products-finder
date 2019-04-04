@@ -12,6 +12,7 @@
     "require": {
         "ext-curl": "*",
         "ext-simplexml": "*",
+        "inetstudio/admin-panel": "1.8.*",
         "inetstudio/classifiers": "1.8.*"
     },
     "autoload": {
@@ -26,15 +27,15 @@
     "extra": {
         "laravel": {
             "providers": [
-                "InetStudio\\ProductsFinder\\Providers\\ProductsFinderServiceProvider",
-                "InetStudio\\ProductsFinder\\Classifiers\\Entries\\Providers\\EntriesBindingsServiceProvider",
-                "InetStudio\\ProductsFinder\\Classifiers\\Entries\\Providers\\EntriesServiceProvider",
-                "InetStudio\\ProductsFinder\\Links\\Providers\\LinksBindingsServiceProvider",
-                "InetStudio\\ProductsFinder\\Links\\Providers\\LinksServiceProvider",
-                "InetStudio\\ProductsFinder\\Products\\Providers\\ProductsBindingsServiceProvider",
-                "InetStudio\\ProductsFinder\\Products\\Providers\\ProductsServiceProvider",
-                "InetStudio\\ProductsFinder\\Reviews\\Messages\\Providers\\MessagesBindingsServiceProvider",
-                "InetStudio\\ProductsFinder\\Reviews\\Messages\\Providers\\MessagesServiceProvider"
+                "InetStudio\\ProductsFinder\\Providers\\ServiceProvider",
+                "InetStudio\\ProductsFinder\\Classifiers\\Entries\\Providers\\BindingsServiceProvider",
+                "InetStudio\\ProductsFinder\\Classifiers\\Entries\\Providers\\ServiceProvider",
+                "InetStudio\\ProductsFinder\\Links\\Providers\\BindingsServiceProvider",
+                "InetStudio\\ProductsFinder\\Links\\Providers\\ServiceProvider",
+                "InetStudio\\ProductsFinder\\Products\\Providers\\BindingsServiceProvider",
+                "InetStudio\\ProductsFinder\\Products\\Providers\\ServiceProvider",
+                "InetStudio\\ProductsFinder\\Reviews\\Messages\\Providers\\BindingsServiceProvider",
+                "InetStudio\\ProductsFinder\\Reviews\\Messages\\Providers\\ServiceProvider"
             ]
         }
     }

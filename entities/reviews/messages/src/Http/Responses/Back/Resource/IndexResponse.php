@@ -2,7 +2,7 @@
 
 namespace InetStudio\ProductsFinder\Reviews\Messages\Http\Responses\Back\Resource;
 
-use Illuminate\View\View;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\Support\Responsable;
 use InetStudio\ProductsFinder\Reviews\Messages\Contracts\Http\Responses\Back\Resource\IndexResponseContract;
 
@@ -29,11 +29,11 @@ class IndexResponse implements IndexResponseContract, Responsable
     /**
      * Возвращаем ответ при открытии списка объектов.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      *
-     * @return View
+     * @return mixed
      */
-    public function toResponse($request): View
+    public function toResponse($request)
     {
         return view('admin.module.products-finder.reviews.messages::back.pages.index', $this->data);
     }

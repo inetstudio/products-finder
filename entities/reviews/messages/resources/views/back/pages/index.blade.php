@@ -36,6 +36,6 @@
     </div>
 @endsection
 
-@pushonce('scripts:datatables_reviews_messages_index')
+@pushonce('scripts:datatables_products_finder_reviews_messages_index')
     {!! $table->scripts() !!}
 @endpushonce

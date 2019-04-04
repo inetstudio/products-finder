@@ -2,6 +2,9 @@
 
 namespace InetStudio\ProductsFinder\Products\Models\Traits;
 
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Contracts\Container\BindingResolutionException;
+
 /**
  * Trait Product.
  */
@@ -10,12 +13,16 @@ trait Product
     /**
      * Отношение "один к одному" с моделью приза.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return HasOne
+     *
+     * @throws BindingResolutionException
      */
-    public function product()
+    public function product(): HasOne
     {
+        $productModel = app()->make('InetStudio\ProductsFinder\Products\Contracts\Models\ProductModelContract');
+
         return $this->belongsTo(
-            app()->make('InetStudio\ProductsFinder\Products\Contracts\Models\ProductModelContract'),
+            get_class($productModel),
             'id',
             'product_id'
         );

@@ -9,6 +9,10 @@ use Illuminate\Console\Command;
 use Spatie\MediaLibrary\Models\Media;
 use GuzzleHttp\Exception\ClientException;
 use InetStudio\ProductsFinder\Products\Contracts\Models\ProductModelContract;
+use InetStudio\Classifiers\Groups\Contracts\Services\Back\GroupsServiceContract as GroupsServiceContract;
+use InetStudio\ProductsFinder\Links\Contracts\Services\Back\ItemsServiceContract as LinksServiceContract;
+use InetStudio\Classifiers\Entries\Contracts\Services\Back\EntriesServiceContract as EntriesServiceContract;
+use InetStudio\ProductsFinder\Products\Contracts\Services\Back\ItemsServiceContract as ProductsServiceContract;
 
 /**
  * Class ProcessFeeds.
@@ -30,24 +34,44 @@ class ProcessFeeds extends Command
     protected $description = 'Process products feeds';
 
     /**
-     * @var mixed
+     * @var LinksServiceContract
      */
     protected $linksService;
+
+    /**
+     * @var ProductsServiceContract
+     */
     protected $productsService;
+
+    /**
+     * @var GroupsServiceContract
+     */
     protected $classifiersGroupsService;
+
+    /**
+     * @var EntriesServiceContract
+     */
     protected $classifiersEntriesService;
 
     /**
      * ProcessFeeds constructor.
+     *
+     * @param LinksServiceContract $linksService
+     * @param ProductsServiceContract $productsService
+     * @param GroupsServiceContract $groupsService
+     * @param EntriesServiceContract $entriesService
      */
-    public function __construct()
+    public function __construct(LinksServiceContract $linksService,
+                                ProductsServiceContract $productsService,
+                                GroupsServiceContract $groupsService,
+                                EntriesServiceContract $entriesService)
     {
         parent::__construct();
 
-        $this->linksService = app()->make('InetStudio\ProductsFinder\Links\Contracts\Services\Back\LinksServiceContract');
-        $this->productsService = app()->make('InetStudio\ProductsFinder\Products\Contracts\Services\Back\ProductsServiceContract');
-        $this->classifiersGroupsService = app()->make('InetStudio\Classifiers\Groups\Contracts\Services\Back\GroupsServiceContract');
-        $this->classifiersEntriesService = app()->make('InetStudio\Classifiers\Entries\Contracts\Services\Back\EntriesServiceContract');
+        $this->linksService = $linksService;
+        $this->productsService = $productsService;
+        $this->classifiersGroupsService = $groupsService;
+        $this->classifiersEntriesService = $entriesService;
     }
 
     /**
@@ -102,8 +126,8 @@ class ProcessFeeds extends Command
                 $this->attachRecommendations($productObject, $item);
                 $this->attachClassifiers($productObject, $item);
 
-                event(app()->makeWith('InetStudio\ProductsFinder\Products\Contracts\Events\Back\ModifyProductEventContract', [
-                    'object' => $productObject,
+                event(app()->makeWith('InetStudio\ProductsFinder\Products\Contracts\Events\Back\ModifyItemEventContract', [
+                    'item' => $productObject,
                 ]));
 
                 $bar->advance();
@@ -255,7 +279,7 @@ class ProcessFeeds extends Command
     }
 
     /**
-     * Сохраняем рекоммендации.
+     * Сохраняем рекомендации.
      *
      * @param ProductModelContract $productObject
      * @param $item
@@ -287,6 +311,12 @@ class ProcessFeeds extends Command
         $productObject->recommendations()->sync($recommendationsIDs);
     }
 
+    /**
+     * Сохраняем классификаторы.
+     *
+     * @param ProductModelContract $productObject
+     * @param $item
+     */
     protected function attachClassifiers(ProductModelContract $productObject, $item)
     {
         $groups = [
