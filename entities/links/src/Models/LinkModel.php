@@ -76,7 +76,13 @@ class LinkModel extends Model implements LinkModelContract
      */
     public function getShopClassAttribute(): string
     {
-        $url = parse_url($this['href']);
+        $href = $this->getAttribute('href');
+
+        if (! is_string($href)) {
+            return 'default';
+        }
+
+        $url = parse_url($href);
 
         if (! isset($url['host'])) {
             return 'default';
