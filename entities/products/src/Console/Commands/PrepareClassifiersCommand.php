@@ -48,7 +48,7 @@ class PrepareClassifiersCommand extends Command
         ];
 
         foreach ($groups as $name => $alias) {
-            $classifiersGroupsService->model::updateOrCreate([
+            $classifiersGroupsService->getModel()::updateOrCreate([
                 'name' => 'Products Finder / '.$name,
             ], [
                 'alias' => 'products_finder_'.$alias,

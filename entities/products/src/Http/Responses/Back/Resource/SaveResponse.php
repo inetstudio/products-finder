@@ -3,6 +3,7 @@
 namespace InetStudio\ProductsFinder\Products\Http\Responses\Back\Resource;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\Support\Responsable;
 use InetStudio\ProductsFinder\Products\Contracts\Models\ProductModelContract;
 use InetStudio\ProductsFinder\Products\Contracts\Http\Responses\Back\Resource\SaveResponseContract;
@@ -32,7 +33,7 @@ class SaveResponse implements SaveResponseContract, Responsable
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function toResponse($request)
     {

@@ -5,7 +5,6 @@ namespace InetStudio\ProductsFinder\Products\Models;
 use Illuminate\Support\Arr;
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use InetStudio\Uploads\Models\Traits\HasImages;
 use InetStudio\Favorites\Models\Traits\Favoritable;
@@ -21,7 +20,7 @@ use InetStudio\ProductsFinder\Products\Contracts\Models\ProductModelContract;
 /**
  * Class ProductModel.
  */
-class ProductModel extends Model implements ProductModelContract, HasMedia, FavoritableContract
+class ProductModel extends Model implements ProductModelContract, FavoritableContract
 {
     use Links;
     use HasImages;

@@ -43,7 +43,7 @@ class SuggestionsResponse implements SuggestionsResponseContract, Responsable
      *
      * @param Request $request
      *
-     * @return JsonResponse|\Illuminate\Http\Response
+     * @return JsonResponse
      *
      * @throws BindingResolutionException
      */

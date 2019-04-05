@@ -200,14 +200,14 @@ class ProcessFeeds extends Command
      */
     protected function getProduct($feedHash, $productId): ?ProductModelContract
     {
-        return $this->productsService->model::query()
+        return $this->productsService->getModel()::query()
             ->where('feed_hash', $feedHash)
             ->where('ean', trim($productId))
             ->first();
     }
 
     /**
-     * Сохраняем изображение прдукта.
+     * Сохраняем изображение продукта.
      * 
      * @param ProductModelContract $productObject
      * @param $item
@@ -261,11 +261,11 @@ class ProcessFeeds extends Command
 
         $hrefArr['shop'] = array_filter($hrefArr['shop']);
 
-        $this->linksService->model::where('product_id', $productObject['id'])->whereNotIn('href', $hrefArr)->delete();
+        $this->linksService->getModel()::where('product_id', $productObject['id'])->whereNotIn('href', $hrefArr)->delete();
 
         foreach ($hrefArr as $hrefsType => $hrefs) {
             foreach ($hrefs as $href) {
-                $linkObject = $this->linksService->model::where('product_id', $productObject['id'])->where('href', $href)
+                $linkObject = $this->linksService->getModel()::where('product_id', $productObject['id'])->where('href', $href)
                     ->first();
 
                 $linkData = [
@@ -301,7 +301,7 @@ class ProcessFeeds extends Command
             $ean = (string) $recommendation;
 
             if ($ean) {
-                $recommendationObject = $this->productsService->model::where('ean', $ean)->first();
+                $recommendationObject = $this->productsService->getModel()::where('ean', $ean)->first();
 
                 if ($recommendationObject) {
                     $recommendationsIDs[] = $recommendationObject->id;
@@ -342,13 +342,13 @@ class ProcessFeeds extends Command
             $values = explode('##', $value);
             $values = array_unique(array_filter($values));
 
-            $group = $this->classifiersGroupsService->model::where('alias', '=', $groupAlias)->first();
+            $group = $this->classifiersGroupsService->getModel()::where('alias', '=', $groupAlias)->first();
 
             $entriesIDs = [];
             foreach ($values as $entryValue) {
                 $alias = 'products_finder_'.$field.'_'.md5(Str::ucfirst(trim($entryValue)));
 
-                $entry = $this->classifiersEntriesService->model::updateOrCreate([
+                $entry = $this->classifiersEntriesService->getModel()::updateOrCreate([
                     'alias' => $alias,
                 ], [
                     'value' => Str::ucfirst(trim($entryValue)),
