@@ -95,24 +95,11 @@ class ProcessFeeds extends Command
 
             $bar = $this->output->createProgressBar(count($xml->channel->item));
 
-            foreach ($xml->channel->item as $item) {
+            foreach ($xml->channel->item ?? [] as $item) {
                 $productData = $this->getProductData($url, $item);
                 $productObject = $this->getProduct($productData['feed_hash'], $productData['ean']);
 
-                if ($productObject && $productObject['update'] == 0) {
-                    continue;
-                }
-
-                $productObject = $this->productsService->saveModel($productData, $productObject['id'] ?? 0);
-
-                $this->attachMedia($productObject, $item);
-                $this->attachLinks($productObject, $item);
-                $this->attachRecommendations($productObject, $item);
-                $this->attachClassifiers($productObject, $item);
-
-                event(app()->makeWith('InetStudio\ProductsFinder\Products\Contracts\Events\Back\ModifyItemEventContract', [
-                    'item' => $productObject,
-                ]));
+                $this->updateProduct($item, $productObject, $productData);
 
                 $bar->advance();
             }
@@ -155,7 +142,7 @@ class ProcessFeeds extends Command
      *
      * @return array
      */
-    protected function getProductData(string $url, SimpleXMLElement $item)
+    protected function getProductData(string $url, SimpleXMLElement $item): array
     {
         $productData = [
             'feed_hash' => md5($url),
@@ -173,6 +160,51 @@ class ProcessFeeds extends Command
         ];
 
         return $productData;
+    }
+
+    /**
+     * Получаем продукт.
+     *
+     * @param $feedHash
+     * @param $productId
+     *
+     * @return ProductModelContract|null
+     */
+    protected function getProduct($feedHash, $productId): ?ProductModelContract
+    {
+        return $this->productsService->getModel()::query()
+            ->where('feed_hash', $feedHash)
+            ->where('ean', trim($productId))
+            ->first();
+    }
+
+    /**
+     * Обновляем продукт.
+     *
+     * @param SimpleXMLElement $item
+     * @param $productObject
+     * @param array $productData
+     *
+     * @return ProductModelContract
+     */
+    protected function updateProduct(SimpleXMLElement $item, $productObject, array $productData): ProductModelContract
+    {
+        if ($productObject && $productObject['update'] == 0) {
+            return $productObject;
+        }
+
+        $productObject = $this->productsService->saveModel($productData, $productObject['id'] ?? 0);
+
+        $this->attachMedia($productObject, $item);
+        $this->attachLinks($productObject, $item);
+        $this->attachRecommendations($productObject, $item);
+        $this->attachClassifiers($productObject, $item);
+
+        event(app()->makeWith('InetStudio\ProductsFinder\Products\Contracts\Events\Back\ModifyItemEventContract', [
+            'item' => $productObject,
+        ]));
+
+        return $productObject;
     }
 
     /**
@@ -200,22 +232,6 @@ class ProcessFeeds extends Command
         }
 
         return null;
-    }
-
-    /**
-     * Получаем продукт.
-     *
-     * @param $feedHash
-     * @param $productId
-     *
-     * @return ProductModelContract|null
-     */
-    protected function getProduct($feedHash, $productId): ?ProductModelContract
-    {
-        return $this->productsService->getModel()::query()
-            ->where('feed_hash', $feedHash)
-            ->where('ean', trim($productId))
-            ->first();
     }
 
     /**
@@ -271,9 +287,11 @@ class ProcessFeeds extends Command
 
         $hrefArr['shop'] = array_filter($hrefArr['shop']);
 
-        foreach ($hrefArr as $hrefsType => $hrefs) {
-            $this->linksService->getModel()::where('product_id', $productObject['id'])->whereNotIn('href', $hrefs)->delete();
+        $this->linksService->getModel()::where('product_id', $productObject['id'])
+            ->whereNotIn('href', collect($hrefArr)->flatten()->toArray())
+            ->delete();
 
+        foreach ($hrefArr as $hrefsType => $hrefs) {
             foreach ($hrefs as $href) {
                 $linkObject = $this->linksService->getModel()::where('product_id', $productObject['id'])->where('href', $href)
                     ->first();
