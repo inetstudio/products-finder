@@ -130,7 +130,6 @@ class ProcessFeeds extends Command
         $content = $response->getBody()->getContents();
         $responseXml = simplexml_load_string($content);
 
-
         return ($responseXml) ? $responseXml : null;
     }
 
@@ -230,16 +229,14 @@ class ProcessFeeds extends Command
                 return $item->$property;
             }
         }
-
-        return null;
     }
 
     /**
      * Сохраняем изображение продукта.
-     * 
+     *
      * @param ProductModelContract $productObject
      * @param $item
-     * 
+     *
      * @return Media|null
      */
     protected function attachMedia(ProductModelContract $productObject, $item): ?Media
@@ -255,7 +252,7 @@ class ProcessFeeds extends Command
                 ->withCustomProperties(['source' => $imageLink])
                 ->toMediaCollection('preview', 'products_finder_products');
         } catch (Exception $error) {
-            $this->info(PHP_EOL . 'Image error: ' . $imageLink);
+            $this->info(PHP_EOL.'Image error: '.$imageLink);
 
             return null;
         }

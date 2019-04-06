@@ -4,8 +4,8 @@ namespace InetStudio\ProductsFinder\Products\Contracts\Models;
 
 use ArrayAccess;
 use JsonSerializable;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Contracts\Support\Jsonable;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Routing\UrlRoutable;
 use Illuminate\Contracts\Queue\QueueableEntity;
