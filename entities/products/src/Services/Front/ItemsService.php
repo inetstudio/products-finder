@@ -152,7 +152,8 @@ class ItemsService extends BaseService implements ItemsServiceContract
      *
      * @return bool
      */
-    public function applyFiltersForItem(array $item, array $filter): bool
+    public function applyFiltersForItem(array $item,
+                                        array $filter): bool
     {
         $classifiersFilterResult = $this->applyClassifiersFilterForItem($item, $filter['classifiers'] ?? []);
         $fieldsFilterResult = $this->applyFieldsFilterForItem($item, $filter['fields'] ?? []);
@@ -168,7 +169,8 @@ class ItemsService extends BaseService implements ItemsServiceContract
      *
      * @return bool|null
      */
-    protected function applyClassifiersFilterForItem(array $item, array $filter): ?bool
+    protected function applyClassifiersFilterForItem(array $item,
+                                                     array $filter): ?bool
     {
         if (empty($filter)) {
             return null;
@@ -187,7 +189,8 @@ class ItemsService extends BaseService implements ItemsServiceContract
      *
      * @return bool|null
      */
-    protected function applyFieldsFilterForItem(array $item, array $filter): ?bool
+    protected function applyFieldsFilterForItem(array $item,
+                                                array $filter): ?bool
     {
         if (empty($filter)) {
             return null;

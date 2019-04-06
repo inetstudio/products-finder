@@ -141,7 +141,8 @@ class ProcessFeeds extends Command
      *
      * @return array
      */
-    protected function getProductData(string $url, SimpleXMLElement $item): array
+    protected function getProductData(string $url,
+                                      SimpleXMLElement $item): array
     {
         $productData = [
             'feed_hash' => md5($url),
@@ -164,12 +165,13 @@ class ProcessFeeds extends Command
     /**
      * Получаем продукт.
      *
-     * @param $feedHash
-     * @param $productId
+     * @param string $feedHash
+     * @param string $productId
      *
      * @return ProductModelContract|null
      */
-    protected function getProduct($feedHash, $productId): ?ProductModelContract
+    protected function getProduct(string $feedHash,
+                                  string $productId): ?ProductModelContract
     {
         return $this->productsService->getModel()::query()
             ->where('feed_hash', $feedHash)
@@ -186,7 +188,9 @@ class ProcessFeeds extends Command
      *
      * @return ProductModelContract
      */
-    protected function updateProduct(SimpleXMLElement $item, $productObject, array $productData): ProductModelContract
+    protected function updateProduct(SimpleXMLElement $item,
+                                     $productObject,
+                                     array $productData): ProductModelContract
     {
         if ($productObject && $productObject['update'] == 0) {
             return $productObject;
@@ -210,11 +214,12 @@ class ProcessFeeds extends Command
      * Получаем значение элемента дерева.
      *
      * @param string $property
-     * @param mixed $node
+     * @param SimpleXMLElement $node
      *
      * @return mixed
      */
-    protected function getNodeValue(string $property, $node)
+    protected function getNodeValue(string $property,
+                                    SimpleXMLElement $node)
     {
         $items = [$node];
 
@@ -229,17 +234,20 @@ class ProcessFeeds extends Command
                 return $item->$property;
             }
         }
+
+        return '';
     }
 
     /**
      * Сохраняем изображение продукта.
      *
      * @param ProductModelContract $productObject
-     * @param $item
+     * @param SimpleXMLElement $item
      *
      * @return Media|null
      */
-    protected function attachMedia(ProductModelContract $productObject, $item): ?Media
+    protected function attachMedia(ProductModelContract $productObject,
+                                   SimpleXMLElement $item): ?Media
     {
         $imageLink = trim($this->getNodeValue('image_link', $item));
 
@@ -262,9 +270,10 @@ class ProcessFeeds extends Command
      * Сохраняем ссылки.
      *
      * @param ProductModelContract $productObject
-     * @param $item
+     * @param SimpleXMLElement $item
      */
-    protected function attachLinks(ProductModelContract $productObject, $item): void
+    protected function attachLinks(ProductModelContract $productObject,
+                                   SimpleXMLElement $item): void
     {
         $hrefArr = [];
 
@@ -308,9 +317,10 @@ class ProcessFeeds extends Command
      * Сохраняем рекомендации.
      *
      * @param ProductModelContract $productObject
-     * @param $item
+     * @param SimpleXMLElement $item
      */
-    protected function attachRecommendations(ProductModelContract $productObject, $item): void
+    protected function attachRecommendations(ProductModelContract $productObject,
+                                             SimpleXMLElement $item): void
     {
         $recommendationsNodes = $item->recommendations;
 
@@ -341,9 +351,10 @@ class ProcessFeeds extends Command
      * Сохраняем классификаторы.
      *
      * @param ProductModelContract $productObject
-     * @param $item
+     * @param SimpleXMLElement $item
      */
-    protected function attachClassifiers(ProductModelContract $productObject, $item)
+    protected function attachClassifiers(ProductModelContract $productObject,
+                                         SimpleXMLElement $item): void
     {
         $groups = [
             'scope_of_use' => 'products_finder_scopes_of_use',
