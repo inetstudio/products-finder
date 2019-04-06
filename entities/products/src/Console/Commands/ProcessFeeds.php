@@ -93,7 +93,7 @@ class ProcessFeeds extends Command
                 continue;
             }
 
-            $bar = $this->output->createProgressBar(count($xml->channel->item));
+            $bar = $this->output->createProgressBar(count($xml->channel->item ?? 0));
 
             foreach ($xml->channel->item ?? [] as $item) {
                 $productData = $this->getProductData($url, $item);
