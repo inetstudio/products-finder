@@ -13,7 +13,7 @@ interface UtilityServiceContract extends BaseServiceContract
     /**
      * Получаем подсказки.
      *
-     * @param string $search
+     * @param  string  $search
      *
      * @return Collection
      */

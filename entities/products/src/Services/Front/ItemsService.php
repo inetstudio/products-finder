@@ -22,7 +22,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
     /**
      * ItemsService constructor.
      *
-     * @param ProductModelContract $model
+     * @param  ProductModelContract  $model
      */
     public function __construct(ProductModelContract $model)
     {
@@ -32,13 +32,12 @@ class ItemsService extends BaseService implements ItemsServiceContract
     /**
      * Получаем отфильтрованный builder.
      *
-     * @param Builder $builder
-     * @param array $filter
+     * @param  Builder  $builder
+     * @param  array  $filter
      *
      * @return Builder
      */
-    public function getFilterBuilder(Builder $builder,
-                                        array $filter): Builder
+    public function getFilterBuilder(Builder $builder, array $filter): Builder
     {
         $filter = (empty($filter)) ? $this->getDefaultFilters() : $filter;
 
@@ -71,7 +70,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
         collect($this->categories)->pluck('types')
             ->flatten(1)
             ->pluck('filter')
-            ->each(function($item) use (&$filter) {
+            ->each(function ($item) use (&$filter) {
                 $filter = array_merge_recursive($item, $filter);
             });
 
@@ -81,7 +80,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
     /**
      * Формируем фильтр по запросу.
      *
-     * @param array $data
+     * @param  array  $data
      *
      * @return array
      */
@@ -94,8 +93,8 @@ class ItemsService extends BaseService implements ItemsServiceContract
 
         $typeCategories = collect($this->categories)->pluck('types')
             ->flatten(1)
-            ->filter(function($value) use ($typeParam) {
-                return in_array($typeParam, (array) $value['alias']);
+            ->filter(function ($value) use ($typeParam) {
+                return in_array($typeParam, (array)$value['alias']);
             });
 
         $scopeCategories = collect($this->categories)->values()->get($scopeParam);
@@ -104,7 +103,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
         $typeCategories->merge($scopeCategories)
             ->unique()
             ->pluck('filter')
-            ->each(function($item) use (&$filter) {
+            ->each(function ($item) use (&$filter) {
                 $filter = array_merge_recursive($item, $filter);
             });
 
@@ -114,7 +113,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
     /**
      * Область и тип продукта (из категории) по типам продукта.
      *
-     * @param array $item
+     * @param  array  $item
      *
      * @return array
      */
@@ -152,8 +151,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
      *
      * @return bool
      */
-    public function applyFiltersForItem(array $item,
-                                        array $filter): bool
+    public function applyFiltersForItem(array $item, array $filter): bool
     {
         $classifiersFilterResult = $this->applyClassifiersFilterForItem($item, $filter['classifiers'] ?? []);
         $fieldsFilterResult = $this->applyFieldsFilterForItem($item, $filter['fields'] ?? []);
@@ -164,13 +162,12 @@ class ItemsService extends BaseService implements ItemsServiceContract
     /**
      * Применяем фильтр по классификаторам.
      *
-     * @param array $item
-     * @param array $filter
+     * @param  array  $item
+     * @param  array  $filter
      *
      * @return bool|null
      */
-    protected function applyClassifiersFilterForItem(array $item,
-                                                        array $filter): ?bool
+    protected function applyClassifiersFilterForItem(array $item, array $filter): ?bool
     {
         if (empty($filter)) {
             return null;
@@ -184,13 +181,12 @@ class ItemsService extends BaseService implements ItemsServiceContract
     /**
      * Применяем фильтр по полям.
      *
-     * @param array $item
-     * @param array $filter
+     * @param  array  $item
+     * @param  array  $filter
      *
      * @return bool|null
      */
-    protected function applyFieldsFilterForItem(array $item,
-                                                array $filter): ?bool
+    protected function applyFieldsFilterForItem(array $item, array $filter): ?bool
     {
         if (empty($filter)) {
             return null;

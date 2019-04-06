@@ -17,9 +17,12 @@
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title table-group-buttons">
-                        <a href="#" data-url="{{ route('back.reviews.messages.moderate.activity') }}" class="btn btn-xs btn-default">Изменить активность</a>
-                        <a href="#" data-url="{{ route('back.reviews.messages.moderate.read') }}" class="btn btn-xs btn-default">Отметить как прочитанное</a>
-                        <a href="#" data-url="{{ route('back.reviews.messages.moderate.destroy') }}" class="btn btn-xs btn-danger">Удалить</a>
+                        <a href="#" data-url="{{ route('back.reviews.messages.moderate.activity') }}"
+                           class="btn btn-xs btn-default">Изменить активность</a>
+                        <a href="#" data-url="{{ route('back.reviews.messages.moderate.read') }}"
+                           class="btn btn-xs btn-default">Отметить как прочитанное</a>
+                        <a href="#" data-url="{{ route('back.reviews.messages.moderate.destroy') }}"
+                           class="btn btn-xs btn-danger">Удалить</a>
                     </div>
                     <div class="ibox-content">
                         <div class="sk-spinner sk-spinner-double-bounce">
@@ -37,5 +40,5 @@
 @endsection
 
 @pushonce('scripts:datatables_products_finder_reviews_messages_index')
-    {!! $table->scripts() !!}
+{!! $table->scripts() !!}
 @endpushonce

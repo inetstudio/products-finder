@@ -21,7 +21,7 @@ class ModifyItemEvent implements ModifyItemEventContract
     /**
      * ModifyItemEvent constructor.
      *
-     * @param LinkModelContract $item
+     * @param  LinkModelContract  $item
      */
     public function __construct(LinkModelContract $item)
     {

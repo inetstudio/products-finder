@@ -12,13 +12,12 @@ interface ItemsServiceContract
     /**
      * Получаем отфильтрованный builder.
      *
-     * @param Builder $builder
-     * @param array $filter
+     * @param  Builder  $builder
+     * @param  array  $filter
      *
      * @return Builder
      */
-    public function getFilterBuilder(Builder $builder,
-                                        array $filter): Builder;
+    public function getFilterBuilder(Builder $builder, array $filter): Builder;
 
     /**
      * Получаем фильтр по умолчанию.
@@ -30,7 +29,7 @@ interface ItemsServiceContract
     /**
      * Формируем фильтр по запросу.
      *
-     * @param array $data
+     * @param  array  $data
      *
      * @return array
      */
@@ -39,7 +38,7 @@ interface ItemsServiceContract
     /**
      * Область и тип продукта (из категории) по типам продукта.
      *
-     * @param array $item
+     * @param  array  $item
      *
      * @return array
      */
@@ -48,11 +47,10 @@ interface ItemsServiceContract
     /**
      * Применяем фильтры к продукту.
      *
-     * @param array $item
-     * @param array $filter
+     * @param  array  $item
+     * @param  array  $filter
      *
      * @return bool
      */
-    public function applyFiltersForItem(array $item,
-                                        array $filter): bool;
+    public function applyFiltersForItem(array $item, array $filter): bool;
 }

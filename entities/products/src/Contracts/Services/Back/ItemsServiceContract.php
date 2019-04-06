@@ -13,11 +13,10 @@ interface ItemsServiceContract extends BaseServiceContract
     /**
      * Сохраняем модель.
      *
-     * @param array $data
-     * @param int $id
+     * @param  array  $data
+     * @param  int  $id
      *
      * @return ProductModelContract
      */
-    public function save(array $data,
-                            int $id): ProductModelContract;
+    public function save(array $data, int $id): ProductModelContract;
 }

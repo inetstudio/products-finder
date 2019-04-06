@@ -16,7 +16,7 @@ class ResourceController extends Controller implements ResourceControllerContrac
     /**
      * Список объектов.
      *
-     * @param DataTableServiceContract $datatablesService
+     * @param  DataTableServiceContract  $datatablesService
      *
      * @return IndexResponseContract
      *

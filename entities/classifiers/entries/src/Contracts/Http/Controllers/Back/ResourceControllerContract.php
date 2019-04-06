@@ -13,7 +13,7 @@ interface ResourceControllerContract
     /**
      * Список объектов.
      *
-     * @param DataTableServiceContract $dataTableService
+     * @param  DataTableServiceContract  $dataTableService
      *
      * @return IndexResponseContract
      */

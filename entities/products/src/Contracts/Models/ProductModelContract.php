@@ -18,7 +18,7 @@ interface ProductModelContract extends ArrayAccess, Arrayable, Jsonable, JsonSer
     /**
      * Reload a fresh model instance from the database.
      *
-     * @param array|string $with
+     * @param  array|string  $with
      *
      * @return static|null
      */

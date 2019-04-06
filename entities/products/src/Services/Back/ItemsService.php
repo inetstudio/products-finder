@@ -17,7 +17,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
     /**
      * ItemsService constructor.
      *
-     * @param ProductModelContract $model
+     * @param  ProductModelContract  $model
      */
     public function __construct(ProductModelContract $model)
     {
@@ -27,15 +27,14 @@ class ItemsService extends BaseService implements ItemsServiceContract
     /**
      * Сохраняем модель.
      *
-     * @param array $data
-     * @param int $id
+     * @param  array  $data
+     * @param  int  $id
      *
      * @return ProductModelContract
      *
      * @throws BindingResolutionException
      */
-    public function save(array $data,
-                            int $id): ProductModelContract
+    public function save(array $data, int $id): ProductModelContract
     {
         $action = ($id) ? 'отредактирован' : 'создан';
 
@@ -46,7 +45,8 @@ class ItemsService extends BaseService implements ItemsServiceContract
             $classifiersService->attachToObject(Arr::get($data, 'classifiers'), $item);
         }
 
-        event(app()->makeWith('InetStudio\ProductsFinder\Products\Contracts\Events\Back\ModifyItemEventContract', compact('item')));
+        event(app()->makeWith('InetStudio\ProductsFinder\Products\Contracts\Events\Back\ModifyItemEventContract',
+            compact('item')));
 
         Session::flash('success', 'Продукт «'.$item->title.'» успешно '.$action);
 

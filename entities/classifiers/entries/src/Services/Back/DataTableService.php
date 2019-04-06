@@ -23,7 +23,7 @@ class DataTableService extends DataTable implements DataTableServiceContract
     /**
      * DataTableService constructor.
      *
-     * @param EntryModelContract $model
+     * @param  EntryModelContract  $model
      */
     public function __construct(EntryModelContract $model)
     {
@@ -57,7 +57,7 @@ class DataTableService extends DataTable implements DataTableServiceContract
         $query = $this->model->buildQuery([
             'columns' => ['created_at', 'updated_at'],
             'relations' => ['groups'],
-        ])->whereHas('groups', function($query) {
+        ])->whereHas('groups', function ($query) {
             $query->where('classifiers_groups.alias', 'LIKE', '%products_finder_%');
         });
 
@@ -93,7 +93,13 @@ class DataTableService extends DataTable implements DataTableServiceContract
             ['data' => 'alias', 'name' => 'alias', 'title' => 'Алиас'],
             ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Дата создания'],
             ['data' => 'updated_at', 'name' => 'updated_at', 'title' => 'Дата обновления'],
-            ['data' => 'actions', 'name' => 'actions', 'title' => 'Действия', 'orderable' => false, 'searchable' => false],
+            [
+                'data' => 'actions',
+                'name' => 'actions',
+                'title' => 'Действия',
+                'orderable' => false,
+                'searchable' => false
+            ],
         ];
     }
 

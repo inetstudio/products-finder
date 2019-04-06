@@ -28,5 +28,5 @@
 @endsection
 
 @pushonce('scripts:datatables_products_finder_products_index')
-    {!! $table->scripts() !!}
+{!! $table->scripts() !!}
 @endpushonce

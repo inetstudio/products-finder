@@ -17,7 +17,7 @@ interface LinkModelContract extends ArrayAccess, Arrayable, Jsonable, JsonSerial
     /**
      * Reload a fresh model instance from the database.
      *
-     * @param array|string $with
+     * @param  array|string  $with
      *
      * @return static|null
      */

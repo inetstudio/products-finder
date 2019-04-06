@@ -24,7 +24,7 @@ class DataTableService extends DataTable implements DataTableServiceContract
     /**
      * DataTableService constructor.
      *
-     * @param ProductModelContract $model
+     * @param  ProductModelContract  $model
      */
     public function __construct(ProductModelContract $model)
     {
@@ -86,12 +86,24 @@ class DataTableService extends DataTable implements DataTableServiceContract
     protected function getColumns(): array
     {
         return [
-            ['data' => 'preview', 'name' => 'preview', 'title' => 'Изображение', 'orderable' => false, 'searchable' => false],
+            [
+                'data' => 'preview',
+                'name' => 'preview',
+                'title' => 'Изображение',
+                'orderable' => false,
+                'searchable' => false
+            ],
             ['data' => 'brand', 'name' => 'brand', 'title' => 'Бренд'],
             ['data' => 'title', 'name' => 'title', 'title' => 'Название'],
             ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Дата создания'],
             ['data' => 'updated_at', 'name' => 'updated_at', 'title' => 'Дата обновления'],
-            ['data' => 'actions', 'name' => 'actions', 'title' => 'Действия', 'orderable' => false, 'searchable' => false],
+            [
+                'data' => 'actions',
+                'name' => 'actions',
+                'title' => 'Действия',
+                'orderable' => false,
+                'searchable' => false
+            ],
         ];
     }
 

@@ -20,7 +20,7 @@ class IndexResponse implements IndexResponseContract, Responsable
     /**
      * IndexResponse constructor.
      *
-     * @param array $data
+     * @param  array  $data
      */
     public function __construct(array $data)
     {
@@ -30,7 +30,7 @@ class IndexResponse implements IndexResponseContract, Responsable
     /**
      * Возвращаем ответ при открытии списка объектов.
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return View
      */

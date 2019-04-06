@@ -14,11 +14,10 @@ interface UtilityControllerContract
     /**
      * Возвращаем сообщения для поля.
      *
-     * @param UtilityServiceContract $utilityService
-     * @param Request $request
+     * @param  UtilityServiceContract  $utilityService
+     * @param  Request  $request
      *
      * @return SuggestionsResponseContract
      */
-    public function getSuggestions(UtilityServiceContract $utilityService,
-                                    Request $request): SuggestionsResponseContract;
+    public function getSuggestions(UtilityServiceContract $utilityService, Request $request): SuggestionsResponseContract;
 }

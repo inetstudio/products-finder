@@ -28,11 +28,10 @@ class SuggestionsResponse implements SuggestionsResponseContract, Responsable
     /**
      * SuggestionsResponse constructor.
      *
-     * @param Collection $items
-     * @param string $type
+     * @param  Collection  $items
+     * @param  string  $type
      */
-    public function __construct(Collection $items,
-                                string $type = '')
+    public function __construct(Collection $items, string $type = '')
     {
         $this->items = $items;
         $this->type = $type;
@@ -41,7 +40,7 @@ class SuggestionsResponse implements SuggestionsResponseContract, Responsable
     /**
      * Возвращаем slug по заголовку объекта.
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return JsonResponse
      *
@@ -49,9 +48,10 @@ class SuggestionsResponse implements SuggestionsResponseContract, Responsable
      */
     public function toResponse($request)
     {
-        $resource = (app()->make('InetStudio\ProductsFinder\Products\Contracts\Transformers\Back\Utility\SuggestionTransformerContract', [
-            'type' => $this->type,
-        ]))->transformCollection($this->items);
+        $resource = (app()->make('InetStudio\ProductsFinder\Products\Contracts\Transformers\Back\Utility\SuggestionTransformerContract',
+            [
+                'type' => $this->type,
+            ]))->transformCollection($this->items);
 
         $serializer = app()->make('InetStudio\AdminPanel\Base\Contracts\Serializers\SimpleDataArraySerializerContract');
 

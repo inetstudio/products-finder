@@ -21,7 +21,7 @@ class SaveResponse implements SaveResponseContract, Responsable
     /**
      * SaveResponse constructor.
      *
-     * @param ProductModelContract $item
+     * @param  ProductModelContract  $item
      */
     public function __construct(ProductModelContract $item)
     {
@@ -31,7 +31,7 @@ class SaveResponse implements SaveResponseContract, Responsable
     /**
      * Возвращаем ответ при сохранении объекта.
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return RedirectResponse
      */

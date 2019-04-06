@@ -52,7 +52,10 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
      * @var array
      */
     protected $guarded = [
-        'id', 'created_at', 'updated_at', 'deleted_at',
+        'id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**
@@ -74,40 +77,62 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
         parent::boot();
 
         self::$buildQueryScopeDefaults['columns'] = [
-            'id', 'brand', 'title', 'description',
+            'id',
+            'brand',
+            'title',
+            'description',
         ];
 
         self::$buildQueryScopeDefaults['relations'] = [
-            'media' => function($query) {
+            'media' => function ($query) {
                 $query->select([
-                    'id', 'model_id', 'model_type', 'collection_name', 'file_name',
-                    'disk', 'mime_type', 'custom_properties', 'responsive_images',
+                    'id',
+                    'model_id',
+                    'model_type',
+                    'collection_name',
+                    'file_name',
+                    'disk',
+                    'mime_type',
+                    'custom_properties',
+                    'responsive_images',
                 ]);
             },
 
-            'links' => function($query) {
+            'links' => function ($query) {
                 $query->select([
-                    'id', 'product_id', 'type', 'href',
+                    'id',
+                    'product_id',
+                    'type',
+                    'href',
                 ]);
             },
 
-            'classifiers' => function($query) {
+            'classifiers' => function ($query) {
                 $query->select(['classifiers_entries.id', 'classifiers_entries.value', 'classifiers_entries.alias'])
                     ->with([
-                        'groups' => function($query) {
+                        'groups' => function ($query) {
                             $query->select(['id', 'name', 'alias']);
                         },
                     ]);
             },
 
-            'recommendations' => function($query) {
+            'recommendations' => function ($query) {
                 $query->select([
-                    'products_finder_products.id', 'products_finder_products.title', 'products_finder_products.brand',
+                    'products_finder_products.id',
+                    'products_finder_products.title',
+                    'products_finder_products.brand',
                 ])->with([
-                    'media' => function($query) {
+                    'media' => function ($query) {
                         $query->select([
-                            'id', 'model_id', 'model_type', 'collection_name', 'file_name',
-                            'disk', 'mime_type', 'custom_properties', 'responsive_images',
+                            'id',
+                            'model_id',
+                            'model_type',
+                            'collection_name',
+                            'file_name',
+                            'disk',
+                            'mime_type',
+                            'custom_properties',
+                            'responsive_images',
                         ]);
                     },
                 ]);
@@ -250,7 +275,7 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
      */
     public function setUpdateAttribute($value): void
     {
-        $this->attributes['update'] = (bool) trim(strip_tags($value));
+        $this->attributes['update'] = (bool)trim(strip_tags($value));
     }
 
     /**
@@ -313,14 +338,14 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
         }
 
         $arr = Arr::only($this->toArray(), ['id', 'brand', 'series', 'title', 'description', 'benefits', 'how_to_use']);
-        $arr = collect($arr)->mapWithKeys(function($item, $key) {
+        $arr = collect($arr)->mapWithKeys(function ($item, $key) {
             $item = preg_replace('/[^A-Za-zА-Яа-я0-9\-\(\) ]+/u', '', $item);
 
             return [$key => $item];
         })->toArray();
 
-        $arr['classifiers'] = ($this['classifiers']) ? $this['classifiers']->map(function($item) {
-            return collect(Arr::only($item->toArray(), ['id', 'value']))->mapWithKeys(function($item, $key) {
+        $arr['classifiers'] = ($this['classifiers']) ? $this['classifiers']->map(function ($item) {
+            return collect(Arr::only($item->toArray(), ['id', 'value']))->mapWithKeys(function ($item, $key) {
                 $item = preg_replace('/[^A-Za-zА-Яа-я0-9\-\(\) ]+/u', '', $item);
 
                 return [$key => $item];

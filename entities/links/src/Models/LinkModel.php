@@ -26,7 +26,9 @@ class LinkModel extends Model implements LinkModelContract
      * @var array
      */
     protected $guarded = [
-        'id', 'created_at', 'updated_at',
+        'id',
+        'created_at',
+        'updated_at',
     ];
 
     /**
@@ -56,7 +58,7 @@ class LinkModel extends Model implements LinkModelContract
      */
     public function setProductIdAttribute($value): void
     {
-        $this->attributes['product_id'] = (int) trim(strip_tags($value));
+        $this->attributes['product_id'] = (int)trim(strip_tags($value));
     }
 
     /**

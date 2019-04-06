@@ -13,7 +13,7 @@ interface DataControllerContract
     /**
      * Получаем данные для отображения в таблице.
      *
-     * @param DataTableServiceContract $dataTableService
+     * @param  DataTableServiceContract  $dataTableService
      *
      * @return JsonResponse
      */

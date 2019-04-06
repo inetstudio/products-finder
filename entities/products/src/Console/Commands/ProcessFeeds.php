@@ -57,16 +57,17 @@ class ProcessFeeds extends Command
     /**
      * ProcessFeeds constructor.
      *
-     * @param LinksServiceContract $linksService
-     * @param ProductsServiceContract $productsService
-     * @param GroupsServiceContract $groupsService
-     * @param EntriesServiceContract $entriesService
+     * @param  LinksServiceContract  $linksService
+     * @param  ProductsServiceContract  $productsService
+     * @param  GroupsServiceContract  $groupsService
+     * @param  EntriesServiceContract  $entriesService
      */
-    public function __construct(LinksServiceContract $linksService,
-                                ProductsServiceContract $productsService,
-                                GroupsServiceContract $groupsService,
-                                EntriesServiceContract $entriesService)
-    {
+    public function __construct(
+        LinksServiceContract $linksService,
+        ProductsServiceContract $productsService,
+        GroupsServiceContract $groupsService,
+        EntriesServiceContract $entriesService
+    ) {
         parent::__construct();
 
         $this->linksService = $linksService;
@@ -111,7 +112,7 @@ class ProcessFeeds extends Command
     /**
      * Получаем фид в виде массива.
      *
-     * @param string $url
+     * @param  string  $url
      *
      * @return SimpleXMLElement|null
      */
@@ -136,13 +137,12 @@ class ProcessFeeds extends Command
     /**
      * Подготовка данных для продукта.
      *
-     * @param string $url
-     * @param SimpleXMLElement $item
+     * @param  string  $url
+     * @param  SimpleXMLElement  $item
      *
      * @return array
      */
-    protected function getProductData(string $url,
-                                        SimpleXMLElement $item): array
+    protected function getProductData(string $url, SimpleXMLElement $item): array
     {
         $productData = [
             'feed_hash' => md5($url),
@@ -165,13 +165,12 @@ class ProcessFeeds extends Command
     /**
      * Получаем продукт.
      *
-     * @param string $feedHash
-     * @param string $productId
+     * @param  string  $feedHash
+     * @param  string  $productId
      *
      * @return ProductModelContract|null
      */
-    protected function getProduct(string $feedHash,
-                                    string $productId): ?ProductModelContract
+    protected function getProduct(string $feedHash, string $productId): ?ProductModelContract
     {
         return $this->productsService->getModel()::query()
             ->where('feed_hash', $feedHash)
@@ -182,15 +181,13 @@ class ProcessFeeds extends Command
     /**
      * Обновляем продукт.
      *
-     * @param SimpleXMLElement $item
+     * @param  SimpleXMLElement  $item
      * @param $productObject
-     * @param array $productData
+     * @param  array  $productData
      *
      * @return ProductModelContract
      */
-    protected function updateProduct(SimpleXMLElement $item,
-                                        $productObject,
-                                        array $productData): ProductModelContract
+    protected function updateProduct(SimpleXMLElement $item, $productObject, array $productData): ProductModelContract
     {
         if ($productObject && $productObject['update'] == 0) {
             return $productObject;
@@ -213,13 +210,12 @@ class ProcessFeeds extends Command
     /**
      * Получаем значение элемента дерева.
      *
-     * @param string $property
-     * @param SimpleXMLElement $node
+     * @param  string  $property
+     * @param  SimpleXMLElement  $node
      *
      * @return mixed
      */
-    protected function getNodeValue(string $property,
-                                    SimpleXMLElement $node)
+    protected function getNodeValue(string $property, SimpleXMLElement $node)
     {
         $items = [$node];
 
@@ -241,13 +237,12 @@ class ProcessFeeds extends Command
     /**
      * Сохраняем изображение продукта.
      *
-     * @param ProductModelContract $productObject
-     * @param SimpleXMLElement $item
+     * @param  ProductModelContract  $productObject
+     * @param  SimpleXMLElement  $item
      *
      * @return Media|null
      */
-    protected function attachMedia(ProductModelContract $productObject,
-                                    SimpleXMLElement $item): ?Media
+    protected function attachMedia(ProductModelContract $productObject, SimpleXMLElement $item): ?Media
     {
         $imageLink = trim($this->getNodeValue('image_link', $item));
 
@@ -269,11 +264,10 @@ class ProcessFeeds extends Command
     /**
      * Сохраняем ссылки.
      *
-     * @param ProductModelContract $productObject
-     * @param SimpleXMLElement $item
+     * @param  ProductModelContract  $productObject
+     * @param  SimpleXMLElement  $item
      */
-    protected function attachLinks(ProductModelContract $productObject,
-                                    SimpleXMLElement $item): void
+    protected function attachLinks(ProductModelContract $productObject, SimpleXMLElement $item): void
     {
         $hrefArr = [];
 
@@ -287,7 +281,7 @@ class ProcessFeeds extends Command
             $hrefArr['shop'][] = trim($link->href);
         }
 
-        if ((string) $videoLinks) {
+        if ((string)$videoLinks) {
             $hrefArr['video'] = explode(',', $videoLinks);
         }
 
@@ -299,7 +293,8 @@ class ProcessFeeds extends Command
 
         foreach ($hrefArr as $hrefsType => $hrefs) {
             foreach ($hrefs as $href) {
-                $linkObject = $this->linksService->getModel()::where('product_id', $productObject['id'])->where('href', $href)
+                $linkObject = $this->linksService->getModel()::where('product_id', $productObject['id'])->where('href',
+                    $href)
                     ->first();
 
                 $linkData = [
@@ -316,11 +311,10 @@ class ProcessFeeds extends Command
     /**
      * Сохраняем рекомендации.
      *
-     * @param ProductModelContract $productObject
-     * @param SimpleXMLElement $item
+     * @param  ProductModelContract  $productObject
+     * @param  SimpleXMLElement  $item
      */
-    protected function attachRecommendations(ProductModelContract $productObject,
-                                                SimpleXMLElement $item): void
+    protected function attachRecommendations(ProductModelContract $productObject, SimpleXMLElement $item): void
     {
         $recommendationsNodes = $item->recommendations;
 
@@ -333,7 +327,7 @@ class ProcessFeeds extends Command
         $recommendationsIDs = [];
 
         foreach ($recommendations as $recommendation) {
-            $ean = (string) $recommendation;
+            $ean = (string)$recommendation;
 
             if ($ean) {
                 $recommendationObject = $this->productsService->getModel()::where('ean', $ean)->first();
@@ -350,11 +344,10 @@ class ProcessFeeds extends Command
     /**
      * Сохраняем классификаторы.
      *
-     * @param ProductModelContract $productObject
-     * @param SimpleXMLElement $item
+     * @param  ProductModelContract  $productObject
+     * @param  SimpleXMLElement  $item
      */
-    protected function attachClassifiers(ProductModelContract $productObject,
-                                            SimpleXMLElement $item): void
+    protected function attachClassifiers(ProductModelContract $productObject, SimpleXMLElement $item): void
     {
         $groups = [
             'scope_of_use' => 'products_finder_scopes_of_use',

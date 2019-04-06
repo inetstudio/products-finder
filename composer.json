@@ -1,44 +1,44 @@
 {
-    "name": "inetstudio/products-finder",
-    "description": "Package for products catalog",
-    "homepage": "https://github.com/inetstudio/products-finder",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Konstantin Bukin",
-            "email": "bukin@inetstudio.ru"
-        }
-    ],
-    "require": {
-        "ext-curl": "*",
-        "ext-simplexml": "*",
-        "inetstudio/admin-panel": "1.8.*",
-        "inetstudio/classifiers": "1.8.*",
-        "inetstudio/favorites": "1.8.*",
-        "inetstudio/reviews": "1.8.*"
-    },
-    "autoload": {
-      "psr-4": {
-        "InetStudio\\ProductsFinder\\": "package/src",
-        "InetStudio\\ProductsFinder\\Classifiers\\Entries\\": "entities/classifiers/entries/src",
-        "InetStudio\\ProductsFinder\\Links\\": "entities/links/src",
-        "InetStudio\\ProductsFinder\\Products\\": "entities/products/src",
-        "InetStudio\\ProductsFinder\\Reviews\\Messages\\": "entities/reviews/messages/src"
-      }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "InetStudio\\ProductsFinder\\Providers\\ServiceProvider",
-                "InetStudio\\ProductsFinder\\Classifiers\\Entries\\Providers\\BindingsServiceProvider",
-                "InetStudio\\ProductsFinder\\Classifiers\\Entries\\Providers\\ServiceProvider",
-                "InetStudio\\ProductsFinder\\Links\\Providers\\BindingsServiceProvider",
-                "InetStudio\\ProductsFinder\\Links\\Providers\\ServiceProvider",
-                "InetStudio\\ProductsFinder\\Products\\Providers\\BindingsServiceProvider",
-                "InetStudio\\ProductsFinder\\Products\\Providers\\ServiceProvider",
-                "InetStudio\\ProductsFinder\\Reviews\\Messages\\Providers\\BindingsServiceProvider",
-                "InetStudio\\ProductsFinder\\Reviews\\Messages\\Providers\\ServiceProvider"
-            ]
-        }
+  "name": "inetstudio/products-finder",
+  "description": "Package for products catalog",
+  "homepage": "https://github.com/inetstudio/products-finder",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Konstantin Bukin",
+      "email": "bukin@inetstudio.ru"
     }
+  ],
+  "require": {
+    "ext-curl": "*",
+    "ext-simplexml": "*",
+    "inetstudio/admin-panel": "1.8.*",
+    "inetstudio/classifiers": "1.8.*",
+    "inetstudio/favorites": "1.8.*",
+    "inetstudio/reviews": "1.8.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "InetStudio\\ProductsFinder\\": "package/src",
+      "InetStudio\\ProductsFinder\\Classifiers\\Entries\\": "entities/classifiers/entries/src",
+      "InetStudio\\ProductsFinder\\Links\\": "entities/links/src",
+      "InetStudio\\ProductsFinder\\Products\\": "entities/products/src",
+      "InetStudio\\ProductsFinder\\Reviews\\Messages\\": "entities/reviews/messages/src"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "InetStudio\\ProductsFinder\\Providers\\ServiceProvider",
+        "InetStudio\\ProductsFinder\\Classifiers\\Entries\\Providers\\BindingsServiceProvider",
+        "InetStudio\\ProductsFinder\\Classifiers\\Entries\\Providers\\ServiceProvider",
+        "InetStudio\\ProductsFinder\\Links\\Providers\\BindingsServiceProvider",
+        "InetStudio\\ProductsFinder\\Links\\Providers\\ServiceProvider",
+        "InetStudio\\ProductsFinder\\Products\\Providers\\BindingsServiceProvider",
+        "InetStudio\\ProductsFinder\\Products\\Providers\\ServiceProvider",
+        "InetStudio\\ProductsFinder\\Reviews\\Messages\\Providers\\BindingsServiceProvider",
+        "InetStudio\\ProductsFinder\\Reviews\\Messages\\Providers\\ServiceProvider"
+      ]
+    }
+  }
 }

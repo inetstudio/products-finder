@@ -15,7 +15,7 @@ class DataController extends Controller implements DataControllerContract
     /**
      * Получаем данные для отображения в таблице.
      *
-     * @param DataTableServiceContract $datatablesService
+     * @param  DataTableServiceContract  $datatablesService
      *
      * @return JsonResponse
      */

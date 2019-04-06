@@ -18,7 +18,7 @@ interface ResourceControllerContract
     /**
      * Список объектов.
      *
-     * @param DataTableServiceContract $dataTableService
+     * @param  DataTableServiceContract  $dataTableService
      *
      * @return IndexResponseContract
      */
@@ -27,7 +27,7 @@ interface ResourceControllerContract
     /**
      * Создание объекта.
      *
-     * @param ItemsServiceContract $resourceService
+     * @param  ItemsServiceContract  $resourceService
      *
      * @return FormResponseContract
      */
@@ -36,45 +36,45 @@ interface ResourceControllerContract
     /**
      * Создание объекта.
      *
-     * @param ItemsServiceContract $resourceService
-     * @param SaveItemRequestContract $request
+     * @param  ItemsServiceContract  $resourceService
+     * @param  SaveItemRequestContract  $request
      *
      * @return SaveResponseContract
      */
-    public function store(ItemsServiceContract $resourceService,
-                            SaveItemRequestContract $request): SaveResponseContract;
+    public function store(ItemsServiceContract $resourceService, SaveItemRequestContract $request): SaveResponseContract;
 
     /**
      * Редактирование объекта.
      *
-     * @param ItemsServiceContract $resourceService
-     * @param int $id
+     * @param  ItemsServiceContract  $resourceService
+     * @param  int  $id
      *
      * @return FormResponseContract
      */
-    public function edit(ItemsServiceContract $resourceService,
-                            int $id = 0): FormResponseContract;
+    public function edit(ItemsServiceContract $resourceService, int $id = 0): FormResponseContract;
 
     /**
      * Обновление объекта.
      *
-     * @param ItemsServiceContract $resourceService
-     * @param SaveItemRequestContract $request
-     * @param int $id
+     * @param  ItemsServiceContract  $resourceService
+     * @param  SaveItemRequestContract  $request
+     * @param  int  $id
      *
      * @return SaveResponseContract
      */
-    public function update(ItemsServiceContract $resourceService,
-                            SaveItemRequestContract $request, int $id = 0): SaveResponseContract;
+    public function update(
+        ItemsServiceContract $resourceService,
+        SaveItemRequestContract $request,
+        int $id = 0
+    ): SaveResponseContract;
 
     /**
      * Удаление объекта.
      *
-     * @param ItemsServiceContract $resourceService
-     * @param int $id
+     * @param  ItemsServiceContract  $resourceService
+     * @param  int  $id
      *
      * @return DestroyResponseContract
      */
-    public function destroy(ItemsServiceContract $resourceService,
-                            int $id = 0): DestroyResponseContract;
+    public function destroy(ItemsServiceContract $resourceService, int $id = 0): DestroyResponseContract;
 }
