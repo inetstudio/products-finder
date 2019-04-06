@@ -11,8 +11,8 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 class BindingsServiceProvider extends BaseServiceProvider implements DeferrableProvider
 {
     /**
-    * @var array
-    */
+     * @var array
+     */
     public $bindings = [
         'InetStudio\ProductsFinder\Links\Contracts\Events\Back\ModifyItemEventContract' => 'InetStudio\ProductsFinder\Links\Events\Back\ModifyItemEvent',
         'InetStudio\ProductsFinder\Links\Contracts\Models\LinkModelContract' => 'InetStudio\ProductsFinder\Links\Models\LinkModel',

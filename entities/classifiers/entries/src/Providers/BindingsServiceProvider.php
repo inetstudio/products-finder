@@ -11,8 +11,8 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 class BindingsServiceProvider extends BaseServiceProvider implements DeferrableProvider
 {
     /**
-    * @var array
-    */
+     * @var array
+     */
     public $bindings = [
         'InetStudio\ProductsFinder\Classifiers\Entries\Contracts\Http\Responses\Back\Resource\IndexResponseContract' => 'InetStudio\ProductsFinder\Classifiers\Entries\Http\Responses\Back\Resource\IndexResponse',
         'InetStudio\ProductsFinder\Classifiers\Entries\Contracts\Http\Controllers\Back\EntriesControllerContract' => 'InetStudio\ProductsFinder\Classifiers\Entries\Http\Controllers\Back\EntriesController',

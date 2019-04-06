@@ -56,7 +56,7 @@ class DataTableService extends DataTable implements DataTableServiceContract
     public function query()
     {
         $query = $this->model->buildQuery([
-            'columns' => ['created_at', 'updated_at']
+            'columns' => ['created_at', 'updated_at'],
         ]);
 
         return $query;

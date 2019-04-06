@@ -74,7 +74,7 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
         parent::boot();
 
         self::$buildQueryScopeDefaults['columns'] = [
-            'id', 'brand', 'title', 'description'
+            'id', 'brand', 'title', 'description',
         ];
 
         self::$buildQueryScopeDefaults['relations'] = [
@@ -194,7 +194,7 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
     {
         $value = (isset($value['text'])) ? $value['text'] : (! is_array($value) ? $value : '');
 
-        $this->attributes['description'] = trim(str_replace("&nbsp;", ' ', strip_tags($value)));
+        $this->attributes['description'] = trim(str_replace('&nbsp;', ' ', strip_tags($value)));
     }
 
     /**
@@ -206,7 +206,7 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
     {
         $value = (isset($value['text'])) ? $value['text'] : (! is_array($value) ? $value : '');
 
-        $this->attributes['benefits'] = trim(str_replace("&nbsp;", ' ', strip_tags($value)));
+        $this->attributes['benefits'] = trim(str_replace('&nbsp;', ' ', strip_tags($value)));
     }
 
     /**
@@ -218,7 +218,7 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
     {
         $value = (isset($value['text'])) ? $value['text'] : (! is_array($value) ? $value : '');
 
-        $this->attributes['how_to_use'] = trim(str_replace("&nbsp;", ' ', strip_tags($value)));
+        $this->attributes['how_to_use'] = trim(str_replace('&nbsp;', ' ', strip_tags($value)));
     }
 
     /**
@@ -230,7 +230,7 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
     {
         $value = (isset($value['text'])) ? $value['text'] : (! is_array($value) ? $value : '');
 
-        $this->attributes['features'] = trim(str_replace("&nbsp;", ' ', strip_tags($value)));
+        $this->attributes['features'] = trim(str_replace('&nbsp;', ' ', strip_tags($value)));
     }
 
     /**

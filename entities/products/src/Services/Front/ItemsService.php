@@ -157,7 +157,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
         $classifiersFilterResult = $this->applyClassifiersFilterForItem($item, $filter['classifiers'] ?? []);
         $fieldsFilterResult = $this->applyFieldsFilterForItem($item, $filter['fields'] ?? []);
 
-        return ($classifiersFilterResult || $fieldsFilterResult);
+        return $classifiersFilterResult || $fieldsFilterResult;
     }
 
     /**
@@ -176,7 +176,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
 
         $types = collect($item['classifiers']['products_finder_types'])->pluck('alias')->toArray();
 
-        return (count(array_intersect($filter, $types)) > 0);
+        return count(array_intersect($filter, $types)) > 0;
     }
 
     /**
