@@ -2,6 +2,7 @@
 
 namespace InetStudio\ProductsFinder\Products\Console\Commands;
 
+use Exception;
 use SimpleXMLElement;
 use GuzzleHttp\Client;
 use Illuminate\Support\Str;
@@ -94,32 +95,15 @@ class ProcessFeeds extends Command
 
             $bar = $this->output->createProgressBar(count($xml->channel->item));
 
-            $feedHash = md5($url);
-
             foreach ($xml->channel->item as $item) {
-                $ean = trim($this->getNodeValue('id', $item));
-                $productObject = $this->getProduct($feedHash, $ean);
+                $productData = $this->getProductData($url, $item);
+                $productObject = $this->getProduct($productData['feed_hash'], $productData['ean']);
 
-                if ($productObject && $productObject->update == 0) {
+                if ($productObject && $productObject['update'] == 0) {
                     continue;
                 }
 
-                $productData = [
-                    'feed_hash' => $feedHash,
-                    'ean' => $ean,
-                    'brand' => trim($this->getNodeValue('brand', $item)),
-                    'series' => trim($this->getNodeValue('series', $item)),
-                    'group_name' => trim($this->getNodeValue('products_group_name', $item)),
-                    'shade' => trim($this->getNodeValue('shade', $item)),
-                    'title' => trim($this->getNodeValue('title', $item)),
-                    'description' => trim($this->getNodeValue('description', $item)),
-                    'benefits' => trim($this->getNodeValue('benefits', $item)),
-                    'how_to_use' => trim($this->getNodeValue('how_to_use', $item)),
-                    'features' => trim($this->getNodeValue('composition_features', $item)),
-                    'volume' => trim($this->getNodeValue('volume', $item)),
-                ];
-
-                $productObject = $this->productsService->saveModel($productData, ($productObject) ? $productObject['id'] : 0);
+                $productObject = $this->productsService->saveModel($productData, $productObject['id'] ?? 0);
 
                 $this->attachMedia($productObject, $item);
                 $this->attachLinks($productObject, $item);
@@ -161,6 +145,34 @@ class ProcessFeeds extends Command
 
 
         return ($responseXml) ? $responseXml : null;
+    }
+
+    /**
+     * Подготовка данных для продукта.
+     *
+     * @param string $url
+     * @param SimpleXMLElement $item
+     *
+     * @return array
+     */
+    protected function getProductData(string $url, SimpleXMLElement $item)
+    {
+        $productData = [
+            'feed_hash' => md5($url),
+            'ean' => trim($this->getNodeValue('id', $item)),
+            'brand' => trim($this->getNodeValue('brand', $item)),
+            'series' => trim($this->getNodeValue('series', $item)),
+            'group_name' => trim($this->getNodeValue('products_group_name', $item)),
+            'shade' => trim($this->getNodeValue('shade', $item)),
+            'title' => trim($this->getNodeValue('title', $item)),
+            'description' => trim($this->getNodeValue('description', $item)),
+            'benefits' => trim($this->getNodeValue('benefits', $item)),
+            'how_to_use' => trim($this->getNodeValue('how_to_use', $item)),
+            'features' => trim($this->getNodeValue('composition_features', $item)),
+            'volume' => trim($this->getNodeValue('volume', $item)),
+        ];
+
+        return $productData;
     }
 
     /**
@@ -226,7 +238,7 @@ class ProcessFeeds extends Command
             return $productObject->addMediaFromUrl($imageLink)
                 ->withCustomProperties(['source' => $imageLink])
                 ->toMediaCollection('preview', 'products_finder_products');
-        } catch (\Exception $error) {
+        } catch (Exception $error) {
             $this->info(PHP_EOL . 'Image error: ' . $imageLink);
 
             return null;
@@ -249,10 +261,8 @@ class ProcessFeeds extends Command
 
         $hrefArr['shop'][] = trim($link);
 
-        if ($links) {
-            foreach ($links->link as $link) {
-                $hrefArr['shop'][] = trim($link->href);
-            }
+        foreach ($links->link ?? [] as $link) {
+            $hrefArr['shop'][] = trim($link->href);
         }
 
         if ((string) $videoLinks) {
@@ -261,9 +271,9 @@ class ProcessFeeds extends Command
 
         $hrefArr['shop'] = array_filter($hrefArr['shop']);
 
-        $this->linksService->getModel()::where('product_id', $productObject['id'])->whereNotIn('href', $hrefArr)->delete();
-
         foreach ($hrefArr as $hrefsType => $hrefs) {
+            $this->linksService->getModel()::where('product_id', $productObject['id'])->whereNotIn('href', $hrefs)->delete();
+
             foreach ($hrefs as $href) {
                 $linkObject = $this->linksService->getModel()::where('product_id', $productObject['id'])->where('href', $href)
                     ->first();
@@ -274,7 +284,7 @@ class ProcessFeeds extends Command
                     'href' => $href,
                 ];
 
-                $this->linksService->save($linkData, ($linkObject) ? $linkObject->id : 0);
+                $this->linksService->save($linkData, $linkObject->id ?? 0);
             }
         }
     }
