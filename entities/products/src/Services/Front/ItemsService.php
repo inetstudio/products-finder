@@ -38,7 +38,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
      * @return Builder
      */
     public function getFilterBuilder(Builder $builder,
-                                     array $filter): Builder
+                                        array $filter): Builder
     {
         $filter = (empty($filter)) ? $this->getDefaultFilters() : $filter;
 

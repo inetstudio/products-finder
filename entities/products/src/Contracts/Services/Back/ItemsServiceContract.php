@@ -19,5 +19,5 @@ interface ItemsServiceContract extends BaseServiceContract
      * @return ProductModelContract
      */
     public function save(array $data,
-                         int $id): ProductModelContract;
+                            int $id): ProductModelContract;
 }
