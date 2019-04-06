@@ -89,7 +89,7 @@ class ProcessFeeds extends Command
 
             $xml = $this->getFeedContent($url);
 
-            if (! $xml) {
+            if (!$xml) {
                 continue;
             }
 
@@ -142,7 +142,7 @@ class ProcessFeeds extends Command
      * @return array
      */
     protected function getProductData(string $url,
-                                      SimpleXMLElement $item): array
+                                        SimpleXMLElement $item): array
     {
         $productData = [
             'feed_hash' => md5($url),
@@ -171,7 +171,7 @@ class ProcessFeeds extends Command
      * @return ProductModelContract|null
      */
     protected function getProduct(string $feedHash,
-                                  string $productId): ?ProductModelContract
+                                    string $productId): ?ProductModelContract
     {
         return $this->productsService->getModel()::query()
             ->where('feed_hash', $feedHash)
@@ -189,8 +189,8 @@ class ProcessFeeds extends Command
      * @return ProductModelContract
      */
     protected function updateProduct(SimpleXMLElement $item,
-                                     $productObject,
-                                     array $productData): ProductModelContract
+                                        $productObject,
+                                        array $productData): ProductModelContract
     {
         if ($productObject && $productObject['update'] == 0) {
             return $productObject;
@@ -247,11 +247,11 @@ class ProcessFeeds extends Command
      * @return Media|null
      */
     protected function attachMedia(ProductModelContract $productObject,
-                                   SimpleXMLElement $item): ?Media
+                                    SimpleXMLElement $item): ?Media
     {
         $imageLink = trim($this->getNodeValue('image_link', $item));
 
-        if (! $imageLink || $productObject->hasMedia('preview')) {
+        if (!$imageLink || $productObject->hasMedia('preview')) {
             return null;
         }
 
@@ -273,7 +273,7 @@ class ProcessFeeds extends Command
      * @param SimpleXMLElement $item
      */
     protected function attachLinks(ProductModelContract $productObject,
-                                   SimpleXMLElement $item): void
+                                    SimpleXMLElement $item): void
     {
         $hrefArr = [];
 
@@ -320,7 +320,7 @@ class ProcessFeeds extends Command
      * @param SimpleXMLElement $item
      */
     protected function attachRecommendations(ProductModelContract $productObject,
-                                             SimpleXMLElement $item): void
+                                                SimpleXMLElement $item): void
     {
         $recommendationsNodes = $item->recommendations;
 
@@ -354,7 +354,7 @@ class ProcessFeeds extends Command
      * @param SimpleXMLElement $item
      */
     protected function attachClassifiers(ProductModelContract $productObject,
-                                         SimpleXMLElement $item): void
+                                            SimpleXMLElement $item): void
     {
         $groups = [
             'scope_of_use' => 'products_finder_scopes_of_use',

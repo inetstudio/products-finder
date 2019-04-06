@@ -47,7 +47,7 @@ class CreateFoldersCommand extends Command
      */
     protected function createDir($path): void
     {
-        if (! is_dir($path)) {
+        if (!is_dir($path)) {
             mkdir($path, 0777, true);
             $this->info($path.' Has been created.');
         } else {

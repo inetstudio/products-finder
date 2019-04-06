@@ -57,7 +57,7 @@ class DataTableService extends DataTable implements DataTableServiceContract
         $query = $this->model->buildQuery([
             'columns' => ['created_at', 'updated_at'],
             'relations' => ['groups'],
-        ])->whereHas('groups', function ($query) {
+        ])->whereHas('groups', function($query) {
             $query->where('classifiers_groups.alias', 'LIKE', '%products_finder_%');
         });
 

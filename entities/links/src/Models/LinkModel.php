@@ -78,17 +78,17 @@ class LinkModel extends Model implements LinkModelContract
     {
         $href = $this->getAttribute('href');
 
-        if (! is_string($href)) {
+        if (!is_string($href)) {
             return 'default';
         }
 
         $url = parse_url($href);
 
-        if (! isset($url['host'])) {
+        if (!isset($url['host'])) {
             return 'default';
         }
 
-        if (! preg_match('/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i', $url['host'], $regs)) {
+        if (!preg_match('/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i', $url['host'], $regs)) {
             return 'default';
         }
 
