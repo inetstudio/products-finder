@@ -319,13 +319,13 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
             return [$key => $item];
         })->toArray();
 
-        $arr['classifiers'] = $this['classifiers']->map(function ($item) {
+        $arr['classifiers'] = ($this['classifiers']) ? $this['classifiers']->map(function ($item) {
             return collect(Arr::only($item->toArray(), ['id', 'value']))->mapWithKeys(function ($item, $key) {
                 $item = preg_replace('/[^A-Za-zА-Яа-я0-9\-\(\) ]+/u', '', $item);
 
                 return [$key => $item];
             })->toArray();
-        })->toArray();
+        })->toArray() : [];
 
         $arr['search_field'] = $arr['title'].' '.implode(' ', collect($arr['classifiers'])->pluck('value')->toArray());
 

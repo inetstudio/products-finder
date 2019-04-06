@@ -15,9 +15,9 @@ use InetStudio\ProductsFinder\Products\Contracts\Services\Front\ItemsServiceCont
 class ItemsService extends BaseService implements ItemsServiceContract
 {
     /**
-     * @var
+     * @var array
      */
-    public $categories;
+    public $categories = [];
 
     /**
      * ItemsService constructor.
@@ -68,15 +68,12 @@ class ItemsService extends BaseService implements ItemsServiceContract
     {
         $filter = [];
 
-        foreach ($this->categories ?? [] as $scope => $scopeData) {
-            foreach ($scopeData['types'] ?? [] as $type) {
-                foreach ($type['filter'] as $filterType => $filters) {
-                    foreach ($filters as $typeFilter) {
-                        $filter[$filterType][] = $typeFilter;
-                    }
-                }
-            }
-        }
+        collect($this->categories)->pluck('types')
+            ->flatten(1)
+            ->pluck('filter')
+            ->each(function ($item) use (&$filter) {
+                $filter = array_merge_recursive($item, $filter);
+            });
 
         return $filter;
     }
@@ -95,20 +92,21 @@ class ItemsService extends BaseService implements ItemsServiceContract
         $scopeParam = Arr::get($data, 'scope', -1);
         $typeParam = Arr::get($data, 'type', '');
 
-        $scopeIndex = 0;
-        foreach ($this->categories ?? [] as $scope => $scopeData) {
-            foreach ($scopeData['types'] ?? [] as $type) {
-                if ($scopeIndex == $scopeParam || in_array($typeParam, (array)$type['alias'])) {
-                    foreach ($type['filter'] as $filterType => $filters) {
-                        foreach ($filters as $typeFilter) {
-                            $filter[$filterType][] = $typeFilter;
-                        }
-                    }
-                }
-            }
+        $typeCategories = collect($this->categories)->pluck('types')
+            ->flatten(1)
+            ->filter(function ($value) use ($typeParam) {
+                return in_array($typeParam, (array) $value['alias']);
+            });
 
-            $scopeIndex++;
-        }
+        $scopeCategories = collect($this->categories)->values()->get($scopeParam);
+        $scopeCategories = ($scopeCategories) ? collect($scopeCategories)->flatten(1) : collect([]);
+
+        $typeCategories->merge($scopeCategories)
+            ->unique()
+            ->pluck('filter')
+            ->each(function ($item) use (&$filter) {
+                $filter = array_merge_recursive($item, $filter);
+            });
 
         return $filter;
     }
@@ -123,7 +121,8 @@ class ItemsService extends BaseService implements ItemsServiceContract
     public function getProductBreadcrumbs(array $item): array
     {
         $scopeIndex = 0;
-        foreach ($this->categories ?? [] as $scope => $scopeData) {
+
+        foreach ($this->categories as $scope => $scopeData) {
             foreach ($scopeData['types'] ?? [] as $type) {
                 if ($this->applyFiltersForItem($item, $type['filter'])) {
                     return [
@@ -138,6 +137,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
                     ];
                 }
             }
+
             $scopeIndex++;
         }
 
@@ -147,23 +147,53 @@ class ItemsService extends BaseService implements ItemsServiceContract
     /**
      * Применяем фильтры к продукту.
      *
-     * @param array $item
-     * @param array $filter
+     * @param $item
+     * @param $filter
      *
      * @return bool
      */
-    public function applyFiltersForItem(array $item,
-                                        array $filter): bool
+    public function applyFiltersForItem(array $item, array $filter): bool
     {
-        if (isset($filter['classifiers']) && ! empty($filter['classifiers'])) {
-            $types = collect($item['classifiers']['products_finder_types'])->pluck('alias')->toArray();
+        $classifiersFilterResult = $this->applyClassifiersFilterForItem($item, $filter['classifiers'] ?? []);
+        $fieldsFilterResult = $this->applyFieldsFilterForItem($item, $filter['fields'] ?? []);
 
-            if (count(array_intersect($filter['classifiers'], $types)) > 0) {
-                return true;
-            }
+        return ($classifiersFilterResult || $fieldsFilterResult);
+    }
+
+    /**
+     * Применяем фильтр по классификаторам.
+     *
+     * @param array $item
+     * @param array $filter
+     *
+     * @return bool|null
+     */
+    protected function applyClassifiersFilterForItem(array $item, array $filter): ?bool
+    {
+        if (empty($filter)) {
+            return null;
         }
 
-        foreach ($filter['fields'] ?? [] as $fieldExpression) {
+        $types = collect($item['classifiers']['products_finder_types'])->pluck('alias')->toArray();
+
+        return (count(array_intersect($filter, $types)) > 0);
+    }
+
+    /**
+     * Применяем фильтр по полям.
+     *
+     * @param array $item
+     * @param array $filter
+     *
+     * @return bool|null
+     */
+    protected function applyFieldsFilterForItem(array $item, array $filter): ?bool
+    {
+        if (empty($filter)) {
+            return null;
+        }
+
+        foreach ($filter as $fieldExpression) {
             $field = strtok($fieldExpression, '|');
             $operator = strtok('|');
             $value = Str::lower(strtok('|'));
@@ -171,6 +201,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
             $itemFieldValue = Str::lower($item[$field] ?? '');
 
             $passed = false;
+
             switch ($operator) {
                 case '=':
                     $passed = ($itemFieldValue == $value);
