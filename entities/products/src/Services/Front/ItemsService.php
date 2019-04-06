@@ -42,7 +42,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
     {
         $filter = (empty($filter)) ? $this->getDefaultFilters() : $filter;
 
-        if (isset($filter['classifiers']) && ! empty($filter['classifiers'])) {
+        if (isset($filter['classifiers']) && !empty($filter['classifiers'])) {
             $builder->withAnyClassifiers($filter['classifiers'], 'alias');
         }
 
@@ -71,7 +71,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
         collect($this->categories)->pluck('types')
             ->flatten(1)
             ->pluck('filter')
-            ->each(function ($item) use (&$filter) {
+            ->each(function($item) use (&$filter) {
                 $filter = array_merge_recursive($item, $filter);
             });
 
@@ -94,7 +94,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
 
         $typeCategories = collect($this->categories)->pluck('types')
             ->flatten(1)
-            ->filter(function ($value) use ($typeParam) {
+            ->filter(function($value) use ($typeParam) {
                 return in_array($typeParam, (array) $value['alias']);
             });
 
@@ -104,7 +104,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
         $typeCategories->merge($scopeCategories)
             ->unique()
             ->pluck('filter')
-            ->each(function ($item) use (&$filter) {
+            ->each(function($item) use (&$filter) {
                 $filter = array_merge_recursive($item, $filter);
             });
 
@@ -170,7 +170,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
      * @return bool|null
      */
     protected function applyClassifiersFilterForItem(array $item,
-                                                     array $filter): ?bool
+                                                        array $filter): ?bool
     {
         if (empty($filter)) {
             return null;

@@ -26,7 +26,7 @@ class ServiceProvider extends BaseServiceProvider
      */
     protected function registerConsoleCommands(): void
     {
-        if (! $this->app->runningInConsole()) {
+        if (!$this->app->runningInConsole()) {
             return;
         }
 
@@ -51,7 +51,7 @@ class ServiceProvider extends BaseServiceProvider
             __DIR__.'/../../config/filesystems.php', 'filesystems.disks'
         );
 
-        if (! $this->app->runningInConsole()) {
+        if (!$this->app->runningInConsole()) {
             return;
         }
 
