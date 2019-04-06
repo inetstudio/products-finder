@@ -42,7 +42,7 @@ interface ResourceControllerContract
      * @return SaveResponseContract
      */
     public function store(ItemsServiceContract $resourceService,
-                          SaveItemRequestContract $request): SaveResponseContract;
+                            SaveItemRequestContract $request): SaveResponseContract;
 
     /**
      * Редактирование объекта.
@@ -53,7 +53,7 @@ interface ResourceControllerContract
      * @return FormResponseContract
      */
     public function edit(ItemsServiceContract $resourceService,
-                         int $id = 0): FormResponseContract;
+                            int $id = 0): FormResponseContract;
 
     /**
      * Обновление объекта.
@@ -65,7 +65,7 @@ interface ResourceControllerContract
      * @return SaveResponseContract
      */
     public function update(ItemsServiceContract $resourceService,
-                           SaveItemRequestContract $request, int $id = 0): SaveResponseContract;
+                            SaveItemRequestContract $request, int $id = 0): SaveResponseContract;
 
     /**
      * Удаление объекта.

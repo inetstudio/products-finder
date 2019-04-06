@@ -65,7 +65,7 @@ class ResourceController extends Controller implements ResourceControllerContrac
      * @throws BindingResolutionException
      */
     public function store(ItemsServiceContract $productsService,
-                          SaveItemRequestContract $request): SaveResponseContract
+                            SaveItemRequestContract $request): SaveResponseContract
     {
         return $this->save($productsService, $request);
     }
@@ -81,7 +81,7 @@ class ResourceController extends Controller implements ResourceControllerContrac
      * @throws BindingResolutionException
      */
     public function edit(ItemsServiceContract $productsService,
-                         int $id = 0): FormResponseContract
+                            int $id = 0): FormResponseContract
     {
         $item = $productsService->getItemById($id, [
             'columns' => [
@@ -106,8 +106,8 @@ class ResourceController extends Controller implements ResourceControllerContrac
      * @throws BindingResolutionException
      */
     public function update(ItemsServiceContract $productsService,
-                           SaveItemRequestContract $request,
-                           int $id = 0): SaveResponseContract
+                            SaveItemRequestContract $request,
+                            int $id = 0): SaveResponseContract
     {
         return $this->save($productsService, $request, $id);
     }

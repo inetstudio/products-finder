@@ -18,7 +18,7 @@ interface ItemsServiceContract
      * @return Builder
      */
     public function getFilterBuilder(Builder $builder,
-                                     array $filter): Builder;
+                                        array $filter): Builder;
 
     /**
      * Получаем фильтр по умолчанию.

@@ -35,7 +35,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
      * @throws BindingResolutionException
      */
     public function save(array $data,
-                         int $id): ProductModelContract
+                            int $id): ProductModelContract
     {
         $action = ($id) ? 'отредактирован' : 'создан';
 
