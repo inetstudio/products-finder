@@ -4,7 +4,6 @@ namespace InetStudio\ProductsFinder\Products\Services\Front;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Illuminate\Database\Eloquent\Builder;
 use InetStudio\AdminPanel\Base\Services\BaseService;
 use InetStudio\ProductsFinder\Products\Contracts\Models\ProductModelContract;
 use InetStudio\ProductsFinder\Products\Contracts\Services\Front\ItemsServiceContract;

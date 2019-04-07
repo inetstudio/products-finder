@@ -419,7 +419,6 @@ class ProcessFeeds extends Command
         $ids = $this->productsService->getModel()::where('feed_hash', md5($url))
             ->whereNotIn('ean', $productsEANs)
             ->pluck('id')
-            ->get()
             ->toArray();
 
         $this->linksService->getModel()::whereIn('product_id', $ids)
