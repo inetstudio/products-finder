@@ -70,9 +70,11 @@ class ItemsService extends BaseService implements ItemsServiceContract
         collect($this->categories)->pluck('types')
             ->flatten(1)
             ->pluck('filter')
-            ->each(function ($item) use (&$filter) {
-                $filter = array_merge_recursive($item, $filter);
-            });
+            ->each(
+                function ($item) use (&$filter) {
+                    $filter = array_merge_recursive($item, $filter);
+                }
+            );
 
         return $filter;
     }
@@ -93,9 +95,11 @@ class ItemsService extends BaseService implements ItemsServiceContract
 
         $typeCategories = collect($this->categories)->pluck('types')
             ->flatten(1)
-            ->filter(function ($value) use ($typeParam) {
-                return in_array($typeParam, (array) $value['alias']);
-            });
+            ->filter(
+                function ($value) use ($typeParam) {
+                    return in_array($typeParam, (array) $value['alias']);
+                }
+            );
 
         $scopeCategories = collect($this->categories)->values()->get($scopeParam);
         $scopeCategories = ($scopeCategories) ? collect($scopeCategories)->flatten(1) : collect([]);
@@ -103,9 +107,11 @@ class ItemsService extends BaseService implements ItemsServiceContract
         $typeCategories->merge($scopeCategories)
             ->unique()
             ->pluck('filter')
-            ->each(function ($item) use (&$filter) {
-                $filter = array_merge_recursive($item, $filter);
-            });
+            ->each(
+                function ($item) use (&$filter) {
+                    $filter = array_merge_recursive($item, $filter);
+                }
+            );
 
         return $filter;
     }

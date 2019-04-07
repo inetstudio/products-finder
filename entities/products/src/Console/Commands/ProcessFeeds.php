@@ -200,9 +200,13 @@ class ProcessFeeds extends Command
         $this->attachRecommendations($productObject, $item);
         $this->attachClassifiers($productObject, $item);
 
-        event(app()->makeWith('InetStudio\ProductsFinder\Products\Contracts\Events\Back\ModifyItemEventContract', [
-            'item' => $productObject,
-        ]));
+        event(
+            app()->makeWith(
+                'InetStudio\ProductsFinder\Products\Contracts\Events\Back\ModifyItemEventContract', [
+                    'item' => $productObject,
+                ]
+            )
+        );
 
         return $productObject;
     }
@@ -293,8 +297,10 @@ class ProcessFeeds extends Command
 
         foreach ($hrefArr as $hrefsType => $hrefs) {
             foreach ($hrefs as $href) {
-                $linkObject = $this->linksService->getModel()::where('product_id', $productObject['id'])->where('href',
-                    $href)
+                $linkObject = $this->linksService->getModel()::where('product_id', $productObject['id'])->where(
+                    'href',
+                    $href
+                )
                     ->first();
 
                 $linkData = [
@@ -377,11 +383,13 @@ class ProcessFeeds extends Command
             foreach ($values as $entryValue) {
                 $alias = 'products_finder_'.$field.'_'.md5(Str::ucfirst(trim($entryValue)));
 
-                $entry = $this->classifiersEntriesService->getModel()::updateOrCreate([
-                    'alias' => $alias,
-                ], [
-                    'value' => Str::ucfirst(trim($entryValue)),
-                ]);
+                $entry = $this->classifiersEntriesService->getModel()::updateOrCreate(
+                    [
+                        'alias' => $alias,
+                    ], [
+                        'value' => Str::ucfirst(trim($entryValue)),
+                    ]
+                );
 
                 $entriesIDs[] = $entry->id;
                 $classifiersIDs[] = $entry->id;

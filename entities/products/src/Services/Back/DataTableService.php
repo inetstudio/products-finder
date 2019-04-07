@@ -40,7 +40,9 @@ class DataTableService extends DataTable implements DataTableServiceContract
      */
     public function ajax(): JsonResponse
     {
-        $transformer = app()->make('InetStudio\ProductsFinder\Products\Contracts\Transformers\Back\Resource\IndexTransformerContract');
+        $transformer = app()->make(
+            'InetStudio\ProductsFinder\Products\Contracts\Transformers\Back\Resource\IndexTransformerContract'
+        );
 
         return DataTables::of($this->query())
             ->setTransformer($transformer)
@@ -55,9 +57,11 @@ class DataTableService extends DataTable implements DataTableServiceContract
      */
     public function query()
     {
-        $query = $this->model->buildQuery([
-            'columns' => ['created_at', 'updated_at'],
-        ]);
+        $query = $this->model->buildQuery(
+            [
+                'columns' => ['created_at', 'updated_at'],
+            ]
+        );
 
         return $query;
     }

@@ -39,8 +39,10 @@ class SaveResponse implements SaveResponseContract, Responsable
     {
         $item = $this->item->fresh();
 
-        return response()->redirectToRoute('back.products-finder.products.edit', [
-            $item['id'],
-        ]);
+        return response()->redirectToRoute(
+            'back.products-finder.products.edit', [
+                $item['id'],
+            ]
+        );
     }
 }

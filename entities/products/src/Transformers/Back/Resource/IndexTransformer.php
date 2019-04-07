@@ -25,16 +25,19 @@ class IndexTransformer extends TransformerAbstract implements IndexTransformerCo
     {
         return [
             'id' => (int) $item['id'],
-            'preview' => view('admin.module.products-finder.products::back.partials.datatables.preview',
+            'preview' => view(
+                'admin.module.products-finder.products::back.partials.datatables.preview',
                 compact('item')
             )->render(),
             'brand' => $item['brand'],
             'title' => $item['title'],
             'created_at' => (string) $item['created_at'],
             'updated_at' => (string) $item['updated_at'],
-            'actions' => view('admin.module.products-finder.products::back.partials.datatables.actions', [
-                'id' => $item['id'],
-            ])->render(),
+            'actions' => view(
+                'admin.module.products-finder.products::back.partials.datatables.actions', [
+                    'id' => $item['id'],
+                ]
+            )->render(),
         ];
     }
 }

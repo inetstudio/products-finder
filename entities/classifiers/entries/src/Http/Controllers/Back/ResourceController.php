@@ -26,8 +26,10 @@ class ResourceController extends Controller implements ResourceControllerContrac
     {
         $table = $datatablesService->html();
 
-        return $this->app->make(IndexResponseContract::class, [
-            'data' => compact('table'),
-        ]);
+        return $this->app->make(
+            IndexResponseContract::class, [
+                'data' => compact('table'),
+            ]
+        );
     }
 }

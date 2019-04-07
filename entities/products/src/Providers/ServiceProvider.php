@@ -30,12 +30,14 @@ class ServiceProvider extends BaseServiceProvider
             return;
         }
 
-        $this->commands([
-            'InetStudio\ProductsFinder\Products\Console\Commands\CreateFoldersCommand',
-            'InetStudio\ProductsFinder\Products\Console\Commands\PrepareClassifiersCommand',
-            'InetStudio\ProductsFinder\Products\Console\Commands\ProcessFeeds',
-            'InetStudio\ProductsFinder\Products\Console\Commands\SetupCommand',
-        ]);
+        $this->commands(
+            [
+                'InetStudio\ProductsFinder\Products\Console\Commands\CreateFoldersCommand',
+                'InetStudio\ProductsFinder\Products\Console\Commands\PrepareClassifiersCommand',
+                'InetStudio\ProductsFinder\Products\Console\Commands\ProcessFeeds',
+                'InetStudio\ProductsFinder\Products\Console\Commands\SetupCommand',
+            ]
+        );
     }
 
     /**
@@ -43,9 +45,11 @@ class ServiceProvider extends BaseServiceProvider
      */
     protected function registerPublishes(): void
     {
-        $this->publishes([
-            __DIR__.'/../../config/products_finder_products.php' => config_path('products_finder_products.php'),
-        ], 'config');
+        $this->publishes(
+            [
+                __DIR__.'/../../config/products_finder_products.php' => config_path('products_finder_products.php'),
+            ], 'config'
+        );
 
         $this->mergeConfigFrom(
             __DIR__.'/../../config/filesystems.php', 'filesystems.disks'
@@ -60,9 +64,13 @@ class ServiceProvider extends BaseServiceProvider
         }
 
         $timestamp = date('Y_m_d_His', time());
-        $this->publishes([
-            __DIR__.'/../../database/migrations/create_products_finder_products_tables.php.stub' => database_path('migrations/'.$timestamp.'_create_products_finder_products_tables.php'),
-        ], 'migrations');
+        $this->publishes(
+            [
+                __DIR__.'/../../database/migrations/create_products_finder_products_tables.php.stub' => database_path(
+                    'migrations/'.$timestamp.'_create_products_finder_products_tables.php'
+                ),
+            ], 'migrations'
+        );
     }
 
     /**

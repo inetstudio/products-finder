@@ -36,9 +36,11 @@ class ItemsService extends BaseService implements ItemsServiceContract
     {
         $item = $this->saveModel($data, $id);
 
-        event(app()->make(
-            'InetStudio\ProductsFinder\Links\Contracts\Events\Back\ModifyItemEventContract',
-            compact('item'))
+        event(
+            app()->make(
+                'InetStudio\ProductsFinder\Links\Contracts\Events\Back\ModifyItemEventContract',
+                compact('item')
+            )
         );
 
         return $item;

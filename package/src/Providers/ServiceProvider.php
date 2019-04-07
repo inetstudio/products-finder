@@ -27,9 +27,11 @@ class ServiceProvider extends BaseServiceProvider
             return;
         }
 
-        $this->commands([
-            'InetStudio\ProductsFinder\Console\Commands\SetupCommand',
-        ]);
+        $this->commands(
+            [
+                'InetStudio\ProductsFinder\Console\Commands\SetupCommand',
+            ]
+        );
     }
 
     /**

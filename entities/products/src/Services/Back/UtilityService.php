@@ -31,9 +31,11 @@ class UtilityService extends BaseService implements UtilityServiceContract
      */
     public function getSuggestions(string $search): Collection
     {
-        $items = $this->getModel()::where([
-            ['title', 'LIKE', '%'.$search.'%'],
-        ])->get();
+        $items = $this->getModel()::where(
+            [
+                ['title', 'LIKE', '%'.$search.'%'],
+            ]
+        )->get();
 
         return $items;
     }

@@ -41,12 +41,18 @@ class ItemsService extends BaseService implements ItemsServiceContract
         $item = $this->saveModel(Arr::only($data, $this->model->getFillable()), $id);
 
         if (Arr::has($data, ['classifiers'])) {
-            $classifiersService = app()->make('InetStudio\Classifiers\Entries\Contracts\Services\Back\EntriesServiceContract');
+            $classifiersService = app()->make(
+                'InetStudio\Classifiers\Entries\Contracts\Services\Back\EntriesServiceContract'
+            );
             $classifiersService->attachToObject(Arr::get($data, 'classifiers'), $item);
         }
 
-        event(app()->makeWith('InetStudio\ProductsFinder\Products\Contracts\Events\Back\ModifyItemEventContract',
-            compact('item')));
+        event(
+            app()->makeWith(
+                'InetStudio\ProductsFinder\Products\Contracts\Events\Back\ModifyItemEventContract',
+                compact('item')
+            )
+        );
 
         Session::flash('success', 'Продукт «'.$item->title.'» успешно '.$action);
 

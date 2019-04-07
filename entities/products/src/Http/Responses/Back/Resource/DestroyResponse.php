@@ -36,8 +36,10 @@ class DestroyResponse implements DestroyResponseContract, Responsable
      */
     public function toResponse($request)
     {
-        return response()->json([
-            'success' => $this->result,
-        ]);
+        return response()->json(
+            [
+                'success' => $this->result,
+            ]
+        );
     }
 }

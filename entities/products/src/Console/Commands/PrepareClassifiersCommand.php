@@ -31,7 +31,9 @@ class PrepareClassifiersCommand extends Command
      */
     public function handle(): void
     {
-        $classifiersGroupsService = app()->make('InetStudio\Classifiers\Groups\Contracts\Services\Back\GroupsServiceContract');
+        $classifiersGroupsService = app()->make(
+            'InetStudio\Classifiers\Groups\Contracts\Services\Back\GroupsServiceContract'
+        );
 
         $groups = [
             'Область' => 'scopes_of_use',
@@ -48,11 +50,13 @@ class PrepareClassifiersCommand extends Command
         ];
 
         foreach ($groups as $name => $alias) {
-            $classifiersGroupsService->getModel()::updateOrCreate([
-                'name' => 'Products Finder / '.$name,
-            ], [
-                'alias' => 'products_finder_'.$alias,
-            ]);
+            $classifiersGroupsService->getModel()::updateOrCreate(
+                [
+                    'name' => 'Products Finder / '.$name,
+                ], [
+                    'alias' => 'products_finder_'.$alias,
+                ]
+            );
         }
     }
 }

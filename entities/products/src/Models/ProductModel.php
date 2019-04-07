@@ -85,57 +85,69 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
 
         self::$buildQueryScopeDefaults['relations'] = [
             'media' => function ($query) {
-                $query->select([
-                    'id',
-                    'model_id',
-                    'model_type',
-                    'collection_name',
-                    'file_name',
-                    'disk',
-                    'mime_type',
-                    'custom_properties',
-                    'responsive_images',
-                ]);
+                $query->select(
+                    [
+                        'id',
+                        'model_id',
+                        'model_type',
+                        'collection_name',
+                        'file_name',
+                        'disk',
+                        'mime_type',
+                        'custom_properties',
+                        'responsive_images',
+                    ]
+                );
             },
 
             'links' => function ($query) {
-                $query->select([
-                    'id',
-                    'product_id',
-                    'type',
-                    'href',
-                ]);
+                $query->select(
+                    [
+                        'id',
+                        'product_id',
+                        'type',
+                        'href',
+                    ]
+                );
             },
 
             'classifiers' => function ($query) {
                 $query->select(['classifiers_entries.id', 'classifiers_entries.value', 'classifiers_entries.alias'])
-                    ->with([
-                        'groups' => function ($query) {
-                            $query->select(['id', 'name', 'alias']);
-                        },
-                    ]);
+                    ->with(
+                        [
+                            'groups' => function ($query) {
+                                $query->select(['id', 'name', 'alias']);
+                            },
+                        ]
+                    );
             },
 
             'recommendations' => function ($query) {
-                $query->select([
-                    'products_finder_products.id',
-                    'products_finder_products.title',
-                    'products_finder_products.brand',
-                ])->with([
-                    'media' => function ($query) {
-                        $query->select([
-                            'id',
-                            'model_id',
-                            'model_type',
-                            'collection_name',
-                            'file_name',
-                            'disk',
-                            'mime_type',
-                            'custom_properties',
-                            'responsive_images',
-                        ]);
-                    },
-                ]);
+                $query->select(
+                    [
+                        'products_finder_products.id',
+                        'products_finder_products.title',
+                        'products_finder_products.brand',
+                    ]
+                )->with(
+                    [
+                        'media' => function ($query) {
+                            $query->select(
+                                [
+                                    'id',
+                                    'model_id',
+                                    'model_type',
+                                    'collection_name',
+                                    'file_name',
+                                    'disk',
+                                    'mime_type',
+                                    'custom_properties',
+                                    'responsive_images',
+                                ]
+                            );
+                        },
+                    ]
+                );
             },
         ];
     }
@@ -326,7 +338,9 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
      */
     public function toSearchableArray(): array
     {
-        $productsService = app()->make('InetStudio\ProductsFinder\Products\Contracts\Services\Front\ProductsServiceContract');
+        $productsService = app()->make(
+            'InetStudio\ProductsFinder\Products\Contracts\Services\Front\ProductsServiceContract'
+        );
         $filter = $productsService->getDefaultFilters();
         $builder = $this::select(['id']);
         $items = $productsService->getFilterBuilder($builder, $filter)->pluck('id')->toArray();
@@ -338,19 +352,25 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
         }
 
         $arr = Arr::only($this->toArray(), ['id', 'brand', 'series', 'title', 'description', 'benefits', 'how_to_use']);
-        $arr = collect($arr)->mapWithKeys(function ($item, $key) {
-            $item = preg_replace('/[^A-Za-zА-Яа-я0-9\-\(\) ]+/u', '', $item);
-
-            return [$key => $item];
-        })->toArray();
-
-        $arr['classifiers'] = ($this['classifiers']) ? $this['classifiers']->map(function ($item) {
-            return collect(Arr::only($item->toArray(), ['id', 'value']))->mapWithKeys(function ($item, $key) {
+        $arr = collect($arr)->mapWithKeys(
+            function ($item, $key) {
                 $item = preg_replace('/[^A-Za-zА-Яа-я0-9\-\(\) ]+/u', '', $item);
 
                 return [$key => $item];
-            })->toArray();
-        })->toArray() : [];
+            }
+        )->toArray();
+
+        $arr['classifiers'] = ($this['classifiers']) ? $this['classifiers']->map(
+            function ($item) {
+                return collect(Arr::only($item->toArray(), ['id', 'value']))->mapWithKeys(
+                    function ($item, $key) {
+                        $item = preg_replace('/[^A-Za-zА-Яа-я0-9\-\(\) ]+/u', '', $item);
+
+                        return [$key => $item];
+                    }
+                )->toArray();
+            }
+        )->toArray() : [];
 
         $arr['search_field'] = $arr['title'].' '.implode(' ', collect($arr['classifiers'])->pluck('value')->toArray());
 

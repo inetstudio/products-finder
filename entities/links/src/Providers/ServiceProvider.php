@@ -28,9 +28,11 @@ class ServiceProvider extends BaseServiceProvider
             return;
         }
 
-        $this->commands([
-            'InetStudio\ProductsFinder\Links\Console\Commands\SetupCommand',
-        ]);
+        $this->commands(
+            [
+                'InetStudio\ProductsFinder\Links\Console\Commands\SetupCommand',
+            ]
+        );
     }
 
     /**
@@ -47,8 +49,12 @@ class ServiceProvider extends BaseServiceProvider
         }
 
         $timestamp = date('Y_m_d_His', time());
-        $this->publishes([
-            __DIR__.'/../../database/migrations/create_products_finder_links_tables.php.stub' => database_path('migrations/'.$timestamp.'_create_products_finder_links_tables.php'),
-        ], 'migrations');
+        $this->publishes(
+            [
+                __DIR__.'/../../database/migrations/create_products_finder_links_tables.php.stub' => database_path(
+                    'migrations/'.$timestamp.'_create_products_finder_links_tables.php'
+                ),
+            ], 'migrations'
+        );
     }
 }
