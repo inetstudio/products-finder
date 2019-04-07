@@ -34,7 +34,8 @@ class IndexTransformer extends TransformerAbstract implements IndexTransformerCo
             'created_at' => (string) $item['created_at'],
             'updated_at' => (string) $item['updated_at'],
             'actions' => view(
-                'admin.module.products-finder.products::back.partials.datatables.actions', [
+                'admin.module.products-finder.products::back.partials.datatables.actions',
+                [
                     'id' => $item['id'],
                 ]
             )->render(),

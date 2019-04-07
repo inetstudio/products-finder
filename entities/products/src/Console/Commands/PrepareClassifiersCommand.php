@@ -53,7 +53,8 @@ class PrepareClassifiersCommand extends Command
             $classifiersGroupsService->getModel()::updateOrCreate(
                 [
                     'name' => 'Products Finder / '.$name,
-                ], [
+                ],
+                [
                     'alias' => 'products_finder_'.$alias,
                 ]
             );

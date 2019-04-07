@@ -32,7 +32,8 @@ class ResourceController extends Controller implements ResourceControllerContrac
         $table = $dataTableService->html();
 
         return $this->app->make(
-            IndexResponseContract::class, [
+            IndexResponseContract::class,
+            [
                 'data' => compact('table'),
             ]
         );
@@ -52,7 +53,8 @@ class ResourceController extends Controller implements ResourceControllerContrac
         $item = $productsService->getItemById();
 
         return $this->app->make(
-            FormResponseContract::class, [
+            FormResponseContract::class,
+            [
                 'data' => compact('item'),
             ]
         );
@@ -102,7 +104,8 @@ class ResourceController extends Controller implements ResourceControllerContrac
         );
 
         return $this->app->make(
-            FormResponseContract::class, [
+            FormResponseContract::class,
+            [
                 'data' => compact('item'),
             ]
         );
@@ -165,7 +168,8 @@ class ResourceController extends Controller implements ResourceControllerContrac
         $result = $productsService->destroy($id);
 
         return $this->app->make(
-            DestroyResponseContract::class, [
+            DestroyResponseContract::class,
+            [
                 'result' => ($result === null) ? false : $result,
             ]
         );

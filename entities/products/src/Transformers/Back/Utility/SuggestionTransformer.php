@@ -36,16 +36,18 @@ class SuggestionTransformer extends TransformerAbstract implements SuggestionTra
      */
     public function transform(ProductModelContract $item): array
     {
-        return ($this->type == 'autocomplete') ? [
-            'value' => $item['title'],
-            'data' => [
+        return ($this->type == 'autocomplete')
+            ? [
+                'value' => $item['title'],
+                'data' => [
+                    'id' => $item['id'],
+                    'title' => $item['title'],
+                ],
+            ]
+            : [
                 'id' => $item['id'],
-                'title' => $item['title'],
-            ],
-        ] : [
-            'id' => $item['id'],
-            'name' => $item['title'],
-        ];
+                'name' => $item['title'],
+            ];
     }
 
     /**

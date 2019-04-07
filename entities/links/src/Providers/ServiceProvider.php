@@ -54,7 +54,8 @@ class ServiceProvider extends BaseServiceProvider
                 __DIR__.'/../../database/migrations/create_products_finder_links_tables.php.stub' => database_path(
                     'migrations/'.$timestamp.'_create_products_finder_links_tables.php'
                 ),
-            ], 'migrations'
+            ],
+            'migrations'
         );
     }
 }

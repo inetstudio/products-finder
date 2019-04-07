@@ -300,10 +300,8 @@ class ProcessFeeds extends Command
 
         foreach ($hrefArr as $hrefsType => $hrefs) {
             foreach ($hrefs as $href) {
-                $linkObject = $this->linksService->getModel()::where('product_id', $productObject['id'])->where(
-                    'href',
-                    $href
-                )
+                $linkObject = $this->linksService->getModel()::where('product_id', $productObject['id'])
+                    ->where('href', $href)
                     ->first();
 
                 $linkData = [
@@ -389,7 +387,8 @@ class ProcessFeeds extends Command
                 $entry = $this->classifiersEntriesService->getModel()::updateOrCreate(
                     [
                         'alias' => $alias,
-                    ], [
+                    ],
+                    [
                         'value' => Str::ucfirst(trim($entryValue)),
                     ]
                 );
@@ -398,7 +397,10 @@ class ProcessFeeds extends Command
                 $classifiersIDs[] = $entry->id;
             }
 
-            $currentEntriesIDs = $group->entries()->pluck('classifiers_entries.id')->toArray();
+            $currentEntriesIDs = $group->entries()
+                ->pluck('classifiers_entries.id')
+                ->toArray();
+            
             $entriesIDs = array_unique(array_merge($entriesIDs, $currentEntriesIDs));
             $group->entries()->sync($entriesIDs);
         }
