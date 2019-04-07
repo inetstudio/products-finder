@@ -339,7 +339,7 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
     public function toSearchableArray(): array
     {
         $productsService = app()->make(
-            'InetStudio\ProductsFinder\Products\Contracts\Services\Front\ProductsServiceContract'
+            'InetStudio\ProductsFinder\Products\Contracts\Services\Front\ItemsServiceContract'
         );
         $filter = $productsService->getDefaultFilters();
         $builder = $this::select(['id']);
