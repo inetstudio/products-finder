@@ -94,7 +94,7 @@ class ProcessFeeds extends Command
                 continue;
             }
 
-            $bar = $this->output->createProgressBar(count($xml->channel->item ?? 0));
+            $bar = $this->output->createProgressBar(count($xml->channel->item ?? []));
 
             foreach ($xml->channel->item ?? [] as $item) {
                 $productData = $this->getProductData($url, $item);
@@ -221,13 +221,9 @@ class ProcessFeeds extends Command
      */
     protected function getNodeValue(string $property, SimpleXMLElement $node)
     {
-        $items = [$node];
-
         $gNode = $node->children('g', true);
 
-        if ($gNode) {
-            $items[] = $gNode;
-        }
+        $items = [$node, $gNode];
 
         foreach ($items as $item) {
             if (isset($item->$property)) {
