@@ -343,8 +343,7 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
             'InetStudio\ProductsFinder\Products\Contracts\Services\Front\ItemsServiceContract'
         );
         $filter = $productsService->getDefaultFilters();
-        $builder = $this::select(['id']);
-        $items = $productsService->getFilterBuilder($builder, $filter)->pluck('id')->toArray();
+        $items = $this->select(['id'])->filterItems($filter)->pluck('id')->toArray();
 
         if (! in_array($this['id'], $items)) {
             $this->unsearchable();
@@ -393,7 +392,7 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
         $productsService = app()->make(
             'InetStudio\ProductsFinder\Products\Contracts\Services\Front\ItemsServiceContract'
         );
-        
+
         $filter = (empty($filter)) ? $productsService->getDefaultFilters() : $filter;
 
         if (isset($filter['classifiers']) && ! empty($filter['classifiers'])) {
