@@ -41,16 +41,6 @@ class SetupCommand extends BaseSetupCommand
                 'description' => 'Products finder links setup',
                 'command' => 'inetstudio:products-finder:links:setup',
             ],
-            [
-                'type' => 'artisan',
-                'description' => 'Products finder scopes setup',
-                'command' => 'inetstudio:products-finder:scopes:setup',
-            ],
-            [
-                'type' => 'artisan',
-                'description' => 'Products finder types setup',
-                'command' => 'inetstudio:products-finder:types:setup',
-            ],
         ];
     }
 }
