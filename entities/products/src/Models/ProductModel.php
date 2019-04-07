@@ -342,8 +342,13 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
         $productsService = app()->make(
             'InetStudio\ProductsFinder\Products\Contracts\Services\Front\ItemsServiceContract'
         );
+        
         $filter = $productsService->getDefaultFilters();
-        $items = $this->select(['id'])->filterItems($filter)->pluck('id')->toArray();
+        $items = $this::newQuery()
+            ->select(['id'])
+            ->filterItems($filter)
+            ->pluck('id')
+            ->toArray();
 
         if (! in_array($this['id'], $items)) {
             $this->unsearchable();
