@@ -96,14 +96,21 @@ class ProcessFeeds extends Command
 
             $bar = $this->output->createProgressBar(count($xml->channel->item ?? []));
 
+            $productsEANs = [];
             foreach ($xml->channel->item ?? [] as $item) {
                 $productData = $this->getProductData($url, $item);
                 $productObject = $this->getProduct($productData['feed_hash'], $productData['ean']);
+
+                if ($productObject) {
+                    $productsEANs[] = $productData['ean'];
+                }
 
                 $this->updateProduct($item, $productObject, $productData);
 
                 $bar->advance();
             }
+
+            $this->removeLinks($url, $productsEANs);
 
             $bar->finish();
         }
@@ -397,5 +404,24 @@ class ProcessFeeds extends Command
         }
 
         $productObject->syncClassifiers($classifiersIDs);
+    }
+
+    /**
+     * Удаляем ссылки.
+     *
+     * @param  string  $url
+     * @param  array  $productsEANs
+     */
+    protected function removeLinks(string $url, array $productsEANs): void
+    {
+        $ids = $this->productsService->getModel()::where('feed_hash', md5($url))
+            ->whereNotIn('ean', $productsEANs)
+            ->pluck('id')
+            ->get()
+            ->toArray();
+
+        $this->linksService->getModel()::whereIn('product_id', $ids)
+            ->where('type', 'shop')
+            ->delete();
     }
 }
