@@ -50,7 +50,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
             $operator = strtok('|');
             $value = strtok('|');
 
-            $value = preg_replace('/[^A-Za-zА-Яа-я\-\(\) ]+/u', '', $value);
+            $value = preg_replace('/[^%A-Za-zА-Яа-я\-\(\) ]+/u', '', $value);
 
             $builder->orWhere($field, $operator, $value);
         }
