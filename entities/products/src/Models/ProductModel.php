@@ -317,7 +317,7 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
      */
     public function searchableIndex()
     {
-        return 'makeup_index_products_finder';
+        return trim(config('scout.elasticsearch.index', '').'_products_finder', '_');
     }
 
     /**
@@ -342,9 +342,9 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
         $productsService = app()->make(
             'InetStudio\ProductsFinder\Products\Contracts\Services\Front\ItemsServiceContract'
         );
-        
+
         $filter = $productsService->getDefaultFilters();
-        $items = $this::newQuery()
+        $items = $this->newQuery()
             ->select(['id'])
             ->filterItems($filter)
             ->pluck('id')
