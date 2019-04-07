@@ -30,35 +30,6 @@ class ItemsService extends BaseService implements ItemsServiceContract
     }
 
     /**
-     * Получаем отфильтрованный builder.
-     *
-     * @param  Builder  $builder
-     * @param  array  $filter
-     *
-     * @return Builder
-     */
-    public function getFilterBuilder(Builder $builder, array $filter): Builder
-    {
-        $filter = (empty($filter)) ? $this->getDefaultFilters() : $filter;
-
-        if (isset($filter['classifiers']) && ! empty($filter['classifiers'])) {
-            $builder->withAnyClassifiers($filter['classifiers'], 'alias');
-        }
-
-        foreach ($filter['fields'] ?? [] as $fieldExpression) {
-            $field = strtok($fieldExpression, '|');
-            $operator = strtok('|');
-            $value = strtok('|');
-
-            $value = preg_replace('/[^%A-Za-zА-Яа-я\-\(\) ]+/u', '', $value);
-
-            $builder->orWhere($field, $operator, $value);
-        }
-
-        return $builder;
-    }
-
-    /**
      * Получаем фильтр по умолчанию.
      *
      * @return array

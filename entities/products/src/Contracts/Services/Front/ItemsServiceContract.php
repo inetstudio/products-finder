@@ -2,23 +2,11 @@
 
 namespace InetStudio\ProductsFinder\Products\Contracts\Services\Front;
 
-use Illuminate\Database\Eloquent\Builder;
-
 /**
  * Interface ItemsServiceContract.
  */
 interface ItemsServiceContract
 {
-    /**
-     * Получаем отфильтрованный builder.
-     *
-     * @param  Builder  $builder
-     * @param  array  $filter
-     *
-     * @return Builder
-     */
-    public function getFilterBuilder(Builder $builder, array $filter): Builder;
-
     /**
      * Получаем фильтр по умолчанию.
      *
