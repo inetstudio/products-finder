@@ -360,7 +360,7 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
             }
         )->toArray();
 
-        $arr['classifiers'] = ($this['classifiers']) ? $this['classifiers']->map(
+        $arr['classifiers'] = $this->getAttribute('classifiers')->map(
             function ($item) {
                 return collect(Arr::only($item->toArray(), ['id', 'value']))->mapWithKeys(
                     function ($item, $key) {
@@ -370,7 +370,7 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
                     }
                 )->toArray();
             }
-        )->toArray() : [];
+        )->toArray();
 
         $arr['search_field'] = $arr['title'].' '.implode(' ', collect($arr['classifiers'])->pluck('value')->toArray());
 
