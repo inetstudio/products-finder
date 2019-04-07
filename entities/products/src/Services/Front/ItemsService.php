@@ -41,7 +41,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
     {
         $filter = (empty($filter)) ? $this->getDefaultFilters() : $filter;
 
-        if (isset($filter['classifiers']) && !empty($filter['classifiers'])) {
+        if (isset($filter['classifiers']) && ! empty($filter['classifiers'])) {
             $builder->withAnyClassifiers($filter['classifiers'], 'alias');
         }
 
@@ -94,7 +94,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
         $typeCategories = collect($this->categories)->pluck('types')
             ->flatten(1)
             ->filter(function ($value) use ($typeParam) {
-                return in_array($typeParam, (array)$value['alias']);
+                return in_array($typeParam, (array) $value['alias']);
             });
 
         $scopeCategories = collect($this->categories)->values()->get($scopeParam);

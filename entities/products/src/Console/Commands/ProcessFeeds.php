@@ -90,7 +90,7 @@ class ProcessFeeds extends Command
 
             $xml = $this->getFeedContent($url);
 
-            if (!$xml) {
+            if (! $xml) {
                 continue;
             }
 
@@ -246,7 +246,7 @@ class ProcessFeeds extends Command
     {
         $imageLink = trim($this->getNodeValue('image_link', $item));
 
-        if (!$imageLink || $productObject->hasMedia('preview')) {
+        if (! $imageLink || $productObject->hasMedia('preview')) {
             return null;
         }
 
@@ -281,7 +281,7 @@ class ProcessFeeds extends Command
             $hrefArr['shop'][] = trim($link->href);
         }
 
-        if ((string)$videoLinks) {
+        if ((string) $videoLinks) {
             $hrefArr['video'] = explode(',', $videoLinks);
         }
 
@@ -327,7 +327,7 @@ class ProcessFeeds extends Command
         $recommendationsIDs = [];
 
         foreach ($recommendations as $recommendation) {
-            $ean = (string)$recommendation;
+            $ean = (string) $recommendation;
 
             if ($ean) {
                 $recommendationObject = $this->productsService->getModel()::where('ean', $ean)->first();

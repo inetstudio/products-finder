@@ -217,7 +217,7 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
      */
     public function setDescriptionAttribute($value): void
     {
-        $value = (isset($value['text'])) ? $value['text'] : (!is_array($value) ? $value : '');
+        $value = (isset($value['text'])) ? $value['text'] : (! is_array($value) ? $value : '');
 
         $this->attributes['description'] = trim(str_replace('&nbsp;', ' ', strip_tags($value)));
     }
@@ -229,7 +229,7 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
      */
     public function setBenefitsAttribute($value): void
     {
-        $value = (isset($value['text'])) ? $value['text'] : (!is_array($value) ? $value : '');
+        $value = (isset($value['text'])) ? $value['text'] : (! is_array($value) ? $value : '');
 
         $this->attributes['benefits'] = trim(str_replace('&nbsp;', ' ', strip_tags($value)));
     }
@@ -241,7 +241,7 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
      */
     public function setHowToUseAttribute($value): void
     {
-        $value = (isset($value['text'])) ? $value['text'] : (!is_array($value) ? $value : '');
+        $value = (isset($value['text'])) ? $value['text'] : (! is_array($value) ? $value : '');
 
         $this->attributes['how_to_use'] = trim(str_replace('&nbsp;', ' ', strip_tags($value)));
     }
@@ -253,7 +253,7 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
      */
     public function setFeaturesAttribute($value): void
     {
-        $value = (isset($value['text'])) ? $value['text'] : (!is_array($value) ? $value : '');
+        $value = (isset($value['text'])) ? $value['text'] : (! is_array($value) ? $value : '');
 
         $this->attributes['features'] = trim(str_replace('&nbsp;', ' ', strip_tags($value)));
     }
@@ -275,7 +275,7 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
      */
     public function setUpdateAttribute($value): void
     {
-        $this->attributes['update'] = (bool)trim(strip_tags($value));
+        $this->attributes['update'] = (bool) trim(strip_tags($value));
     }
 
     /**
@@ -331,7 +331,7 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
         $builder = $this::select(['id']);
         $items = $productsService->getFilterBuilder($builder, $filter)->pluck('id')->toArray();
 
-        if (!in_array($this['id'], $items)) {
+        if (! in_array($this['id'], $items)) {
             $this->unsearchable();
 
             return [];

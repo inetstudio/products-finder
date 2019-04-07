@@ -19,5 +19,8 @@ interface UtilityControllerContract
      *
      * @return SuggestionsResponseContract
      */
-    public function getSuggestions(UtilityServiceContract $utilityService, Request $request): SuggestionsResponseContract;
+    public function getSuggestions(
+        UtilityServiceContract $utilityService,
+        Request $request
+    ): SuggestionsResponseContract;
 }

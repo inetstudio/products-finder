@@ -23,7 +23,7 @@ class ServiceProvider extends BaseServiceProvider
      */
     protected function registerConsoleCommands(): void
     {
-        if (!$this->app->runningInConsole()) {
+        if (! $this->app->runningInConsole()) {
             return;
         }
 

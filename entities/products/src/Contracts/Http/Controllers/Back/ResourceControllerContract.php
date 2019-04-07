@@ -41,7 +41,10 @@ interface ResourceControllerContract
      *
      * @return SaveResponseContract
      */
-    public function store(ItemsServiceContract $resourceService, SaveItemRequestContract $request): SaveResponseContract;
+    public function store(
+        ItemsServiceContract $resourceService,
+        SaveItemRequestContract $request
+    ): SaveResponseContract;
 
     /**
      * Редактирование объекта.
