@@ -400,7 +400,7 @@ class ProcessFeeds extends Command
             $currentEntriesIDs = $group->entries()
                 ->pluck('classifiers_entries.id')
                 ->toArray();
-            
+
             $entriesIDs = array_unique(array_merge($entriesIDs, $currentEntriesIDs));
             $group->entries()->sync($entriesIDs);
         }

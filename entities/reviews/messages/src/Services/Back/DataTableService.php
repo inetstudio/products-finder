@@ -148,7 +148,7 @@ class DataTableService extends DataTable implements DataTableServiceContract
      */
     protected function getParameters(): array
     {
-        $i18n = trans('admin::datatables');
+        $translation = trans('admin::datatables');
 
         return [
             'order' => [10, 'desc'],
@@ -157,7 +157,7 @@ class DataTableService extends DataTable implements DataTableServiceContract
             'searching' => true,
             'info' => false,
             'searchDelay' => 350,
-            'language' => $i18n,
+            'language' => $translation,
         ];
     }
 }

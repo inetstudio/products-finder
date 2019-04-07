@@ -31,6 +31,9 @@ class ServiceProvider extends BaseServiceProvider
      */
     protected function registerViews(): void
     {
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'admin.module.products-finder.classifiers.entries');
+        $this->loadViewsFrom(
+            __DIR__.'/../../resources/views',
+            'admin.module.products-finder.classifiers.entries'
+        );
     }
 }
