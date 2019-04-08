@@ -11,12 +11,12 @@ Route::group(
     function () {
         Route::any(
             'entries/data',
-            'EntriesDataControllerContract@data'
+            'DataControllerContract@data'
         )->name('back.products-finder.classifiers.entries.data.index');
 
         Route::resource(
             'entries',
-            'EntriesControllerContract',
+            'ResourceControllerContract',
             [
                 'only' => [
                     'index',

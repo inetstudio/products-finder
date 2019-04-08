@@ -15,9 +15,9 @@ class BindingsServiceProvider extends BaseServiceProvider implements DeferrableP
      */
     public $bindings = [
         'InetStudio\ProductsFinder\Classifiers\Entries\Contracts\Http\Responses\Back\Resource\IndexResponseContract' => 'InetStudio\ProductsFinder\Classifiers\Entries\Http\Responses\Back\Resource\IndexResponse',
-        'InetStudio\ProductsFinder\Classifiers\Entries\Contracts\Http\Controllers\Back\EntriesControllerContract' => 'InetStudio\ProductsFinder\Classifiers\Entries\Http\Controllers\Back\EntriesController',
-        'InetStudio\ProductsFinder\Classifiers\Entries\Contracts\Http\Controllers\Back\EntriesDataControllerContract' => 'InetStudio\ProductsFinder\Classifiers\Entries\Http\Controllers\Back\EntriesDataController',
-        'InetStudio\ProductsFinder\Classifiers\Entries\Contracts\Services\Back\EntriesDataTableServiceContract' => 'InetStudio\ProductsFinder\Classifiers\Entries\Services\Back\EntriesDataTableService',
+        'InetStudio\ProductsFinder\Classifiers\Entries\Contracts\Http\Controllers\Back\ResourceControllerContract' => 'InetStudio\ProductsFinder\Classifiers\Entries\Http\Controllers\Back\ResourceController',
+        'InetStudio\ProductsFinder\Classifiers\Entries\Contracts\Http\Controllers\Back\DataControllerContract' => 'InetStudio\ProductsFinder\Classifiers\Entries\Http\Controllers\Back\DataController',
+        'InetStudio\ProductsFinder\Classifiers\Entries\Contracts\Services\Back\DataTableServiceContract' => 'InetStudio\ProductsFinder\Classifiers\Entries\Services\Back\DataTableService',
     ];
 
     /**

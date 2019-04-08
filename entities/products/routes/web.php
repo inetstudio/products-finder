@@ -10,16 +10,16 @@ Route::group(
     ], function () {
         Route::any(
             'products/data',
-            'ProductsDataControllerContract@data'
+            'DataControllerContract@data'
         )->name('back.products-finder.products.data.index');
 
         Route::post(
             'products/suggestions',
-            'ProductsUtilityControllerContract@getSuggestions'
+            'UtilityControllerContract@getSuggestions'
         )->name('back.products-finder.products.getSuggestions');
 
         Route::resource(
-            'products', 'ProductsControllerContract', [
+            'products', 'ResourceControllerContract', [
                 'except' => [
                     'show',
                 ],

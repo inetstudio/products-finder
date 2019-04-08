@@ -10,11 +10,11 @@ Route::group(
     ], function () {
         Route::any(
             'messages/data',
-            'MessagesDataControllerContract@data'
+            'DataControllerContract@data'
         )->name('back.products-finder.reviews.messages.data.index');
 
         Route::resource(
-            'messages', 'MessagesControllerContract', [
+            'messages', 'ResourceControllerContract', [
                 'only' => [
                     'index',
                 ],
