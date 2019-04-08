@@ -7,7 +7,8 @@ Route::group(
         'namespace' => 'InetStudio\ProductsFinder\Reviews\Messages\Contracts\Http\Controllers\Back',
         'middleware' => ['web', 'back.auth'],
         'prefix' => 'back/products-finder/reviews',
-    ], function () {
+    ],
+    function () {
         Route::any(
             'messages/data',
             'DataControllerContract@data'

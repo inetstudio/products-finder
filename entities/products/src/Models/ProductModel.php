@@ -48,15 +48,14 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
     protected $table = 'products_finder_products';
 
     /**
-     * Атрибуты, для которых запрещено массовое назначение.
+     * Атрибуты, для которых разрешено массовое назначение.
      *
      * @var array
      */
-    protected $guarded = [
-        'id',
-        'created_at',
-        'updated_at',
-        'deleted_at',
+    protected $fillable = [
+        'feed_hash', 'ean', 'brand', 'series', 'group_name',
+        'shade', 'title', 'description', 'benefits',
+        'how_to_use', 'features', 'volume', 'update',
     ];
 
     /**

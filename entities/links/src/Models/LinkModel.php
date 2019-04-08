@@ -21,14 +21,12 @@ class LinkModel extends Model implements LinkModelContract
     protected $table = 'products_finder_links';
 
     /**
-     * Атрибуты, для которых запрещено массовое назначение.
+     * Атрибуты, для которых разрешено массовое назначение.
      *
      * @var array
      */
-    protected $guarded = [
-        'id',
-        'created_at',
-        'updated_at',
+    protected $fillable = [
+        'type', 'product_id', 'href',
     ];
 
     /**
