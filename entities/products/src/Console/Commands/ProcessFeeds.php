@@ -78,14 +78,12 @@ class ProcessFeeds extends Command
 
     /**
      * Запуск команды.
-     *
-     * @return void
      */
     public function handle(): void
     {
-        $feeds = config('products_finder_products.feeds');
+        $feeds = config('products_finder_products.feeds', []);
 
-        foreach ($feeds ?? [] as $productsFeed => $url) {
+        foreach ($feeds as $productsFeed => $url) {
             $this->info(PHP_EOL.'Обработка фида: '.$productsFeed);
 
             $xml = $this->getFeedContent($url);
