@@ -14,7 +14,7 @@ interface ModelFilterServiceContract
      * @param  string $filterType
      * @param  array  $filters
      *
-     * @return boolean
+     * @return bool
      */
     public static function apply($item, string $filterType, array $filters = []): bool;
 }

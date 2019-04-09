@@ -67,7 +67,7 @@ class BuilderFilterService implements BuilderFilterServiceContract
      *
      * @param  string  $decorator
      *
-     * @return boolean
+     * @return bool
      */
     protected static function isValidDecorator(string $decorator): bool
     {
