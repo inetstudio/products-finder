@@ -3,8 +3,8 @@
 namespace InetStudio\ProductsFinder\Products\Services\Front;
 
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use InetStudio\AdminPanel\Base\Services\BaseService;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use InetStudio\ProductsFinder\Products\Contracts\Models\ProductModelContract;
 use InetStudio\ProductsFinder\Products\Contracts\Services\Front\ItemsServiceContract;
 
@@ -92,14 +92,20 @@ class ItemsService extends BaseService implements ItemsServiceContract
      * @param  array  $item
      *
      * @return array
+     *
+     * @throws BindingResolutionException
      */
     public function getProductBreadcrumbs(array $item): array
     {
+        $filterService = app()->make(
+            'InetStudio\ProductsFinder\Products\Contracts\Managers\FilterServicesManagerContract'
+        )->with('model');
+
         $scopeIndex = 0;
 
         foreach ($this->categories as $scope => $scopeData) {
             foreach ($scopeData['types'] ?? [] as $type) {
-                if ($this->applyFiltersForItem($item, $type['filter'])) {
+                if ($filterService->apply($item, 'or', $type['filter'])) {
                     return [
                         'scope' => [
                             'title' => $scope,
@@ -117,80 +123,5 @@ class ItemsService extends BaseService implements ItemsServiceContract
         }
 
         return [];
-    }
-
-    /**
-     * Применяем фильтры к продукту.
-     *
-     * @param $item
-     * @param $filter
-     *
-     * @return bool
-     */
-    public function applyFiltersForItem(array $item, array $filter): bool
-    {
-        $classifiersFilterResult = $this->applyClassifiersFilterForItem($item, $filter['classifiers'] ?? []);
-        $fieldsFilterResult = $this->applyFieldsFilterForItem($item, $filter['fields'] ?? []);
-
-        return $classifiersFilterResult || $fieldsFilterResult;
-    }
-
-    /**
-     * Применяем фильтр по классификаторам.
-     *
-     * @param  array  $item
-     * @param  array  $filter
-     *
-     * @return bool|null
-     */
-    protected function applyClassifiersFilterForItem(array $item, array $filter): ?bool
-    {
-        if (empty($filter)) {
-            return null;
-        }
-
-        $types = collect($item['classifiers']['products_finder_types'])->pluck('alias')->toArray();
-
-        return count(array_intersect($filter, $types)) > 0;
-    }
-
-    /**
-     * Применяем фильтр по полям.
-     *
-     * @param  array  $item
-     * @param  array  $filter
-     *
-     * @return bool|null
-     */
-    protected function applyFieldsFilterForItem(array $item, array $filter): ?bool
-    {
-        if (empty($filter)) {
-            return null;
-        }
-
-        foreach ($filter as $fieldExpression) {
-            $field = strtok($fieldExpression, '|');
-            $operator = strtok('|');
-            $value = Str::lower(strtok('|'));
-
-            $itemFieldValue = Str::lower($item[$field] ?? '');
-
-            $passed = false;
-
-            switch ($operator) {
-                case '=':
-                    $passed = ($itemFieldValue == $value);
-                    break;
-                case 'like':
-                    $passed = (strpos($itemFieldValue, str_replace('%', '', $value)) !== false);
-                    break;
-            }
-
-            if ($passed) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

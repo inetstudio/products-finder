@@ -342,10 +342,12 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
             'InetStudio\ProductsFinder\Products\Contracts\Services\Front\ItemsServiceContract'
         );
 
+        $filterService = app()->make(
+            'InetStudio\ProductsFinder\Products\Contracts\Managers\FilterServicesManagerContract'
+        )->with('builder');
+
         $filter = $productsService->getDefaultFilters();
-        $items = $this->newQuery()
-            ->select(['id'])
-            ->filterItems($filter)
+        $items = $filterService->apply($this->newQuery()->select(['id']), $filter)
             ->pluck('id')
             ->toArray();
 
@@ -379,40 +381,5 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
         $arr['search_field'] = $arr['title'].' '.implode(' ', collect($arr['classifiers'])->pluck('value')->toArray());
 
         return $arr;
-    }
-
-    /**
-     * Возвращаем запрос на получение объектов.
-     *
-     * @param  Builder  $query
-     * @param  array  $filter
-     *
-     * @return Builder
-     *
-     * @throws BindingResolutionException
-     */
-    public function scopeFilterItems(Builder $query, array $filter = []): Builder
-    {
-        $productsService = app()->make(
-            'InetStudio\ProductsFinder\Products\Contracts\Services\Front\ItemsServiceContract'
-        );
-
-        $filter = (empty($filter)) ? $productsService->getDefaultFilters() : $filter;
-
-        if (isset($filter['classifiers']) && ! empty($filter['classifiers'])) {
-            $query->withAnyClassifiers($filter['classifiers'], 'alias');
-        }
-
-        foreach ($filter['fields'] ?? [] as $fieldExpression) {
-            $field = strtok($fieldExpression, '|');
-            $operator = strtok('|');
-            $value = strtok('|');
-
-            $value = preg_replace('/[^%A-Za-zА-Яа-я\-\(\) ]+/u', '', $value);
-
-            $query->orWhere($field, $operator, $value);
-        }
-
-        return $query;
     }
 }

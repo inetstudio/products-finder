@@ -31,14 +31,4 @@ interface ItemsServiceContract
      * @return array
      */
     public function getProductBreadcrumbs(array $item): array;
-
-    /**
-     * Применяем фильтры к продукту.
-     *
-     * @param  array  $item
-     * @param  array  $filter
-     *
-     * @return bool
-     */
-    public function applyFiltersForItem(array $item, array $filter): bool;
 }
