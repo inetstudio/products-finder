@@ -3,6 +3,7 @@
 namespace InetStudio\ProductsFinder\Products\Managers;
 
 use Illuminate\Support\Manager;
+use Illuminate\Support\Facades\App;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use InetStudio\ProductsFinder\Products\Contracts\Managers\FilterServicesManagerContract;
 use InetStudio\ProductsFinder\Products\Contracts\Services\Common\Filter\ModelFilterServiceContract;
@@ -18,7 +19,7 @@ class FilterServicesManager extends Manager implements FilterServicesManagerCont
      */
     public function __construct()
     {
-        parent::__construct(app());
+        parent::__construct(App::getFacadeApplication());
     }
 
     /**
