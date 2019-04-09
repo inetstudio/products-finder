@@ -59,7 +59,7 @@ class BuilderFilterService implements BuilderFilterServiceContract
             ' ',
             '',
             ucwords(str_replace('_', ' ', $name))
-        );
+        ).'Filter';
     }
 
     /**

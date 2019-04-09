@@ -85,7 +85,7 @@ class ModelFilterService implements ModelFilterServiceContract
             ' ',
             '',
             ucwords(str_replace('_', ' ', $name))
-        );
+        ).'Filter';
     }
 
     /**
