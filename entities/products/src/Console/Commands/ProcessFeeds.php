@@ -99,11 +99,9 @@ class ProcessFeeds extends Command
                 $productData = $this->getProductData($url, $item);
                 $productObject = $this->getProduct($productData['feed_hash'], $productData['ean']);
 
-                if ($productObject) {
-                    $productsEANs[] = $productData['ean'];
-                }
-
                 $this->updateProduct($item, $productObject, $productData);
+
+                $productsEANs[] = $productData['ean'];
 
                 $bar->advance();
             }
