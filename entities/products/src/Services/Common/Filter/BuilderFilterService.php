@@ -49,24 +49,23 @@ class BuilderFilterService implements BuilderFilterServiceContract
     /**
      * Возвращаем класс фильтра.
      *
-     * @param string $name
+     * @param  string  $name
      *
      * @return string
      */
     protected static function createFilterDecorator(string $name): string
     {
-        return __NAMESPACE__.'\\Filters\\Builder\\'.
-            str_replace(
-                ' ',
-                '',
-                ucwords(str_replace('_', ' ', $name))
-            );
+        return __NAMESPACE__.'\\Filters\\Builder\\'.str_replace(
+            ' ',
+            '',
+            ucwords(str_replace('_', ' ', $name))
+        );
     }
 
     /**
      * Проверяем существование фильтра.
      *
-     * @param string $decorator
+     * @param  string  $decorator
      *
      * @return boolean
      */

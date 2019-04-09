@@ -7,4 +7,12 @@ namespace InetStudio\ProductsFinder\Products\Contracts\Managers;
  */
 interface FilterServicesManagerContract
 {
+    /**
+     * Возвращаем сервис фильтра.
+     *
+     * @param  string  $driver
+     *
+     * @return mixed
+     */
+    public function with($driver);
 }

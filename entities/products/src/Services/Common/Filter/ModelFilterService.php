@@ -13,7 +13,7 @@ class ModelFilterService implements ModelFilterServiceContract
      * Применяем фильтры.
      *
      * @param  $item
-     * @param  string $filterType
+     * @param  string  $filterType
      * @param  array  $filters
      *
      * @return boolean
@@ -29,7 +29,7 @@ class ModelFilterService implements ModelFilterServiceContract
      * Применяем фильтры.
      *
      * @param  $item
-     * @param  string $filterType
+     * @param  string  $filterType
      * @param  array  $filters
      *
      * @return boolean
@@ -75,23 +75,23 @@ class ModelFilterService implements ModelFilterServiceContract
     /**
      * Возвращаем класс фильтра.
      *
-     * @param string $name
+     * @param  string  $name
      *
      * @return string
      */
     protected static function createFilterDecorator(string $name): string
     {
-        return __NAMESPACE__.'\\Filters\\Model\\'.
-            str_replace(
-                ' ', '',
-                ucwords(str_replace('_', ' ', $name))
-            );
+        return __NAMESPACE__.'\\Filters\\Model\\'.str_replace(
+            ' ',
+            '',
+            ucwords(str_replace('_', ' ', $name))
+        );
     }
 
     /**
      * Проверяем существование фильтра.
      *
-     * @param string $decorator
+     * @param  string  $decorator
      *
      * @return boolean
      */
