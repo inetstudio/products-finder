@@ -24,7 +24,7 @@ Route::group(
                 'except' => [
                     'show',
                 ],
-                'as' => 'back.products-finder'
+                'as' => 'back.products-finder',
             ]
         );
     }

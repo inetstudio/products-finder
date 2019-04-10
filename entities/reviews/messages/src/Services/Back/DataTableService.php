@@ -115,7 +115,7 @@ class DataTableService extends DataTable implements DataTableServiceContract
                 'name' => 'product',
                 'title' => 'Продукт',
                 'orderable' => false,
-                'searchable' => false
+                'searchable' => false,
             ],
             ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Дата создания'],
             [
@@ -123,7 +123,7 @@ class DataTableService extends DataTable implements DataTableServiceContract
                 'name' => 'actions',
                 'title' => 'Действия',
                 'orderable' => false,
-                'searchable' => false
+                'searchable' => false,
             ],
         ];
     }

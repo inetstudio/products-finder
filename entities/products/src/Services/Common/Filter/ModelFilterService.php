@@ -16,7 +16,7 @@ class ModelFilterService implements ModelFilterServiceContract
      * @param  string  $filterType
      * @param  array  $filters
      *
-     * @return boolean
+     * @return bool
      */
     public static function apply($item, string $filterType = 'or', array $filters = []): bool
     {
@@ -32,7 +32,7 @@ class ModelFilterService implements ModelFilterServiceContract
      * @param  string  $filterType
      * @param  array  $filters
      *
-     * @return boolean
+     * @return bool
      */
     protected static function applyDecorators($item, string $filterType, array $filters = []): bool
     {
@@ -106,7 +106,7 @@ class ModelFilterService implements ModelFilterServiceContract
      *
      * @param  string  $decorator
      *
-     * @return boolean
+     * @return bool
      */
     protected static function isValidDecorator(string $decorator): bool
     {
