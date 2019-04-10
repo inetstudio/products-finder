@@ -13,7 +13,7 @@ class ClassifiersFilter
      * @param  $item
      * @param  array  $filter
      *
-     * @return boolean
+     * @return bool
      */
     public static function apply($item, array $filter): bool
     {

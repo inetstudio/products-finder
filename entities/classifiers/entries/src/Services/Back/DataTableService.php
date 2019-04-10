@@ -105,7 +105,7 @@ class DataTableService extends DataTable implements DataTableServiceContract
                 'name' => 'actions',
                 'title' => 'Действия',
                 'orderable' => false,
-                'searchable' => false
+                'searchable' => false,
             ],
         ];
     }
