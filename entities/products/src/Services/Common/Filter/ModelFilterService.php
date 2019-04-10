@@ -36,8 +36,6 @@ class ModelFilterService implements ModelFilterServiceContract
      */
     protected static function applyDecorators($item, string $filterType, array $filters = []): bool
     {
-        $result = false;
-
         $checks = [];
 
         foreach ($filters as $filterName => $value) {
@@ -52,6 +50,19 @@ class ModelFilterService implements ModelFilterServiceContract
             }
         }
 
+        return static::analyzeResult($checks, $filterType);
+    }
+
+    /**
+     * Анализ фильтров.
+     *
+     * @param  array  $checks
+     * @param  string  $filterType
+     *
+     * @return bool
+     */
+    protected static function analyzeResult(array $checks, string $filterType): bool
+    {
         if (empty($checks)) {
             return true;
         }
@@ -60,16 +71,18 @@ class ModelFilterService implements ModelFilterServiceContract
 
         switch ($filterType) {
             case 'or':
-                $result = count($checks) > 1 || (count($checks) == 1 && $checks[0] === true);
+                $result = array_sum($checks);
 
                 break;
             case 'and':
-                $result = (count($checks) == 1 && $checks[0] === true);
+                $result = array_product($checks);
 
                 break;
+            default:
+                $result = 0;
         }
 
-        return $result;
+        return $result > 0;
     }
 
     /**
