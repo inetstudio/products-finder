@@ -10,9 +10,9 @@ use Illuminate\Console\Command;
 use Spatie\MediaLibrary\Models\Media;
 use GuzzleHttp\Exception\ClientException;
 use InetStudio\ProductsFinder\Products\Contracts\Models\ProductModelContract;
-use InetStudio\Classifiers\Groups\Contracts\Services\Back\GroupsServiceContract as GroupsServiceContract;
+use InetStudio\Classifiers\Groups\Contracts\Services\Back\ItemsServiceContract as GroupsServiceContract;
 use InetStudio\ProductsFinder\Links\Contracts\Services\Back\ItemsServiceContract as LinksServiceContract;
-use InetStudio\Classifiers\Entries\Contracts\Services\Back\EntriesServiceContract as EntriesServiceContract;
+use InetStudio\Classifiers\Entries\Contracts\Services\Back\ItemsServiceContract as EntriesServiceContract;
 use InetStudio\ProductsFinder\Products\Contracts\Services\Back\ItemsServiceContract as ProductsServiceContract;
 
 /**

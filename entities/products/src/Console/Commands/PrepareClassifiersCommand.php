@@ -32,7 +32,7 @@ class PrepareClassifiersCommand extends Command
     public function handle(): void
     {
         $classifiersGroupsService = app()->make(
-            'InetStudio\Classifiers\Groups\Contracts\Services\Back\GroupsServiceContract'
+            'InetStudio\Classifiers\Groups\Contracts\Services\Back\ItemsServiceContract'
         );
 
         $groups = [
