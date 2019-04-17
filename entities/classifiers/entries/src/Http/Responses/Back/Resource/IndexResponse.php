@@ -3,13 +3,12 @@
 namespace InetStudio\ProductsFinder\Classifiers\Entries\Http\Responses\Back\Resource;
 
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Support\Responsable;
 use InetStudio\ProductsFinder\Classifiers\Entries\Contracts\Http\Responses\Back\Resource\IndexResponseContract;
 
 /**
  * Class IndexResponse.
  */
-class IndexResponse implements IndexResponseContract, Responsable
+class IndexResponse implements IndexResponseContract
 {
     /**
      * @var array

@@ -2,30 +2,11 @@
 
 namespace InetStudio\ProductsFinder\Reviews\Messages\Contracts\Services\Back;
 
-use Illuminate\Http\JsonResponse;
-use Yajra\DataTables\Html\Builder;
+use InetStudio\AdminPanel\Base\Contracts\Services\Back\BaseDataTableServiceContract;
 
 /**
  * Interface DataTableServiceContract.
  */
-interface DataTableServiceContract
+interface DataTableServiceContract extends BaseDataTableServiceContract
 {
-    /**
-     * @return Builder
-     */
-    public function html(): Builder;
-
-    /**
-     * Запрос на получение данных таблицы.
-     *
-     * @return JsonResponse
-     */
-    public function ajax(): JsonResponse;
-
-    /**
-     * Запрос в бд для получения данных для формирования таблицы.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Support\Collection
-     */
-    public function query();
 }

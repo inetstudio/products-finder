@@ -4,8 +4,8 @@ namespace InetStudio\ProductsFinder\Products\Models;
 
 use Illuminate\Support\Arr;
 use Laravel\Scout\Searchable;
+use OwenIt\Auditing\Auditable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use InetStudio\Uploads\Models\Traits\HasImages;
 use InetStudio\Favorites\Models\Traits\Favoritable;
@@ -24,6 +24,7 @@ use InetStudio\ProductsFinder\Products\Contracts\Models\ProductModelContract;
 class ProductModel extends Model implements ProductModelContract, FavoritableContract
 {
     use Links;
+    use Auditable;
     use HasImages;
     use HasReviews;
     use Searchable;
@@ -31,6 +32,15 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
     use Favoritable;
     use HasClassifiers;
     use BuildQueryScopeTrait;
+
+    const ENTITY_TYPE = 'products_finder_product';
+
+    /**
+     * Should the timestamps be audited?
+     *
+     * @var bool
+     */
+    protected $auditTimestamps = true;
 
     /**
      * @var array
@@ -288,6 +298,16 @@ class ProductModel extends Model implements ProductModelContract, FavoritableCon
     public function setUpdateAttribute($value): void
     {
         $this->attributes['update'] = (bool) trim(strip_tags($value));
+    }
+
+    /**
+     * Геттер атрибута type.
+     *
+     * @return string
+     */
+    public function getTypeAttribute(): string
+    {
+        return self::ENTITY_TYPE;
     }
 
     /**

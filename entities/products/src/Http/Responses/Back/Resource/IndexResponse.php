@@ -4,13 +4,12 @@ namespace InetStudio\ProductsFinder\Products\Http\Responses\Back\Resource;
 
 use Illuminate\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Support\Responsable;
 use InetStudio\ProductsFinder\Products\Contracts\Http\Responses\Back\Resource\IndexResponseContract;
 
 /**
  * Class IndexResponse.
  */
-class IndexResponse implements IndexResponseContract, Responsable
+class IndexResponse implements IndexResponseContract
 {
     /**
      * @var array

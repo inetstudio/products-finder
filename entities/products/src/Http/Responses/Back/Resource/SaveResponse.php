@@ -4,14 +4,13 @@ namespace InetStudio\ProductsFinder\Products\Http\Responses\Back\Resource;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Contracts\Support\Responsable;
 use InetStudio\ProductsFinder\Products\Contracts\Models\ProductModelContract;
 use InetStudio\ProductsFinder\Products\Contracts\Http\Responses\Back\Resource\SaveResponseContract;
 
 /**
  * Class SaveResponse.
  */
-class SaveResponse implements SaveResponseContract, Responsable
+class SaveResponse implements SaveResponseContract
 {
     /**
      * @var ProductModelContract

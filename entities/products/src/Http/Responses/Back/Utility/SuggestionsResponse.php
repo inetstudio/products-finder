@@ -6,14 +6,13 @@ use League\Fractal\Manager;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
-use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use InetStudio\ProductsFinder\Products\Contracts\Http\Responses\Back\Utility\SuggestionsResponseContract;
 
 /**
  * Class SuggestionsResponse.
  */
-class SuggestionsResponse implements SuggestionsResponseContract, Responsable
+class SuggestionsResponse implements SuggestionsResponseContract
 {
     /**
      * @var Collection
@@ -38,7 +37,7 @@ class SuggestionsResponse implements SuggestionsResponseContract, Responsable
     }
 
     /**
-     * Возвращаем slug по заголовку объекта.
+     * Возвращаем подсказки.
      *
      * @param  Request  $request
      *

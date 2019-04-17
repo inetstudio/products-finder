@@ -87,21 +87,7 @@ class ResourceController extends Controller implements ResourceControllerContrac
      */
     public function edit(ItemsServiceContract $resourceService, int $id = 0): FormResponseContract
     {
-        $item = $resourceService->getItemById(
-            $id, [
-                'columns' => [
-                    'ean',
-                    'series',
-                    'group_name',
-                    'shade',
-                    'benefits',
-                    'how_to_use',
-                    'features',
-                    'volume',
-                    'update',
-                ],
-            ]
-        );
+        $item = $resourceService->getItemById($id);
 
         return $this->app->make(
             FormResponseContract::class,

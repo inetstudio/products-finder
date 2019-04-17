@@ -4,13 +4,12 @@ namespace InetStudio\ProductsFinder\Products\Http\Responses\Back\Resource;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Contracts\Support\Responsable;
 use InetStudio\ProductsFinder\Products\Contracts\Http\Responses\Back\Resource\DestroyResponseContract;
 
 /**
  * Class DestroyResponse.
  */
-class DestroyResponse implements DestroyResponseContract, Responsable
+class DestroyResponse implements DestroyResponseContract
 {
     /**
      * @var bool

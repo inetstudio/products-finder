@@ -4,6 +4,7 @@ namespace InetStudio\ProductsFinder\Products\Contracts\Models;
 
 use ArrayAccess;
 use JsonSerializable;
+use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Contracts\Support\Jsonable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Contracts\Support\Arrayable;
@@ -13,7 +14,7 @@ use Illuminate\Contracts\Queue\QueueableEntity;
 /**
  * Interface ProductModelContract.
  */
-interface ProductModelContract extends ArrayAccess, Arrayable, Jsonable, JsonSerializable, QueueableEntity, UrlRoutable, HasMedia
+interface ProductModelContract extends ArrayAccess, Arrayable, Auditable, Jsonable, JsonSerializable, QueueableEntity, UrlRoutable, HasMedia
 {
     /**
      * Reload a fresh model instance from the database.
