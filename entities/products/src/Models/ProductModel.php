@@ -14,14 +14,13 @@ use InetStudio\ProductsFinder\Links\Models\Traits\Links;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use InetStudio\Reviews\Messages\Models\Traits\HasReviews;
 use Illuminate\Contracts\Container\BindingResolutionException;
-use InetStudio\Favorites\Contracts\Models\Traits\FavoritableContract;
 use InetStudio\AdminPanel\Base\Models\Traits\Scopes\BuildQueryScopeTrait;
 use InetStudio\ProductsFinder\Products\Contracts\Models\ProductModelContract;
 
 /**
  * Class ProductModel.
  */
-class ProductModel extends Model implements ProductModelContract, FavoritableContract
+class ProductModel extends Model implements ProductModelContract
 {
     use Links;
     use Auditable;
