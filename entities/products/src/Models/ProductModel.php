@@ -366,7 +366,9 @@ class ProductModel extends Model implements ProductModelContract
         )->with('builder');
 
         $filter = $productsService->getDefaultFilters();
-        $items = $filterService->apply($this->newQuery()->select(['id']), $filter)
+
+        $query = $this->newQuery()->select(['id']);
+        $items = $filterService->apply($query, $filter['main'])
             ->pluck('id')
             ->toArray();
 

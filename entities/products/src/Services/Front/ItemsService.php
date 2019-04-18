@@ -35,14 +35,20 @@ class ItemsService extends BaseService implements ItemsServiceContract
      */
     public function getDefaultFilters(): array
     {
-        $filter = [];
+        $filter = [
+            'additional' => [],
+            'main' => [],
+        ];
 
         collect($this->categories)->pluck('types')
             ->flatten(1)
-            ->pluck('filter')
             ->each(
                 function ($item) use (&$filter) {
-                    $filter = array_merge_recursive($item, $filter);
+                    $mode = $item['mode'] ?? 'main';
+
+                    if ($mode == 'main') {
+                        $filter[$mode] = array_merge_recursive($item['filter'], $filter[$mode]);
+                    }
                 }
             );
 
@@ -58,7 +64,10 @@ class ItemsService extends BaseService implements ItemsServiceContract
      */
     public function prepareFilterByRequestData(array $data): array
     {
-        $filter = [];
+        $filter = [
+            'additional' => [],
+            'main' => [],
+        ];
 
         $scopeParam = Arr::get($data, 'scope', -1);
         $typeParam = Arr::get($data, 'type', '');
@@ -76,10 +85,13 @@ class ItemsService extends BaseService implements ItemsServiceContract
 
         $typeCategories->merge($scopeCategories)
             ->unique()
-            ->pluck('filter')
             ->each(
                 function ($item) use (&$filter) {
-                    $filter = array_merge_recursive($item, $filter);
+                    $mode = $item['mode'] ?? 'main';
+
+                    if ($mode == 'main') {
+                        $filter[$mode] = array_merge_recursive($item['filter'], $filter[$mode]);
+                    }
                 }
             );
 
@@ -105,7 +117,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
 
         foreach ($this->categories as $scope => $scopeData) {
             foreach ($scopeData['types'] ?? [] as $type) {
-                if ($filterService->apply($item, 'or', $type['filter'])) {
+                if ((($type['mode'] ?? 'main') == 'main') && $filterService->apply($item, 'or', $type['filter'])) {
                     return [
                         'scope' => [
                             'title' => $scope,
