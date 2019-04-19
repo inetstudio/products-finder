@@ -72,6 +72,12 @@ class ItemsService extends BaseService implements ItemsServiceContract
         $scopeParam = Arr::get($data, 'scope', -1);
         $typeParam = Arr::get($data, 'type', '');
 
+        if ($scopeParam === -1 && $typeParam === '') {
+            $filter = array_merge_recursive($filter, $data);
+
+            return $filter;
+        }
+
         $typeCategories = collect($this->categories)->pluck('types')
             ->flatten(1)
             ->filter(
