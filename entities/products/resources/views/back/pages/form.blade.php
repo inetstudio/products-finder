@@ -41,6 +41,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="panel-group float-e-margins" id="mainAccordion">
+
+                            {!! Form::meta('', $item) !!}
+
+                            {!! Form::social_meta('', $item) !!}
+
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h5 class="panel-title">

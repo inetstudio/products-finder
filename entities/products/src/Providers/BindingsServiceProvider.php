@@ -14,6 +14,7 @@ class BindingsServiceProvider extends BaseServiceProvider implements DeferrableP
      * @var array
      */
     public $bindings = [
+        'InetStudio\ProductsFinder\Products\Contracts\Console\Commands\ProcessFeedsCommandContract' => 'InetStudio\ProductsFinder\Products\Console\Commands\ProcessFeedsCommand',
         'InetStudio\ProductsFinder\Products\Contracts\Events\Back\ModifyItemEventContract' => 'InetStudio\ProductsFinder\Products\Events\Back\ModifyItemEvent',
         'InetStudio\ProductsFinder\Products\Contracts\Http\Controllers\Back\ResourceControllerContract' => 'InetStudio\ProductsFinder\Products\Http\Controllers\Back\ResourceController',
         'InetStudio\ProductsFinder\Products\Contracts\Http\Controllers\Back\DataControllerContract' => 'InetStudio\ProductsFinder\Products\Http\Controllers\Back\DataController',

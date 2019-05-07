@@ -15,6 +15,7 @@
     "inetstudio/admin-panel": "1.8.*",
     "inetstudio/classifiers": "1.8.*",
     "inetstudio/favorites": "1.8.*",
+    "inetstudio/meta": "1.8.*",
     "inetstudio/reviews": "1.8.*"
   },
   "autoload": {

@@ -34,7 +34,7 @@ class ServiceProvider extends BaseServiceProvider
             [
                 'InetStudio\ProductsFinder\Products\Console\Commands\CreateFoldersCommand',
                 'InetStudio\ProductsFinder\Products\Console\Commands\PrepareClassifiersCommand',
-                'InetStudio\ProductsFinder\Products\Console\Commands\ProcessFeeds',
+                'InetStudio\ProductsFinder\Products\Contracts\Console\Commands\ProcessFeedsCommandContract',
                 'InetStudio\ProductsFinder\Products\Console\Commands\SetupCommand',
             ]
         );

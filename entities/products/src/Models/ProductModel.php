@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use InetStudio\Uploads\Models\Traits\HasImages;
 use InetStudio\Favorites\Models\Traits\Favoritable;
+use InetStudio\MetaPackage\Meta\Models\Traits\HasMeta;
 use InetStudio\Classifiers\Models\Traits\HasClassifiers;
 use InetStudio\ProductsFinder\Links\Models\Traits\Links;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -23,6 +24,7 @@ use InetStudio\ProductsFinder\Products\Contracts\Models\ProductModelContract;
 class ProductModel extends Model implements ProductModelContract
 {
     use Links;
+    use HasMeta;
     use Auditable;
     use HasImages;
     use HasReviews;
