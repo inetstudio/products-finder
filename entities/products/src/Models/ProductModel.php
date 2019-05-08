@@ -64,9 +64,19 @@ class ProductModel extends Model implements ProductModelContract
      * @var array
      */
     protected $fillable = [
-        'feed_hash', 'ean', 'brand', 'series', 'group_name',
-        'shade', 'title', 'description', 'benefits',
-        'how_to_use', 'features', 'volume', 'update',
+        'feed_hash',
+        'ean',
+        'brand',
+        'series',
+        'group_name',
+        'shade',
+        'title',
+        'description',
+        'benefits',
+        'how_to_use',
+        'features',
+        'volume',
+        'update',
     ];
 
     /**
@@ -95,6 +105,10 @@ class ProductModel extends Model implements ProductModelContract
         ];
 
         self::$buildQueryScopeDefaults['relations'] = [
+            'meta' => function ($query) {
+                $query->select(['metable_id', 'metable_type', 'key', 'value']);
+            },
+
             'media' => function ($query) {
                 $query->select(
                     [
