@@ -5,6 +5,7 @@ namespace InetStudio\ProductsFinder\Products\Services\Front;
 use Illuminate\Support\Arr;
 use InetStudio\AdminPanel\Base\Services\BaseService;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use InetStudio\Favorites\Services\Front\Traits\FavoritesServiceTrait;
 use InetStudio\ProductsFinder\Products\Contracts\Models\ProductModelContract;
 use InetStudio\ProductsFinder\Products\Contracts\Services\Front\ItemsServiceContract;
 
@@ -13,6 +14,13 @@ use InetStudio\ProductsFinder\Products\Contracts\Services\Front\ItemsServiceCont
  */
 class ItemsService extends BaseService implements ItemsServiceContract
 {
+    use FavoritesServiceTrait;
+
+    /**
+     * @var string
+     */
+    protected $favoritesType = 'products_finder';
+
     /**
      * @var array
      */
