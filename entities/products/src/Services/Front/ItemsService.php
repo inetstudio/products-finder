@@ -3,6 +3,7 @@
 namespace InetStudio\ProductsFinder\Products\Services\Front;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use InetStudio\AdminPanel\Base\Services\BaseService;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use InetStudio\Favorites\Services\Front\Traits\FavoritesServiceTrait;
@@ -149,5 +150,38 @@ class ItemsService extends BaseService implements ItemsServiceContract
         }
 
         return [];
+    }
+
+    /**
+     * Получаем продукты.
+     *
+     * @param  array  $filter
+     * @param  array  $params
+     *
+     * @return Collection
+     *
+     * @throws BindingResolutionException
+     */
+    public function getProducts(array $filter = [], array $params = []): Collection
+    {
+        $filterService = app()->make(
+            'InetStudio\ProductsFinder\Products\Contracts\Managers\FilterServicesManagerContract'
+        )->with('builder');
+
+        $defaultParams = [
+            'columns' => ['created_at'],
+            'relations' => ['media'],
+            'order' => ['created_at' => 'DESC'],
+        ];
+
+        $filter = (empty($filter['main']) && empty($filter['additional']))
+            ? $this->getDefaultFilters()
+            : $this->prepareFilterByRequestData($filter);
+
+        $query = $this->getModel()::buildQuery(array_merge($params, $defaultParams));
+        $mainFilterQuery = $filterService->apply($query, $filter['main']);
+        $items = $filterService->apply($mainFilterQuery, $filter['additional'])->get();
+
+        return $items;
     }
 }

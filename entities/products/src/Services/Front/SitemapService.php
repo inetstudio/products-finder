@@ -37,9 +37,12 @@ class SitemapService extends BaseService implements SitemapServiceContract
         );
 
         $filter = $productsService->prepareFilterByRequestData([]);
-        $items = $productsService->getProducts($filter, [
-            'columns' => ['created_at', 'updated_at'],
-        ]);
+        $items = $productsService->getProducts(
+            $filter,
+            [
+                'columns' => ['created_at', 'updated_at'],
+            ]
+        );
 
         $transformer = app()->make(
             'InetStudio\ProductsFinder\Products\Contracts\Transformers\Front\Sitemap\ItemTransformerContract'
