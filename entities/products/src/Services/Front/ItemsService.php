@@ -177,7 +177,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
             ? $this->getDefaultFilters()
             : $this->prepareFilterByRequestData($filter);
 
-        $query = $this->getModel()::buildQuery(array_merge($params, $defaultParams));
+        $query = $this->getModel()::buildQuery(array_merge($defaultParams, $params));
         $mainFilterQuery = $filterService->apply($query, $filter['main']);
         $items = $filterService->apply($mainFilterQuery, $filter['additional'])->get();
 
