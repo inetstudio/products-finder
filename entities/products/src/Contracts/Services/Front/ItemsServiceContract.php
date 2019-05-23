@@ -2,8 +2,6 @@
 
 namespace InetStudio\ProductsFinder\Products\Contracts\Services\Front;
 
-use Illuminate\Support\Collection;
-
 /**
  * Interface ItemsServiceContract.
  */
@@ -40,7 +38,7 @@ interface ItemsServiceContract
      * @param  array  $filter
      * @param  array  $params
      *
-     * @return Collection
+     * @return mixed
      */
-    public function getProducts(array $filter = [], array $params = []): Collection;
+    public function getProducts(array $filter = [], array $params = []);
 }

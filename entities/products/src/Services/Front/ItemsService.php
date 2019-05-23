@@ -3,7 +3,6 @@
 namespace InetStudio\ProductsFinder\Products\Services\Front;
 
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use InetStudio\AdminPanel\Base\Services\BaseService;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use InetStudio\Favorites\Services\Front\Traits\FavoritesServiceTrait;
@@ -158,11 +157,11 @@ class ItemsService extends BaseService implements ItemsServiceContract
      * @param  array  $filter
      * @param  array  $params
      *
-     * @return Collection
+     * @return mixed
      *
      * @throws BindingResolutionException
      */
-    public function getProducts(array $filter = [], array $params = []): Collection
+    public function getProducts(array $filter = [], array $params = [])
     {
         $filterService = app()->make(
             'InetStudio\ProductsFinder\Products\Contracts\Managers\FilterServicesManagerContract'
