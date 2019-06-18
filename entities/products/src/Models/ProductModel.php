@@ -174,6 +174,22 @@ class ProductModel extends Model implements ProductModelContract
                     ]
                 );
             },
+
+            'reviews' => function ($reviewQuery) {
+                $reviewQuery->select([
+                    'id',
+                    'is_active',
+                    'created_at',
+                    'user_id',
+                    'name',
+                    'email',
+                    'title',
+                    'message',
+                    'rating',
+                    'reviewable_id',
+                    'reviewable_type',
+                ])->active()->orderBy('created_at', 'desc');
+            }
         ];
     }
 
