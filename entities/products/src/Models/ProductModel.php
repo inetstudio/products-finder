@@ -189,7 +189,7 @@ class ProductModel extends Model implements ProductModelContract
                     'reviewable_id',
                     'reviewable_type',
                 ])->active()->orderBy('created_at', 'desc');
-            }
+            },
         ];
     }
 
