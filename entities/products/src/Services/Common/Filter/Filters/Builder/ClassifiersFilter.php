@@ -21,6 +21,29 @@ class ClassifiersFilter
     {
         $value = (array) $value;
 
-        return $builder->withAnyClassifiers($value, 'alias');
+        $classifiers = [
+            'any' => [],
+            'all' => [],
+        ];
+
+        foreach ($value as $filterValue) {
+            if (strpos($filterValue, '+') !== false) {
+                $values = explode('+', $filterValue);
+
+                $classifiers['all'][] = $values;
+            } else {
+                $classifiers['any'][] = $filterValue;
+            }
+        }
+
+        $builder->withAnyClassifiers($classifiers['any'], 'alias');
+
+        foreach ($classifiers['all'] as $group) {
+            $builder->orWhere(function ($query) use ($group) {
+                $query->withAllClassifiers($group, 'alias');
+            });
+        }
+
+        return $builder;
     }
 }
