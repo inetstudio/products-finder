@@ -5,6 +5,7 @@ namespace InetStudio\ProductsFinder\Products\Models;
 use Illuminate\Support\Arr;
 use Laravel\Scout\Searchable;
 use OwenIt\Auditing\Auditable;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use InetStudio\Uploads\Models\Traits\HasImages;
@@ -384,25 +385,26 @@ class ProductModel extends Model implements ProductModelContract
      * Настройка полей для поиска.
      *
      * @return array
-     *
-     * @throws BindingResolutionException
      */
     public function toSearchableArray(): array
     {
-        $productsService = app()->make(
-            'InetStudio\ProductsFinder\Products\Contracts\Services\Front\ItemsServiceContract'
-        );
+        $items = Cache::remember('products_finder_filtered_products', 600, function () {
+            $productsService = app()->make(
+                'InetStudio\ProductsFinder\Products\Contracts\Services\Front\ItemsServiceContract'
+            );
 
-        $filterService = app()->make(
-            'InetStudio\ProductsFinder\Products\Contracts\Managers\FilterServicesManagerContract'
-        )->with('builder');
+            $filterService = app()->make(
+                'InetStudio\ProductsFinder\Products\Contracts\Managers\FilterServicesManagerContract'
+            )->with('builder');
 
-        $filter = $productsService->getDefaultFilters();
+            $filter = $productsService->getDefaultFilters();
 
-        $query = $this->newQuery()->select(['id']);
-        $items = $filterService->apply($query, $filter['main'])
-            ->pluck('id')
-            ->toArray();
+            $query = $this->newQuery()->select(['id']);
+
+            return $filterService->apply($query, $filter['main'])
+                ->pluck('id')
+                ->toArray();
+        });
 
         if (! in_array($this['id'], $items)) {
             $this->unsearchable();
