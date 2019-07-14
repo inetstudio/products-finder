@@ -377,7 +377,7 @@ class ProductModel extends Model implements ProductModelContract
      */
     public function searchableAs()
     {
-        return 'doc';
+        return '_doc';
     }
 
     /**
