@@ -433,7 +433,7 @@ class ProductModel extends Model implements ProductModelContract
             }
         )->toArray();
 
-        $arr['search_field'] = $arr['title'].' '.implode(' ', collect($arr['classifiers'])->pluck('value')->toArray());
+        $arr['search_field'] = $arr['brand'].' '.$arr['title'].' '.implode(' ', collect($arr['classifiers'])->pluck('value')->toArray());
 
         return $arr;
     }
