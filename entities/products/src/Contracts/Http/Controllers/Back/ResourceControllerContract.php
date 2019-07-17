@@ -3,8 +3,8 @@
 namespace InetStudio\ProductsFinder\Products\Contracts\Http\Controllers\Back;
 
 use InetStudio\ProductsFinder\Products\Contracts\Services\Back\ItemsServiceContract;
-use InetStudio\ProductsFinder\Products\Contracts\Services\Back\DataTableServiceContract;
 use InetStudio\ProductsFinder\Products\Contracts\Http\Requests\Back\SaveItemRequestContract;
+use InetStudio\ProductsFinder\Products\Contracts\Services\Back\DataTables\IndexServiceContract;
 use InetStudio\ProductsFinder\Products\Contracts\Http\Responses\Back\Resource\FormResponseContract;
 use InetStudio\ProductsFinder\Products\Contracts\Http\Responses\Back\Resource\SaveResponseContract;
 use InetStudio\ProductsFinder\Products\Contracts\Http\Responses\Back\Resource\IndexResponseContract;
@@ -18,11 +18,11 @@ interface ResourceControllerContract
     /**
      * Список объектов.
      *
-     * @param  DataTableServiceContract  $dataTableService
+     * @param  IndexServiceContract  $dataTableService
      *
      * @return IndexResponseContract
      */
-    public function index(DataTableServiceContract $dataTableService): IndexResponseContract;
+    public function index(IndexServiceContract $dataTableService): IndexResponseContract;
 
     /**
      * Создание объекта.

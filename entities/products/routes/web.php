@@ -10,9 +10,19 @@ Route::group(
     ],
     function () {
         Route::any(
-            'products/data',
-            'DataControllerContract@data'
-        )->name('back.products-finder.products.data.index');
+            'products/datatables/{service}/data',
+            'DataControllerContract@getData'
+        )->name('back.products-finder.products.datatables.data');
+
+        Route::any(
+            'products/datatables/{service}/html',
+            'DataControllerContract@getHtml'
+        )->name('back.products-finder.products.datatables.html');
+
+        Route::any(
+            'products/datatables/{service}/options',
+            'DataControllerContract@getOptions'
+        )->name('back.products-finder.products.datatables.options');
 
         Route::post(
             'products/suggestions',

@@ -1,6 +1,6 @@
 <?php
 
-namespace InetStudio\ProductsFinder\Products\Services\Back;
+namespace InetStudio\ProductsFinder\Products\Services\Back\DataTables;
 
 use Exception;
 use Yajra\DataTables\DataTables;
@@ -9,12 +9,12 @@ use Yajra\DataTables\Html\Builder;
 use Yajra\DataTables\Services\DataTable;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use InetStudio\ProductsFinder\Products\Contracts\Models\ProductModelContract;
-use InetStudio\ProductsFinder\Products\Contracts\Services\Back\DataTableServiceContract;
+use InetStudio\ProductsFinder\Products\Contracts\Services\Back\DataTables\IndexServiceContract;
 
 /**
- * Class DataTableService.
+ * Class IndexService.
  */
-class DataTableService extends DataTable implements DataTableServiceContract
+class IndexService extends DataTable implements IndexServiceContract
 {
     /**
      * @var ProductModelContract
@@ -22,7 +22,7 @@ class DataTableService extends DataTable implements DataTableServiceContract
     public $model;
 
     /**
-     * DataTableService constructor.
+     * IndexService constructor.
      *
      * @param  ProductModelContract  $model
      */
@@ -41,7 +41,7 @@ class DataTableService extends DataTable implements DataTableServiceContract
     public function ajax(): JsonResponse
     {
         $transformer = app()->make(
-            'InetStudio\ProductsFinder\Products\Contracts\Transformers\Back\Resource\IndexTransformerContract'
+            'InetStudio\ProductsFinder\Products\Contracts\Transformers\Back\DataTables\IndexTransformerContract'
         );
 
         return DataTables::of($this->query())
@@ -119,7 +119,7 @@ class DataTableService extends DataTable implements DataTableServiceContract
     protected function getAjaxOptions(): array
     {
         return [
-            'url' => route('back.products-finder.products.data.index'),
+            'url' => route('back.products-finder.products.datatables.data', ['service' => 'index']),
             'type' => 'POST',
         ];
     }
@@ -134,10 +134,7 @@ class DataTableService extends DataTable implements DataTableServiceContract
         $translation = trans('admin::datatables');
 
         return [
-            'order' => [
-                1,
-                'asc',
-            ],
+            'order' => [1, 'asc'],
             'paging' => true,
             'pagingType' => 'full_numbers',
             'searching' => true,

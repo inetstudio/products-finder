@@ -5,8 +5,8 @@ namespace InetStudio\ProductsFinder\Products\Http\Controllers\Back;
 use InetStudio\AdminPanel\Base\Http\Controllers\Controller;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use InetStudio\ProductsFinder\Products\Contracts\Services\Back\ItemsServiceContract;
-use InetStudio\ProductsFinder\Products\Contracts\Services\Back\DataTableServiceContract;
 use InetStudio\ProductsFinder\Products\Contracts\Http\Requests\Back\SaveItemRequestContract;
+use InetStudio\ProductsFinder\Products\Contracts\Services\Back\DataTables\IndexServiceContract;
 use InetStudio\ProductsFinder\Products\Contracts\Http\Controllers\Back\ResourceControllerContract;
 use InetStudio\ProductsFinder\Products\Contracts\Http\Responses\Back\Resource\FormResponseContract;
 use InetStudio\ProductsFinder\Products\Contracts\Http\Responses\Back\Resource\SaveResponseContract;
@@ -21,13 +21,13 @@ class ResourceController extends Controller implements ResourceControllerContrac
     /**
      * Список объектов.
      *
-     * @param  DataTableServiceContract  $dataTableService
+     * @param  IndexServiceContract  $dataTableService
      *
      * @return IndexResponseContract
      *
      * @throws BindingResolutionException
      */
-    public function index(DataTableServiceContract $dataTableService): IndexResponseContract
+    public function index(IndexServiceContract $dataTableService): IndexResponseContract
     {
         $table = $dataTableService->html();
 

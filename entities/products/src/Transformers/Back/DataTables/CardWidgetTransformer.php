@@ -1,16 +1,16 @@
 <?php
 
-namespace InetStudio\ProductsFinder\Products\Transformers\Back\Resource;
+namespace InetStudio\ProductsFinder\Products\Transformers\Back\DataTables;
 
 use Throwable;
 use League\Fractal\TransformerAbstract;
 use InetStudio\ProductsFinder\Products\Contracts\Models\ProductModelContract;
-use InetStudio\ProductsFinder\Products\Contracts\Transformers\Back\Resource\IndexTransformerContract;
+use InetStudio\ProductsFinder\Products\Contracts\Transformers\Back\DataTables\CardWidgetTransformerContract;
 
 /**
- * Class IndexTransformer.
+ * Class CardWidgetTransformer.
  */
-class IndexTransformer extends TransformerAbstract implements IndexTransformerContract
+class CardWidgetTransformer extends TransformerAbstract implements CardWidgetTransformerContract
 {
     /**
      * Трансформация данных.
@@ -31,13 +31,9 @@ class IndexTransformer extends TransformerAbstract implements IndexTransformerCo
             )->render(),
             'brand' => $item['brand'],
             'title' => $item['title'],
-            'created_at' => (string) $item['created_at'],
-            'updated_at' => (string) $item['updated_at'],
             'actions' => view(
-                'admin.module.products-finder.products::back.partials.datatables.actions',
-                [
-                    'id' => $item['id'],
-                ]
+                'admin.module.products-finder.products::back.partials.datatables.modal_actions',
+                compact('item')
             )->render(),
         ];
     }

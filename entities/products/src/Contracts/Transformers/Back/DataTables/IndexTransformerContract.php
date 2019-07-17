@@ -1,6 +1,6 @@
 <?php
 
-namespace InetStudio\ProductsFinder\Products\Contracts\Transformers\Back\Resource;
+namespace InetStudio\ProductsFinder\Products\Contracts\Transformers\Back\DataTables;
 
 use InetStudio\ProductsFinder\Products\Contracts\Models\ProductModelContract;
 
