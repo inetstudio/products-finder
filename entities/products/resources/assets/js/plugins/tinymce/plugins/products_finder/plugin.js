@@ -3,9 +3,11 @@ window.tinymce.PluginManager.add('products_finder', function(editor) {
     widget: {
       events: {
         widgetSaved: function(model) {
+          let alt = model.additional_info.title.replace(/['"]+/g, '');
+
           editor.execCommand('mceReplaceContent', false,
               '<img class="content-widget" data-type="products_finder" data-id="' +
-              model.id + '" alt="Виджет-продуктовая карточка ('+model.additional_info.title+')" />',
+              model.id + '" alt="Виджет-продуктовая карточка ('+alt+')" />',
           );
         },
       },
