@@ -90,7 +90,9 @@ class ItemsService extends BaseService implements ItemsServiceContract
             ->flatten(1)
             ->filter(
                 function ($value) use ($typeParam) {
-                    return in_array($typeParam, (array) $value['alias']);
+                    $key = md5(json_encode($value['filter']));
+
+                    return $typeParam == $key;
                 }
             );
 
@@ -139,7 +141,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
                         ],
                         'type' => [
                             'title' => $type['title'],
-                            'alias' => $type['alias'],
+                            'key' => md5(json_encode($type['filter'])),
                         ],
                     ];
                 }

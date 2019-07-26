@@ -19,6 +19,31 @@ class ClassifiersFilter
     {
         $types = collect($item['classifiers'])->collapse()->pluck('alias')->toArray();
 
-        return count(array_intersect($filter, $types)) > 0;
+        $classifiers = [
+            'any' => [],
+            'all' => [],
+        ];
+
+        foreach ($filter as $filterValue) {
+            if (strpos($filterValue, '+') !== false) {
+                $values = explode('+', $filterValue);
+
+                $classifiers['all'][] = $values;
+            } else {
+                $classifiers['any'][] = $filterValue;
+            }
+        }
+
+        if (count(array_intersect($classifiers['any'], $types)) > 0) {
+            return true;
+        }
+
+        foreach ($classifiers['all'] as $group) {
+            if (count(array_intersect($group, $types)) == count($group)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
