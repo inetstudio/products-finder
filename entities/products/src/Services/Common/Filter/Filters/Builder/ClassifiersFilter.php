@@ -36,12 +36,20 @@ class ClassifiersFilter
             }
         }
 
-        $builder->withAnyClassifiers($classifiers['any'], 'alias');
+        if (! empty($classifiers['any'])) {
+            $builder->withAnyClassifiers($classifiers['any'], 'alias');
+        }
 
-        foreach ($classifiers['all'] as $group) {
-            $builder->orWhere(function ($query) use ($group) {
-                $query->withAllClassifiers($group, 'alias');
-            });
+        foreach ($classifiers['all'] as $index => $group) {
+            if (empty($classifiers['any']) && $index == 0) {
+                $builder->where(function ($query) use ($group) {
+                    $query->withAllClassifiers($group, 'alias');
+                });
+            } else {
+                $builder->orWhere(function ($query) use ($group) {
+                    $query->withAllClassifiers($group, 'alias');
+                });
+            }
         }
 
         return $builder;

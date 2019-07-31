@@ -34,7 +34,7 @@ class ClassifiersFilter
             }
         }
 
-        if (count(array_intersect($classifiers['any'], $types)) > 0) {
+        if (! empty($classifiers['any']) && count(array_intersect($classifiers['any'], $types)) > 0) {
             return true;
         }
 
