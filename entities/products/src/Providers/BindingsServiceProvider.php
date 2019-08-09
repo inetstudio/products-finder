@@ -33,6 +33,7 @@ class BindingsServiceProvider extends BaseServiceProvider implements DeferrableP
         'InetStudio\ProductsFinder\Products\Contracts\Services\Back\UtilityServiceContract' => 'InetStudio\ProductsFinder\Products\Services\Back\UtilityService',
         'InetStudio\ProductsFinder\Products\Contracts\Services\Common\Filter\BuilderFilterServiceContract' => 'InetStudio\ProductsFinder\Products\Services\Common\Filter\BuilderFilterService',
         'InetStudio\ProductsFinder\Products\Contracts\Services\Common\Filter\ModelFilterServiceContract' => 'InetStudio\ProductsFinder\Products\Services\Common\Filter\ModelFilterService',
+        'InetStudio\ProductsFinder\Products\Contracts\Services\Front\FeedsServiceContract' => 'InetStudio\ProductsFinder\Products\Services\Front\FeedsService',
         'InetStudio\ProductsFinder\Products\Contracts\Services\Front\ItemsServiceContract' => 'InetStudio\ProductsFinder\Products\Services\Front\ItemsService',
         'InetStudio\ProductsFinder\Products\Contracts\Services\Front\SitemapServiceContract' => 'InetStudio\ProductsFinder\Products\Services\Front\SitemapService',
         'InetStudio\ProductsFinder\Products\Contracts\Transformers\Back\DataTables\CardWidgetTransformerContract' => 'InetStudio\ProductsFinder\Products\Transformers\Back\DataTables\CardWidgetTransformer',
