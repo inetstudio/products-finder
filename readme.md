@@ -31,7 +31,10 @@ curl -X PUT "localhost:9200/app_index_products_finder" -H 'Content-Type: applica
     }
   },
    "mappings":{
-      "properties":{            
+      "properties":{
+          "type": {
+             "type":"keyword"
+          },            
           "id":{
              "type":"integer"
           },            
