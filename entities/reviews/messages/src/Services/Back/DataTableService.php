@@ -61,7 +61,7 @@ class DataTableService extends DataTable implements DataTableServiceContract
             [
                 'columns' => ['title', 'rating', 'created_at'],
             ]
-        )->where('reviewable_type', '=', 'InetStudio\ProductsFinder\Products\Models\ProductModel');
+        )->where('reviewable_type', '=', 'products_finder_products');
 
         return $query;
     }
