@@ -83,7 +83,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
         if ($scopeParam === -1 && $typeParam === '') {
             $filter = array_merge_recursive($filter, $data);
 
-            return $filter;
+            return Arr::only($filter, ['additional', 'main']);
         }
 
         $typeCategories = collect($this->categories)->pluck('types')
@@ -111,7 +111,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
                 }
             );
 
-        return $filter;
+        return Arr::only($filter, ['additional', 'main']);
     }
 
     /**
