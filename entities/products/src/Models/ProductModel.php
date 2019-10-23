@@ -343,6 +343,16 @@ class ProductModel extends Model implements ProductModelContract
     }
 
     /**
+     * Геттер атрибута href.
+     *
+     * @return string
+     */
+    public function getHrefAttribute()
+    {
+        return url('products-finder/'.(! empty($this['slug']) ? $this['slug'] : $this['id']));
+    }
+
+    /**
      * Рекомендации.
      *
      * @return BelongsToMany
