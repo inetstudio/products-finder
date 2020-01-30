@@ -14,7 +14,6 @@
     "ext-simplexml": "*",
     "inetstudio/admin-panel": "^6.0",
     "inetstudio/classifiers": "^6.0",
-    "inetstudio/favorites": "^6.0",
     "inetstudio/meta": "^6.0",
     "inetstudio/reviews": "^6.0"
   },

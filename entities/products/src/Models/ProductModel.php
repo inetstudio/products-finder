@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use InetStudio\Uploads\Models\Traits\HasImages;
-use InetStudio\Favorites\Models\Traits\Favoritable;
 use InetStudio\MetaPackage\Meta\Models\Traits\HasMeta;
 use InetStudio\Classifiers\Models\Traits\HasClassifiers;
 use InetStudio\ProductsFinder\Links\Models\Traits\Links;
@@ -31,7 +30,6 @@ class ProductModel extends Model implements ProductModelContract
     use HasReviews;
     use Searchable;
     use SoftDeletes;
-    use Favoritable;
     use HasClassifiers;
     use BuildQueryScopeTrait;
 
