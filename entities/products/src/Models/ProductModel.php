@@ -15,6 +15,7 @@ use InetStudio\ProductsFinder\Links\Models\Traits\Links;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use InetStudio\Reviews\Messages\Models\Traits\HasReviews;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use InetStudio\AdminPanel\Base\Models\Traits\HasDynamicRelations;
 use InetStudio\AdminPanel\Base\Models\Traits\Scopes\BuildQueryScopeTrait;
 use InetStudio\ProductsFinder\Products\Contracts\Models\ProductModelContract;
 
@@ -31,6 +32,7 @@ class ProductModel extends Model implements ProductModelContract
     use Searchable;
     use SoftDeletes;
     use HasClassifiers;
+    use HasDynamicRelations;
     use BuildQueryScopeTrait;
 
     const ENTITY_TYPE = 'products_finder_product';
