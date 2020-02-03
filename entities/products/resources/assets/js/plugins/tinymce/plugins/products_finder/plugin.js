@@ -24,11 +24,13 @@ window.tinymce.PluginManager.add('products_finder', function(editor) {
               data: widgetData,
             },
           ]);
-    } else {
-      let component = window.Admin.vue.modulesComponents.$refs['products_finder_ProductCardWidget'][0];
-
-      component.$data.model.id = widgetData.model.id;
     }
+  }
+
+  function loadWidget() {
+    let component = window.Admin.vue.modulesComponents.$refs['products_finder_ProductCardWidget'][0];
+
+    component.$data.model.id = widgetData.model.id;
   }
 
   editor.addButton('add_products_finder_card_widget', {
@@ -48,6 +50,8 @@ window.tinymce.PluginManager.add('products_finder', function(editor) {
         initProductsFinderComponents();
 
         window.waitForElement('#add_products_finder_card_widget_modal', function() {
+          loadWidget();
+
           $('#add_products_finder_card_widget_modal').modal();
         });
       } else {
