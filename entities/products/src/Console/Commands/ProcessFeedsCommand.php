@@ -7,7 +7,7 @@ use SimpleXMLElement;
 use GuzzleHttp\Client;
 use Illuminate\Support\Str;
 use Illuminate\Console\Command;
-use Spatie\MediaLibrary\Models\Media;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use GuzzleHttp\Exception\ClientException;
 use InetStudio\ProductsFinder\Products\Contracts\Models\ProductModelContract;
 use InetStudio\ProductsFinder\Products\Contracts\Console\Commands\ProcessFeedsCommandContract;
