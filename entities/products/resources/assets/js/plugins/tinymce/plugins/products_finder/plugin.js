@@ -14,21 +14,8 @@ window.tinymce.PluginManager.add('products_finder', function(editor) {
     },
   };
 
-  function initProductsFinderComponents() {
-    if (typeof window.Admin.vue.modulesComponents.$refs['products_finder_ProductCardWidget'] ==
-        'undefined') {
-      window.Admin.vue.modulesComponents.modules.products_finder.components = _.union(
-          window.Admin.vue.modulesComponents.modules.products_finder.components, [
-            {
-              name: 'ProductCardWidget',
-              data: widgetData,
-            },
-          ]);
-    }
-  }
-
   function loadWidget() {
-    let component = window.Admin.vue.modulesComponents.$refs['products_finder_ProductCardWidget'][0];
+    let component = window.Admin.vue.helpers.getVueComponent('products_finder', 'ProductCardWidget');
 
     component.$data.model.id = widgetData.model.id;
   }
@@ -47,7 +34,7 @@ window.tinymce.PluginManager.add('products_finder', function(editor) {
           id: parseInt($(content).attr('data-id')) || 0,
         };
 
-        initProductsFinderComponents();
+        window.Admin.vue.helpers.initComponent('products_finder', 'ProductCardWidget', widgetData);
 
         window.waitForElement('#add_products_finder_card_widget_modal', function() {
           loadWidget();

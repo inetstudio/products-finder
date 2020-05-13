@@ -1,5 +1,6 @@
 require('./plugins/tinymce/plugins/products_finder');
-require('../../../../../../widgets/resources/assets/js/mixins/widget');
+
+require('../../../../../../widgets/entities/widgets/resources/assets/js/mixins/widget');
 
 Vue.component(
     'ProductCardWidget',
