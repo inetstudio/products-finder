@@ -133,9 +133,21 @@ class ProcessFeedsCommand extends Command implements ProcessFeedsCommandContract
         }
 
         $content = $response->getBody()->getContents();
+        $content = $this->prepareFeedContent($content);
+
         $responseXml = simplexml_load_string($content);
 
         return ($responseXml) ? $responseXml : null;
+    }
+
+    /**
+     * @param  string  $content
+     *
+     * @return string
+     */
+    protected function prepareFeedContent(string $content): string
+    {
+        return preg_replace ('/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u', ' ', $content);
     }
 
     /**
