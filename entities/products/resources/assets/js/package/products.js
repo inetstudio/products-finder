@@ -1,7 +1,5 @@
-let products = {};
+export let products = {
+  init: function () {
 
-products.init = function () {
-
+  }
 };
-
-module.exports = products;
