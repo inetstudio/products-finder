@@ -8,7 +8,7 @@ use OwenIt\Auditing\Auditable;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use InetStudio\Uploads\Models\Traits\HasImages;
+use InetStudio\UploadsPackage\Uploads\Models\Traits\HasMedia;
 use InetStudio\MetaPackage\Meta\Models\Traits\HasMeta;
 use InetStudio\Classifiers\Models\Traits\HasClassifiers;
 use InetStudio\ProductsFinder\Links\Models\Traits\Links;
@@ -27,7 +27,7 @@ class ProductModel extends Model implements ProductModelContract
     use Links;
     use HasMeta;
     use Auditable;
-    use HasImages;
+    use HasMedia;
     use HasReviews;
     use Searchable;
     use SoftDeletes;
@@ -43,14 +43,6 @@ class ProductModel extends Model implements ProductModelContract
      * @var bool
      */
     protected $auditTimestamps = true;
-
-    /**
-     * @var array
-     */
-    protected $images = [
-        'config' => 'products_finder_products',
-        'model' => 'product',
-    ];
 
     /**
      * Связанная с моделью таблица.
@@ -451,5 +443,10 @@ class ProductModel extends Model implements ProductModelContract
         $arr['type'] = $this['type'];
 
         return $arr;
+    }
+
+    public function getMediaConfig(): array
+    {
+        return config('products_finder_products.media', []);
     }
 }
