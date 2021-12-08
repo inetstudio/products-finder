@@ -1,3 +1,5 @@
+import Swal from 'sweetalert2';
+
 window.tinymce.PluginManager.add('products_finder', function(editor) {
   let widgetData = {
     widget: {
@@ -21,7 +23,7 @@ window.tinymce.PluginManager.add('products_finder', function(editor) {
   }
 
   editor.addButton('add_products_finder_card_widget', {
-    title: 'Продуктовая карточка',
+    title: 'Карточка Product Finder',
     icon: 'fa fa-search-dollar',
     onclick: function() {
       let content = editor.selection.getContent();
@@ -42,10 +44,10 @@ window.tinymce.PluginManager.add('products_finder', function(editor) {
           $('#add_products_finder_card_widget_modal').modal();
         });
       } else {
-        swal({
+        Swal.fire({
           title: 'Ошибка',
           text: 'Необходимо выбрать виджет-продуктовая карточка',
-          type: 'error'
+          icon: 'error'
         });
 
         return false;
