@@ -155,6 +155,7 @@ class ProductModel extends Model implements ProductModelContract
                 $query->select(
                     [
                         'products_finder_products.id',
+                        'products_finder_products.ean',
                         'products_finder_products.title',
                         'products_finder_products.brand',
                     ]
