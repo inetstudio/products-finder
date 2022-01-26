@@ -100,6 +100,7 @@ class ProductModel extends Model implements ProductModelContract
 
         self::$buildQueryScopeDefaults['columns'] = [
             'id',
+            'ean',
             'brand',
             'title',
             'description',
